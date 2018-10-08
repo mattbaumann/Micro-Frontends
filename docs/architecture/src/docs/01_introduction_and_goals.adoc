@@ -1,9 +1,162 @@
 [[section-introduction-and-goals]]
 == Introduction and Goals
 
-To test the capabillity of the micro-frontend architecture, we will build a sample architecture. As defined in the project meeting of 03.10.2018 the architecture will consist out of 3 Micro-Services. This is enough to test the capabillities of the pattern and see the limitations. 
+To test the capability of the micro-frontend architecture, we will build a sample architecture. As defined in the project meeting of 03.10.2018 the infrastructure will consist out of 3 Micro-Services. This is enough to test the capabilities of the pattern and see the limitations.
+
+For demonstrating the forces above, I will program a sample application. This application manages cooking recipes. Additionally, as a supplement it allows to build purchase lists from recipe ingredients. The cooking instructions allow us to select cooking machine to use.
+
+Because the project yields a sample application, it does not have software quality goals in the custom sense. Rather, the quality goals are, simple idea, simple and understandable code and focus on the architecture I want to prove.
+
+Stakeholders are readers of the paper and students which want to understand the sample application.
 
 === Requirements Overview
 
+For the requirements see the requirements document. Under https://sp.mattbaumann.ch/Shared%20Documents/Architecture%20Documentation/RequirementsDiagram.pdf[requirements diagram] are all requirements throughly described. *ADD TO DOCUMENTATION: For the user stories I use the connextra template (see Wikipedia sources under https://en.wikipedia.org/wiki/User_story), why that template?*
+
+*Actors of the sample application:*
+
+*User* - The user of the system.
+
+=== Use Case UC01: CRUD recipes ===
+
+The user wants to manage his collection of recipes.
+
+*User Stories*
+
+UC01-US01: AS A user I CAN view a menu, SO THAT I can cook that menu.
+
+UC01-US02: AS A user I CAN add a menu, SO THAT that menu is stored.
+
+UC01-US03: AS A suer I CAN modify a menu, SO THAT that menu has new information.
+
+UC01-US04: AS A user I CAN remove a menu, SO THAT I can slim my cookbook.
 
 
+=== Use Case UC02: CRUD Cooking Instructions ===
+
+The user wants to add cooking instructions to a recipe. Instructions tell him what and how to cook in order to get the desired result.
+
+*User Stories*
+
+UC02-US01: AS A user I CAN view cooking instructions, SO THAT I know how to cook.
+
+UC02-US02: AS A user I CAN add cooking instructions, SO THAT I know how to cook my menus.
+
+UC02-US03: AS A user I CAN modify cooking instructions, SO THAT I can update the information in the instruction.
+
+UC02-US04: AS A user I CAN remove cooking instructions, SO THAT I can remove unnecessary steps.
+
+=== Use Case UC03: CRUD Ingredients ===
+
+The user wants to add ingredients to a recipe. Ingredients tell the user what to prepare before cooking.
+
+*User Stories*
+
+UC03-US01: AS A user I CAN view ingredients, SO THAT I know what to prepare before cooking.
+
+UC03-US02: AS A user I CAN add ingredients, SO THAT I remember next time what to prepare.
+
+UC03-US03: AS A user I CAN remove ingredients, SO THAT I can remove unnessary garnishes.
+
+UC03-US04: AS A user I CAN modify ingredients, SO THAT I can save ingredients next time.
+
+=== Use Case UC04: CRUD Recipe Category ===
+
+The user wants to add recipes to categories. These categories represent cook book chapters, but are modifiable.
+
+*User Stories*
+
+UC04-US01: AS A user I CAN add a category, SO THAT the recipes are nicely grouped into sections.
+
+UC04-US02: AS A user I CAN modify the category title, SO THAT it describes better the recipes in the category.
+
+UC04-US03: AS A user I CAN modify the category recipes, SO THAT I can add my cool new recipe.
+
+UC04-US04: AS A user I CAN modify the category recipes, SO THAT I can remove old, stinky recipes.
+
+UC04-US05 AS A user I CAN remove a category, SO THAT I can clean up my category list.
+
+UC04-US06: AS A user I CAN view the category, SO THAT I see the category title and the recipes stored inside.
+
+=== Use Case UC05: CRUD Kitchen Devices ===
+
+The user wants to store a list of kitchen devices. These devices stand in his kitchen and he lost the overview about them. Also he wants to know, if a device is still working. These very practical helpers are selectable in a recipe instruction.
+
+*User Stories*
+
+UC05-US01: AS A user I CAN view my kitchen devices, SO THAT I have an overview over my devices.
+
+UC05-US02: AS A user I CAN add a kitchen device, SO THAT I can inventory my devices.
+
+UC05-US03: AS A user I CAN modify the device, SO THAT I can set my device unfunctional.
+
+UC05-US04: AS A user I CAN modify the device, SO THAT I can correct my spelling errors.
+
+UC05-US05: AS A user I CAN remove a device, SO THAT I can clean up unfunctional devices.
+
+=== Use Case UC06: CRUD Purchase Lists ===
+
+The user wants to modify his purchase lists. These lists are used by the user in the walmart to find all ingredients for cooking his menu. The user does not care, about the order nor the quantity, it's just a compilation of ingredients.
+
+*User Stories*
+
+UC06-US01: AS A user I CAN view purchase lists, SO THAT I can select the actual list.
+
+UC06-US03: AS A user I CAN add a purchase list, SO THAT I can send ingredients to it afterwards.
+
+UC06-US04: AS A user I CAN remove a purchase list, SO THAT I can remove unused lists.
+
+UC06-US05: AS A user I CAN update a purchase list, SO THAT I can modify it's name.
+
+
+=== Use Case UC07: CRUD Purchase List Items ===
+
+The user wants to modify the contents of his purchase lists.
+
+*User Stories*
+
+UC07-US01: AS A user I CAN view the items of a purchase list, SO THAT I know what to buy.
+
+UC07-US02: AS A user I CAN add a purchase list item, SO THAT I can buy whatever I want.
+
+UC07-US03: AS A user I CAN remove a purchase list item, SO THAT I can save money.
+
+=== Optional Use Case UC08: Print recipe ===
+
+The user wants to print the entire recipe with the title, ingredients and instructions.
+
+*User Stories*
+
+UC08-US01: AS A user I CAN print the recipe, SO THAT I can cook after it.
+
+=== Optional Use Case UC09: Print Purchase List ===
+
+The user wants to print the entire purchase list with all items.
+
+*User Stories*
+
+UC08-US01: AS A user I CAN print the purchase list, SO THAT I can buy the items.
+
+=== Optional Use Case UC10: Attach a Cooking Device to Cooking Instructions ===
+
+The user wants to see his device in the cooking instructions so that he immediately knows what to do.
+
+*User Stories*
+
+UC10-US01: AS A user I CAN see the device in the cooking instructions, SO THAT I know faster what to do.
+
+UC10-US02: AS A user I CAN set the device in the cooking instructions editor pane, SO THAT I know next time what device I should use.
+
+=== Optional Use Case UC11: Add Menu Ingredients to Purchase List ===
+
+The user wants to add menu ingredients to purchase list.
+
+*User Stories*
+UC11-US01: AS A user I CAN select the purchase list in the recipe view, SO THAT all ingredients are sent to the purchase list.
+
+=== Optional Use Case UC12: Mark Purchase Item as Bought ===
+
+The user wants to use the application in the store, therefore he wants to mark items as purchased.
+
+*User Stories*
+UC12-US01: AS A user I CAN mark bought purchase items as done, SO THAT I know what to buy next.
