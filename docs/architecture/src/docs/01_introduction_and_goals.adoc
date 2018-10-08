@@ -1,0 +1,9 @@
+[[section-introduction-and-goals]]
+== Introduction and Goals
+
+To test the capabillity of the micro-frontend architecture, we will build a sample architecture. As defined in the project meeting of 03.10.2018 the architecture will consist out of 3 Micro-Services. This is enough to test the capabillities of the pattern and see the limitations. 
+
+=== Requirements Overview
+
+
+
