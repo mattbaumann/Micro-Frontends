@@ -4,7 +4,7 @@ This log lists the architectural decisions for [project name].
 
 <!-- adrlog -- Regenerate the content by using "adr-log -i". You can install it via "npm install -g adr-log" -->
 
-
+- [ADR-0001](0001-Service-Separation.md) - [Separate domain into microservices]
 
 <!-- adrlogstop -->
 
