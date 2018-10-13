@@ -5,6 +5,17 @@
  * Learn how to create Gradle builds at https://guides.gradle.org/creating-new-gradle-builds/
  */
 
+plugins {
+    id("idea")
+}
+
+idea {
+    targetVersion = "2018.2"
+    project {
+        vcs = "Git"
+    }
+}
+
 subprojects {
     version = "1.0"
 }

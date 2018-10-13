@@ -9,4 +9,5 @@
 
 rootProject.name = "Micro-Frontends"
 
-include("kitchen-device-service")
+include "kitchen-device-service"
+include "purchase-list-service"
