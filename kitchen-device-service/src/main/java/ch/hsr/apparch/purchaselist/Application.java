@@ -1,4 +1,4 @@
-package ch.hsr.apparch.kitchendeviceservice;
+package ch.hsr.apparch.purchaselist;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

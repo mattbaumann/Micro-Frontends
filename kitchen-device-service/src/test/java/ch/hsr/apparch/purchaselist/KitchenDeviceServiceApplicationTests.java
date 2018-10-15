@@ -1,4 +1,4 @@
-package ch.hsr.apparch.kitchendeviceservice;
+package ch.hsr.apparch.purchaselist;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
