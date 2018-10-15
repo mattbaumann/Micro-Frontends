@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration debug="true">
+    <Appenders>
+        <Console name="ConsoleAppender" target="SYSTEM_OUT" follow="true">
+            <PatternLayout
+                    pattern="%d{DEFAULT} [%highlight{%level{length=4}}] %style{%pid}{FG_Magenta} [%t] %style{%c{10.}}{FG_CYAN}: %m%throwable"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Logger name="Testing" level="warn">
+            <AppenderRef ref="ConsoleAppender"/>
+        </Logger>
+
+        <Root level="warn">
+            <AppenderRef ref="ConsoleAppender"/>
+        </Root>
+    </Loggers>
+</Configuration>

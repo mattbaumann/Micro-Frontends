@@ -8,7 +8,13 @@ spring:
     path: /h2
 
   datasource:
-    url: jdbc:h2:file:~/test
+    url: jdbc:h2:file:~/kitchenDevices
     username: sa
     password:
     driver-class-name: org.h2.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: false
+    hibernate:
+      ddl-auto: create
