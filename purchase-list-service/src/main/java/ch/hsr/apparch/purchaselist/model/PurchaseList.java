@@ -7,6 +7,7 @@ import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Collection;
 
 @Entity
 @RequiredArgsConstructor
@@ -28,4 +29,9 @@ public class PurchaseList implements Serializable {
     @Column(nullable = false)
     @FutureOrPresent
     private LocalDate date;
+
+    @Setter
+    @Column()
+    @OneToMany(mappedBy = "list")
+    private Collection<PurchaseListItem> ingredients;
 }
