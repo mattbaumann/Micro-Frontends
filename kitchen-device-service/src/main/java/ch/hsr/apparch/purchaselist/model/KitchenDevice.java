@@ -1,17 +1,14 @@
 package ch.hsr.apparch.purchaselist.model;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 @Entity
+@RequiredArgsConstructor
+@Getter
 @EqualsAndHashCode(of = {"name", "function", "available"})
 @ToString(exclude = "id")
 public class KitchenDevice implements Serializable {
@@ -19,16 +16,19 @@ public class KitchenDevice implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	
-	@Getter
-	@Setter
-	private String name;
 
-	@Getter
 	@Setter
-	private String function;
+    @NotBlank
+    @Column(nullable = false)
+    private String name;
 
-	@Getter
 	@Setter
-	private boolean available;
+    @NotBlank
+    @Column
+    private String function;
+
+	@Setter
+    @NotBlank
+    @Column
+    private boolean available;
 }
