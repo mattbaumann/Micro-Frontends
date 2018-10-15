@@ -1,0 +1,13 @@
+= Spring REST Docs JUnit 5 Sample =
+Andy Wilkinson;
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+
+The HTML Request for kitchen device service
+
+include::{snippets}/PurchaseList/http-request.adoc[]
+
+The HTML Responses for kitchen device service
+
+include::{snippets}/PurchaseList/http-response.adoc[]
