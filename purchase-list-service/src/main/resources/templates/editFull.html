@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<header th:replace="headers :: html-head('Add new purchase list')">
+</header>
+<body>
+<p th:replace="menu :: main-nav">
+<form method="post" action="/requests/purchaseList/update">
+    <input type="hidden" name="id" th:value="${purchaseList.getId()}">
+    <div class="form-group">
+        <label for="purchseListName">Name</label>
+        <input id="purchseListName" name="name" type="text" required class="form-control"
+               th:value="${purchaseList.getName()}">
+        <small class="form-text text-muted">You can change the name at any time.</small>
+    </div>
+    <div>
+        <label for="purchseListDate">Due at</label>
+        <input id="purchseListDate" name="date" type="date" required class="form-control"
+               th:value="${purchaseList.getDate()}">
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+</body>
+</html>
