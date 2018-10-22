@@ -4,7 +4,7 @@
 </header>
 <body>
 <p th:replace="menu :: main-nav">
-<form method="post" action="/requests/purchaseList/update">
+<form method="post" action="/requests/purchaseList/update" th:fragment="content">
     <input type="hidden" name="id" th:value="${purchaseList.getId()}">
     <div class="form-group">
         <label for="purchseListName">Name</label>
