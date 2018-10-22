@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.Collection;
 
 @Entity
+@NoArgsConstructor
 @RequiredArgsConstructor
 @Getter
 @EqualsAndHashCode
@@ -20,18 +21,27 @@ public class PurchaseList implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id = 0;
 
+    @NonNull
     @Setter
     @Column(nullable = false)
     @NotBlank
     private String name;
 
+    @NonNull
     @Setter
     @Column(nullable = false)
     @FutureOrPresent
     private LocalDate date;
 
+    @NonNull
     @Setter
     @Column()
     @OneToMany(mappedBy = "list")
     private Collection<PurchaseListItem> ingredients;
+
+    public PurchaseList update(String name, LocalDate date) {
+        this.name = name;
+        this.date = date;
+        return this;
+    }
 }
