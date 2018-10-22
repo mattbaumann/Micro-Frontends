@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<header th:replace="helpers/headers :: html-head('List purchase lists')">
+</header>
+<body>
+<p th:replace="helpers/menu :: main-nav">
+
+<div class="btn-group">
+    <a class="btn btn-secondary" href="/controller/editList"><i class="fas fa-plus"></i> Add</a>
+</div>
+
+<table class="table" th:fragment="content">
+    <thead>
+    <tr>
+        <th>name</th>
+        <th>function</th>
+        <th>available</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="model : ${models}">
+        <td th:text="${model.name}">Name</td>
+        <td th:text="${model.function}">Function</td>
+        <td><i class="fas fa-check" th:if="${model.available}"></i> <i class="fas fa-times"
+                                                                       th:if="${!model.available}"></i></td>
+        <td><a class="btn btn-link" th:href="@{/controller/editList/{plid}(plid=${model.id})}"><i
+                class="fas fa-pen"></i></a></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
