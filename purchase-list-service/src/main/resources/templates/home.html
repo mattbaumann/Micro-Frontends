@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<header th:replace="headers :: html-head('Add new purchase list')">
+</header>
+<body>
+<nav th:replace="menu :: main-nav"></nav>
+<article>
+    <header>
+        <h1 class="display-1">
+            Purchase list service
+        </h1>
+        <p class="lead">
+            The <em>purchase list service</em> is the medium size service in the example application. It manages <em>purchase
+            lists</em>. A <em>purchase list</em> consist of
+            a name and a due date. It also references the items inside a purchase list. This class simply consists of
+            the name of the ingredient
+            that should be bought.
+        </p>
+    </header>
+    <section>
+        <h2>
+            Database
+            <small class="text-muted">H2</small>
+        </h2>
+        <p>
+            This service uses an <em>H2</em> persistent DBMS. The database is stored under the user directory. Two files
+            can be found there:
+        </p>
+        <ul>
+            <li>purchaseList.mv.db</li>
+            <li>purchaseList.trace.db</li>
+        </ul>
+        <div class="alert alert-info">
+            In case of an service failure, just delete the files stated above and restart the service.
+        </div>
+        <p>
+            The service has an <a href="/h2">database browser</a>. The <em>username</em> is <strong>admin</strong> and
+            the <em>password</em> is an <strong>empty text field</strong>. The browser is an simple database query
+            service, which you can use to see the changes written to the database.
+        </p>
+    </section>
+
+    <section>
+        <h2>
+            REST API
+            <small class="text-muted">Spring Data HATEOAS REST</small>
+        </h2>
+        <p>
+            This service exposes an REST API to see an logical view of the data stored in the database.
+        <p>
+            Under <a href="/browser/index.html#/">HAL Browser</a> you have an interactive online console for accessing
+            the
+            <em>REST API</em> of this service.
+        </p>
+    </section>
+</article>
+
+
+<p>
+
+</p>
+
+</body>
+</html>

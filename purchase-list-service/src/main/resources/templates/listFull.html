@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<header th:replace="headers :: html-head('List purchase lists')">
+</header>
+<body>
+<p th:replace="menu :: main-nav">
+
+<div class="btn-group">
+    <a class="btn btn-secondary" href="/controller/editList"><i class="fas fa-plus"></i> Add</a>
+</div>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>list name</th>
+        <th>list date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="purchaseList : ${purchaseLists}">
+        <td th:text="${purchaseList.name}">Name</td>
+        <td th:text="${purchaseList.date}">Date</td>
+        <td><a class="btn btn-link" th:href="@{/controller/editList/{plid}(plid=${purchaseList.id})}"><i
+                class="fas fa-pen"></i></a></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
