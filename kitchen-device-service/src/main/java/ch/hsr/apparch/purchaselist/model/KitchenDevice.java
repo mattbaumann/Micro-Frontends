@@ -7,9 +7,9 @@ import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 @Entity
-@RequiredArgsConstructor
+@NoArgsConstructor
 @Getter
-@EqualsAndHashCode(of = {"name", "function", "available"})
+@EqualsAndHashCode
 @ToString(exclude = "id")
 public class KitchenDevice implements Serializable {
 
@@ -18,17 +18,31 @@ public class KitchenDevice implements Serializable {
 	private long id;
 
 	@Setter
+    @NonNull
     @NotBlank
     @Column(nullable = false)
     private String name;
 
 	@Setter
+    @NonNull
     @NotBlank
     @Column
     private String function;
 
 	@Setter
-    @NotBlank
     @Column
     private boolean available;
+
+    public KitchenDevice(final String name, final String function, final boolean available) {
+        this.name = name;
+        this.function = function;
+        this.available = available;
+    }
+
+    public KitchenDevice update(final String name, final String function, final boolean available) {
+        this.name = name;
+        this.function = function;
+        this.available = available;
+        return this;
+    }
 }
