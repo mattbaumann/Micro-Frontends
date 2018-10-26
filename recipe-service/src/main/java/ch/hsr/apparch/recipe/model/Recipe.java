@@ -17,7 +17,8 @@ public class Recipe {
 
 
     @Id
-    @Setter(value = AccessLevel.NONE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Setter(AccessLevel.NONE)
     private long id;
 
     @NonNull

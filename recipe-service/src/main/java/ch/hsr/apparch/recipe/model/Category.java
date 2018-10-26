@@ -1,7 +1,6 @@
 package ch.hsr.apparch.recipe.model;
 
-import lombok.Data;
-import lombok.NonNull;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
@@ -11,10 +10,14 @@ import java.util.Collection;
 
 @Data
 @Entity
+@NoArgsConstructor
+@RequiredArgsConstructor
 @Accessors(chain = true)
 public class Category {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Setter(AccessLevel.NONE)
     private long id;
 
     @NonNull

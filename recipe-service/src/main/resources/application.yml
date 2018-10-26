@@ -8,7 +8,7 @@ spring:
     path: /h2
 
   datasource:
-    url: jdbc:h2:file:~/purchaseList
+    url: jdbc:h2:file:~/recipe
     username: admin
     password:
     driver-class-name: org.h2.Driver
