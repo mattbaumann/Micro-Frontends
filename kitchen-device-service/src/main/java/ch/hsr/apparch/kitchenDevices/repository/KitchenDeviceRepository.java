@@ -1,7 +1,7 @@
-package ch.hsr.apparch.purchaselist.repository;
+package ch.hsr.apparch.kitchenDevices.repository;
 
 
-import ch.hsr.apparch.purchaselist.model.KitchenDevice;
+import ch.hsr.apparch.kitchenDevices.model.KitchenDevice;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
