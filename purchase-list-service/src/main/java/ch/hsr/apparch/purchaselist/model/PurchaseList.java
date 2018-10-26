@@ -14,7 +14,7 @@ import java.util.Collection;
 @RequiredArgsConstructor
 @Getter
 @EqualsAndHashCode
-@ToString
+@ToString()
 public class PurchaseList implements Serializable {
 
     @Id
