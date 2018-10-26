@@ -6,7 +6,7 @@
 <p th:replace="helpers/menu :: main-nav">
 
 <div class="btn-group">
-    <a class="btn btn-secondary" href="/controller/editList"><i class="fas fa-plus"></i> Add</a>
+    <a class="btn btn-secondary" href="/recipe/edit"><i class="fas fa-plus"></i> Add</a>
 </div>
 
 <table class="table" th:fragment="content">
@@ -35,8 +35,10 @@
                 <li th:each="item : ${model.getInstructions()}" th:text="${item.getDescription()}"></li>
             </ol>
         </td>
-        <td><a class="btn btn-link" th:href="@{/controller/editList/{plid}(plid=${model.id})}"><i
-                class="fas fa-pen"></i></a></td>
+        <td><a class="btn btn-link" th:href="@{/recipe/{recipeId}/edit(recipeId=${model.getId()})}">
+            <i class="fas fa-pen"></i></a></td>
+        <td><a class="btn btn-link" th:href="@{/recipe/{recipeId}/delete(recipeId=${model.getId()})}">
+            <i class="fas fa-trash"></i></a></td>
     </tr>
     </tbody>
 </table>

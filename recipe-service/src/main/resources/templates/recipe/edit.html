@@ -4,7 +4,7 @@
 </header>
 <body>
 <p th:replace="helpers/menu :: main-nav">
-<form method="post" action="/controller/recipe/update" th:fragment="content">
+<form method="post" action="/recipe/update" th:fragment="content">
     <!--/*@thymesVar id="model" type="ch.hsr.apparch.recipe.model.Recipe"*/-->
     <input type="hidden" name="id" th:value="${model.getId()}">
     <div class="form-group">
