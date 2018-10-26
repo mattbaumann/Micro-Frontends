@@ -3,10 +3,7 @@ package ch.hsr.apparch.purchaselist.model;
 import lombok.*;
 import lombok.experimental.Accessors;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
@@ -21,8 +18,9 @@ import java.util.Collection;
 public class PurchaseList implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Setter(AccessLevel.NONE)
-    private long id = 0;
+    private long id;
 
     @NonNull
     @NotBlank
@@ -35,7 +33,6 @@ public class PurchaseList implements Serializable {
     private LocalDate date;
 
     @NonNull
-    @Column()
     @OneToMany(mappedBy = "list")
     private Collection<PurchaseListItem> ingredients;
 }

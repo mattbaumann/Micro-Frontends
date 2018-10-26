@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<header th:replace="helpers/headers :: html-head('List purchase lists')">
+</header>
+<body>
+<p th:replace="helpers/menu :: main-nav">
+
+<div class="btn-group">
+    <a class="btn btn-secondary" th:href="@{/purchaseList/{plid}/item/edit(plid=${plid})}"><i class="fas fa-plus"></i>
+        Add</a>
+</div>
+
+<table class="table" th:fragment="content">
+    <thead>
+    <tr>
+        <th>Ingredient</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="model : ${models}">
+        <td th:text="${model.getName()}">Name</td>
+        <td><a th:href="@{/purchaseList/{plid}/item/{id}/edit(plid=${plid}, id=${model.getId()})}"><i
+                class="fas fa-pen"></i></a></td>
+        <td><a th:href="@{/purchaseList/{plid}/item/{id}/remove(plid=${plid}, id=${model.getId()})}"><i
+                class="fas fa-trash"></i></a></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
