@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<header th:replace="helpers/headers :: html-head('List purchase lists')">
+</header>
+<body>
+<p th:replace="helpers/menu :: main-nav">
+
+<div class="btn-group">
+    <a class="btn btn-secondary" href="/controller/editList"><i class="fas fa-plus"></i> Add</a>
+</div>
+
+<table class="table" th:fragment="content">
+    <thead>
+    <tr>
+        <th>name</th>
+        <th>category</th>
+        <th>ingredients</th>
+        <th>instructions</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <!--/*@thymesVar id="model" type="ch.hsr.apparch.recipe.model.Recipe"*/-->
+    <!--/*@thymesVar id="models" type="java.util.Collection"*/-->
+    <tr th:each="model : ${models}">
+        <td th:text="${model.getName()}">Name</td>
+        <td th:text="${model.getCategory().getName()}">Function</td>
+        <td>
+            <ul>
+                <li th:each="item : ${model.getIngredients()}" th:text="${item.getName()}"></li>
+            </ul>
+        </td>
+        <td>
+            <ol>
+                <li th:each="item : ${model.getInstructions()}" th:text="${item.getDescription()}"></li>
+            </ol>
+        </td>
+        <td><a class="btn btn-link" th:href="@{/controller/editList/{plid}(plid=${model.id})}"><i
+                class="fas fa-pen"></i></a></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
