@@ -1,6 +1,7 @@
 package ch.hsr.apparch.purchaselist.controller;
 
 import ch.hsr.apparch.purchaselist.model.PurchaseList;
+import ch.hsr.apparch.purchaselist.model.PurchaseListItem;
 import ch.hsr.apparch.purchaselist.repository.PurchaseListItemRepository;
 import ch.hsr.apparch.purchaselist.repository.PurchaseListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,23 @@ public class FormRequests {
         this.purchaseListItems = purchaseListItems;
     }
 
+    @PostMapping("/purchaseList/{plid}/Item/update")
+    public String updatePurchaseListItem(@PathVariable("plid") Long plid,
+                                         @RequestParam(value = "id", required = false) Long id,
+                                         @RequestParam("name") String name) {
+        PurchaseList list = purchaseLists.findById(plid).orElseThrow(ResourceNotFoundException::new);
+        if (id == 0) {
+            purchaseListItems.save(new PurchaseListItem(name, list));
+        } else {
+            purchaseListItems.findById(id)
+                    .map(item -> item.setName(name))
+                    .map(purchaseListItems::save)
+                    .orElseThrow(ResourceNotFoundException::new);
+        }
+        return Views.REDIRECT_CONTROLLER_LIST_VIEW;
+    }
+
+
     @PostMapping("/purchaseList/update")
     public String updatePurchaseList(@RequestParam(value = "id", required = false) Long id,
                                      @RequestParam("name") String name,
@@ -34,7 +52,7 @@ public class FormRequests {
             purchaseLists.save(new PurchaseList(name, date, Collections.emptyList()));
         } else {
             purchaseLists.findById(id)
-                    .map(purchaseList -> purchaseList.update(name, date))
+                    .map(purchaseList -> purchaseList.setName(name).setDate(date))
                     .map(purchaseLists::save)
                     .orElseThrow(ResourceNotFoundException::new);
         }
