@@ -1,29 +1,30 @@
 package ch.hsr.apparch.purchaselist.model;
 
 import lombok.*;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
+@Data
 @Entity
+@NoArgsConstructor
 @RequiredArgsConstructor
-@Getter
-@EqualsAndHashCode
-@ToString
+@Accessors(chain = true)
 public class PurchaseListItem {
 
-  @Id
-  @GeneratedValue
-  private long id;
+    @Id
+    @Setter(value = AccessLevel.NONE)
+    private long id;
 
-  @Setter
-  @Column(nullable = false)
-  @NotBlank
-  private String name;
+    @NonNull
+    @NotBlank
+    @Column(nullable = false)
+    private String name;
 
-  @Setter
-  @ManyToOne
-  @JoinColumn(referencedColumnName = "id")
-  private PurchaseList list;
+    @NonNull
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "id")
+    private PurchaseList list;
 
 }

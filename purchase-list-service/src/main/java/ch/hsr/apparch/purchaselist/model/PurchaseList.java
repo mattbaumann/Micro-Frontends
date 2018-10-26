@@ -1,47 +1,41 @@
 package ch.hsr.apparch.purchaselist.model;
 
 import lombok.*;
+import lombok.experimental.Accessors;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Collection;
 
+@Data
 @Entity
 @NoArgsConstructor
 @RequiredArgsConstructor
-@Getter
-@EqualsAndHashCode
-@ToString()
+@Accessors(chain = true)
 public class PurchaseList implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Setter(AccessLevel.NONE)
     private long id = 0;
 
     @NonNull
-    @Setter
-    @Column(nullable = false)
     @NotBlank
+    @Column(nullable = false)
     private String name;
 
     @NonNull
-    @Setter
-    @Column(nullable = false)
     @FutureOrPresent
+    @Column(nullable = false)
     private LocalDate date;
 
     @NonNull
-    @Setter
     @Column()
     @OneToMany(mappedBy = "list")
     private Collection<PurchaseListItem> ingredients;
-
-    public PurchaseList update(String name, LocalDate date) {
-        this.name = name;
-        this.date = date;
-        return this;
-    }
 }
