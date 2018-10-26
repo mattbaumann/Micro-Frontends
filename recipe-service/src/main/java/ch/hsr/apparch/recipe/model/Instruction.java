@@ -3,7 +3,6 @@ package ch.hsr.apparch.recipe.model;
 
 import lombok.*;
 import lombok.experimental.Accessors;
-import org.apache.commons.lang3.Validate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -12,11 +11,13 @@ import javax.validation.constraints.NotNull;
 @Data
 @Entity
 @NoArgsConstructor
+@RequiredArgsConstructor
 @Accessors(chain = true)
 public class Instruction {
 
     @Id
-    @Setter(value = AccessLevel.NONE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Setter(AccessLevel.NONE)
     private long id;
 
     @Setter
