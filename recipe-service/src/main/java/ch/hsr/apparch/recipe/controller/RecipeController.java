@@ -27,7 +27,7 @@ public class RecipeController {
     @GetMapping("/list")
     public String list(final Model model) {
         model.addAttribute("models", recipeRepository.findAll());
-        return "listRecipe";
+        return "recipe/list";
     }
 
     @GetMapping({"/edit", "/edit/{id}"})
@@ -39,7 +39,7 @@ public class RecipeController {
         else
             model.addAttribute("model", new Recipe());
         model.addAttribute("categories", categoryRepository.findAll());
-        return "editRecipe";
+        return "recipe/edit";
     }
 
     @PostMapping("/update")
