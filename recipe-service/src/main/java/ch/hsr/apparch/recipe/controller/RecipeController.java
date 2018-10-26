@@ -6,10 +6,12 @@ import ch.hsr.apparch.recipe.repository.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/controller/recipe")
 public class RecipeController {
 
     private static final String REDIRECT_CONTROLLER_LIST_VIEW = "redirect:/controller/listView";
@@ -22,6 +24,11 @@ public class RecipeController {
                             final CategoryRepository categoryRepository) {
         this.recipeRepository = recipeRepository;
         this.categoryRepository = categoryRepository;
+    }
+
+    @GetMapping("/home")
+    public String home() {
+        return "home";
     }
 
     @GetMapping("/list")

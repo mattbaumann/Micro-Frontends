@@ -11,6 +11,10 @@
             <AppenderRef ref="ConsoleAppender"/>
         </Logger>
 
+        <Logger name="Request-Logging" level="warn">
+            <AppenderRef ref="ConsoleAppender"/>
+        </Logger>
+
         <Root level="warn">
             <AppenderRef ref="ConsoleAppender"/>
         </Root>
