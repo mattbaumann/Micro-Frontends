@@ -14,6 +14,7 @@ import javax.validation.constraints.NotBlank;
 public class PurchaseListItem {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Setter(value = AccessLevel.NONE)
     private long id;
 

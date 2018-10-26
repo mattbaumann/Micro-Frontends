@@ -6,7 +6,7 @@
 <p th:replace="helpers/menu :: main-nav">
 
 <div class="btn-group">
-    <a class="btn btn-secondary" href="/controller/editList"><i class="fas fa-plus"></i> Add</a>
+    <a class="btn btn-secondary" href="/purchaseList/edit"><i class="fas fa-plus"></i> Add</a>
 </div>
 
 <table class="table" th:fragment="content">
@@ -18,11 +18,12 @@
     </thead>
     <tbody>
     <tr th:each="purchaseList : ${purchaseLists}">
-        <td th:text="${purchaseList.name}">Name</td>
-        <td th:text="${purchaseList.date}">Date</td>
-        <td><a class="btn btn-link" th:href="@{/controller/editList/{plid}(plid=${purchaseList.getId()})}"><i
+        <td><a class="btn btn-link" th:href="@{/purchaseList/{plid}/list(plid=${purchaseList.getId()})}"
+               th:text="${purchaseList.name}">Name</a></td>
+        <td th:text="${purchaseList.getDate()}">Date</td>
+        <td><a class="btn btn-link" th:href="@{/purchaseList/edit/{plid}(plid=${purchaseList.getId()})}"><i
                 class="fas fa-pen"></i></a></td>
-        <td><a class="btn btn-link" th:href="@{/requests/purchaseList/delete/{plid}(plid=${purchaseList.getId()})}">
+        <td><a class="btn btn-link" th:href="@{/purchaseList/{plid}/delete(plid=${purchaseList.getId()})}">
             <i class="fas fa-trash"></i></a></td>
     </tr>
     </tbody>
