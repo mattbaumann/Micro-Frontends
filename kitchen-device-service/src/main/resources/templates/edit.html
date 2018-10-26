@@ -4,7 +4,7 @@
 </header>
 <body>
 <p th:replace="helpers/menu :: main-nav">
-<form method="post" action="/requests/purchaseList/update" th:fragment="content">
+<form method="post" th:action="${posturl}" th:fragment="content">
     <input type="hidden" name="id" th:value="${model.getId()}">
     <div class="form-group">
         <label for="kitchenDeviceName">Name</label>
