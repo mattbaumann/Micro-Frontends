@@ -11,3 +11,4 @@ rootProject.name = "Micro-Frontends"
 
 include "kitchen-device-service"
 include "purchase-list-service"
+include "recipe-service"
