@@ -1,6 +1,7 @@
 package ch.hsr.apparch.purchaselist;
 
 import ch.hsr.apparch.purchaselist.model.PurchaseList;
+import ch.hsr.apparch.purchaselist.model.PurchaseListItem;
 import ch.hsr.apparch.purchaselist.repository.PurchaseListItemRepository;
 import ch.hsr.apparch.purchaselist.repository.PurchaseListRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -9,10 +10,26 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDate;
-import java.util.Collections;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Random;
 
 @SpringBootApplication
 public class Application {
+
+    private static String[] SAMPLE_ITEMS = new String[]{
+            "apples",
+            "carrots",
+            "bread",
+            "milk",
+            "sandwich"
+    };
+
+    private static LocalDate[] SAMPLE_DATES = new LocalDate[]{
+            LocalDate.of(2100, 10, 18),
+            LocalDate.of(2090, 4, 30),
+            LocalDate.of(2110, 8, 14)
+    };
 
 
     public static void main(String[] args) {
@@ -22,7 +39,16 @@ public class Application {
     @Bean
     public CommandLineRunner insertSampleData(PurchaseListRepository lists, PurchaseListItemRepository listItems) {
         return args -> {
-            PurchaseList list = lists.save(new PurchaseList("Sample List", LocalDate.of(2100, 10, 18), Collections.emptyList()));
+            Random random = new Random();
+            for (int i = 0; i < 3; i++) {
+                LocalDate chosen_date = SAMPLE_DATES[random.nextInt(SAMPLE_DATES.length)];
+                PurchaseList list = lists.save(new PurchaseList(chosen_date.format(DateTimeFormatter.ISO_DATE), chosen_date, new ArrayList<>(3)));
+
+                for (int j = 0; j < 3; j++) {
+                    String chosen_item_description = SAMPLE_ITEMS[random.nextInt(SAMPLE_ITEMS.length)];
+                    list.getIngredients().add(listItems.save(new PurchaseListItem(chosen_item_description, list)));
+                }
+            }
         };
     }
 }
