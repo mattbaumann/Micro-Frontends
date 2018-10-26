@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<header th:replace="headers :: html-head('Add new purchase list')">
+<header th:replace="helpers/headers :: html-head('Add new purchase list')">
 </header>
 <body>
-<p th:replace="menu :: main-nav">
+<p th:replace="helpers/menu :: main-nav">
 <form method="post" action="/requests/purchaseList/update" th:fragment="content">
     <input type="hidden" name="id" th:value="${purchaseList.getId()}">
     <div class="form-group">
