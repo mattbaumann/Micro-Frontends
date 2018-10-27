@@ -5,6 +5,8 @@
 <body>
 <p th:replace="helpers/menu :: main-nav">
 
+<h1 th:text="${listingTitle}"></h1>
+
 <div class="btn-group">
     <a class="btn btn-secondary" href="/recipe/edit"><i class="fas fa-plus"></i> Add</a>
 </div>
@@ -24,7 +26,8 @@
     <!--/*@thymesVar id="models" type="java.util.Collection"*/-->
     <tr th:each="model : ${models}">
         <td th:text="${model.getName()}">Name</td>
-        <td th:text="${model.getCategory().getName()}">Function</td>
+        <td><a th:href="@{/recipe/list/category/{categoryId}/list/(categoryId=${model.getCategory().getId()})}"
+               th:text="${model.getCategory().getName()}">Category</a></td>
         <td>
             <ul>
                 <li th:each="item : ${model.getIngredients()}" th:text="${item.getName()}"></li>
