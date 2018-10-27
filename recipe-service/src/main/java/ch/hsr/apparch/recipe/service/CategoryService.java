@@ -5,6 +5,7 @@ import ch.hsr.apparch.recipe.exceptions.NotEmptyCategoryException;
 import ch.hsr.apparch.recipe.exceptions.ResourceNotFoundException;
 import ch.hsr.apparch.recipe.model.Category;
 import ch.hsr.apparch.recipe.repository.CategoryRepository;
+import ch.hsr.apparch.recipe.repository.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -17,10 +18,12 @@ import java.util.Optional;
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
+    private final RecipeRepository recipeRepository;
 
     @Autowired
-    public CategoryService(CategoryRepository categoryRepository) {
+    public CategoryService(CategoryRepository categoryRepository, RecipeRepository recipeRepository) {
         this.categoryRepository = categoryRepository;
+        this.recipeRepository = recipeRepository;
     }
 
     public Iterable<Category> listCategories() {
@@ -29,7 +32,7 @@ public class CategoryService {
 
     @Transactional
     public Category findOrNew(Optional<Long> id) {
-        return id.flatMap(categoryRepository::findById).orElse(new Category());
+        return id.flatMap(categoryRepository::findById).orElseGet(Category::new);
     }
 
     @Transactional
@@ -55,7 +58,7 @@ public class CategoryService {
     public void delete(final long id) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(ResourceNotFoundException.withRecordNotFoundMessage(Category.class, id));
-        if (!category.getRecipes().isEmpty()) {
+        if (!recipeRepository.findAllByCategory(category).isEmpty()) {
             throw NotEmptyCategoryException.withCategoryNotEmptyMessage(category);
         }
         categoryRepository.delete(category);
