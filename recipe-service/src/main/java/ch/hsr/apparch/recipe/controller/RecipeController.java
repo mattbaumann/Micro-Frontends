@@ -1,45 +1,58 @@
 package ch.hsr.apparch.recipe.controller;
 
-import ch.hsr.apparch.recipe.model.Category;
-import ch.hsr.apparch.recipe.model.Recipe;
-import ch.hsr.apparch.recipe.repository.CategoryRepository;
-import ch.hsr.apparch.recipe.repository.RecipeRepository;
+import ch.hsr.apparch.recipe.service.CategoryService;
+import ch.hsr.apparch.recipe.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
+import java.text.MessageFormat;
 import java.util.Optional;
 
 @Controller
 @RequestMapping("/recipe")
 public class RecipeController {
 
-    private static final String REDIRECT_CONTROLLER_LIST_VIEW = "redirect:/controller/listView";
+    private static final String REDIRECT_CONTROLLER_LIST_VIEW = "redirect:/recipe/list";
+    private static final String SINGULAR_MODEL_KEY = "model";
+    private static final String PLURAL_MODEL_KEY = "models";
+    private static final String POSTURL_KEY = "posturl";
+    private static final String CATEGORIES_KEY = "categories";
+    private static final String LISTING_TITLE = "listingTitle";
+    private static final String GLOBAL_LISTING_TITLE = "global listing of all recipes";
+    private static final String CATEGORY_LISTING_TITLE = "category ''{0}'' listing of all recipes";
 
-    private final RecipeRepository recipeRepository;
-    private final CategoryRepository categoryRepository;
+    private final RecipeService recipeService;
+    private final CategoryService categoryService;
 
     @Autowired
-    public RecipeController(final RecipeRepository recipeRepository,
-                            final CategoryRepository categoryRepository) {
-        this.recipeRepository = recipeRepository;
-        this.categoryRepository = categoryRepository;
+    public RecipeController(final RecipeService recipeService, final CategoryService categoryService) {
+        this.recipeService = recipeService;
+        this.categoryService = categoryService;
     }
 
     @GetMapping("/list")
     public String list(final Model model) {
-        model.addAttribute("models", recipeRepository.findAll());
+        model.addAttribute(PLURAL_MODEL_KEY, recipeService.listRecipes());
+        model.addAttribute(LISTING_TITLE, GLOBAL_LISTING_TITLE);
+        return "recipe/list";
+    }
+
+    @GetMapping("/list/category/{id}/list")
+    public String listByCategory(@PathVariable("id") final long id, final Model model) {
+        model.addAttribute(PLURAL_MODEL_KEY, recipeService.listRecipesByCategory(id));
+        model.addAttribute(LISTING_TITLE,
+                MessageFormat.format(CATEGORY_LISTING_TITLE, recipeService.getCategoryNameById(id))
+        );
         return "recipe/list";
     }
 
     @GetMapping({"/edit", "/{id}/edit"})
-    public String edit(@PathVariable(value = "id", required = false) final Optional<Long> id,
-                       final Model model) {
-        model.addAttribute("model", id.flatMap(recipeRepository::findById).orElse(new Recipe()));
-        model.addAttribute("categories", categoryRepository.findAll());
+    public String edit(@PathVariable(value = "id", required = false) final Optional<Long> id, final Model model) {
+        model.addAttribute(SINGULAR_MODEL_KEY, recipeService.findRecipeOrNew(id));
+        model.addAttribute(CATEGORIES_KEY, categoryService.listCategories());
+        model.addAttribute(POSTURL_KEY, id.map(i -> "/recipe/" + i + "/update").orElse("/recipe/add"));
         return "recipe/edit";
     }
 
@@ -47,28 +60,20 @@ public class RecipeController {
     public String update(@PathVariable("id") final long id,
                          @RequestParam("name") final String name,
                          @RequestParam("category") final long categoryId) {
-
-        Category category = categoryRepository.findById(categoryId).orElseThrow(ResourceNotFoundException::new);
-        recipeRepository.findById(id)
-                .map(recipe -> recipe.setName(name).setCategory(category))
-                .map(recipeRepository::save);
+        recipeService.update(id, name, categoryId);
         return REDIRECT_CONTROLLER_LIST_VIEW;
     }
 
     @PostMapping("/add")
     public String update(@RequestParam("name") final String name,
                          @RequestParam("category") final long category_id) {
-
-        categoryRepository.findById(category_id)
-                .map(category -> new Recipe(name, Collections.emptyList(), Collections.emptyList(), category))
-                .map(recipeRepository::save)
-                .orElseThrow(ResourceNotFoundException::new);
+        recipeService.add(name, category_id);
         return REDIRECT_CONTROLLER_LIST_VIEW;
     }
 
     @GetMapping("{id}/delete")
     public String delete(@PathVariable("id") final long id) {
-        recipeRepository.deleteById(id);
+        recipeService.delete(id);
         return REDIRECT_CONTROLLER_LIST_VIEW;
     }
 }

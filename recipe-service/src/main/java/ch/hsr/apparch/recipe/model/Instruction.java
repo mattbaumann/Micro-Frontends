@@ -20,13 +20,12 @@ public class Instruction {
     @Setter(AccessLevel.NONE)
     private long id;
 
-    @Setter
-    @Column(nullable = false)
+    @NonNull
     @NotBlank
     @NotNull
+    @Column(nullable = false)
     private String description;
 
-    @Setter
     @NonNull
     @NotNull
     @ManyToOne

@@ -13,13 +13,13 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping()
-public class Views {
+public class KitchenDeviceController {
 
     private static final String REDIRECT_CONTROLLER_LIST_VIEW = "redirect:/kitchenDevice/list";
     private final KitchenDeviceRepository kitchenDevices;
 
     @Autowired
-    public Views(final KitchenDeviceRepository kitchenDevices) {
+    public KitchenDeviceController(final KitchenDeviceRepository kitchenDevices) {
         this.kitchenDevices = kitchenDevices;
     }
 

@@ -20,14 +20,12 @@ public class Ingredient {
     private long id = 0;
 
     @NonNull
-    @Setter
     @NotNull
     @NotBlank
     @Column(nullable = false)
     private String name;
 
     @NonNull
-    @Setter
     @ManyToOne
     @NotNull
     @JoinColumn(referencedColumnName = "id", nullable = false)

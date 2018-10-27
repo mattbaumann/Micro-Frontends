@@ -15,6 +15,8 @@ import java.util.Collection;
 @Accessors(chain = true)
 public class Category {
 
+    public static final String NAME_PROPERTY = "name";
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Setter(AccessLevel.NONE)

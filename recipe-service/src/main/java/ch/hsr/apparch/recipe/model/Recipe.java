@@ -15,6 +15,7 @@ import java.util.Collection;
 @Accessors(chain = true)
 public class Recipe {
 
+    public static final String NAME_PROPERTY = "name";
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

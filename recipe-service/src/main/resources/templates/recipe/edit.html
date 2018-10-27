@@ -4,9 +4,8 @@
 </header>
 <body>
 <p th:replace="helpers/menu :: main-nav">
-<form method="post" action="/recipe/update" th:fragment="content">
+<form method="post" th:action="${posturl}" th:fragment="content">
     <!--/*@thymesVar id="model" type="ch.hsr.apparch.recipe.model.Recipe"*/-->
-    <input type="hidden" name="id" th:value="${model.getId()}">
     <div class="form-group">
         <label for="recipeName">Name</label>
         <input id="recipeName" name="name" type="text" required class="form-control"
@@ -15,7 +14,7 @@
     </div>
     <div class="form-group">
         <label for="recipeCategory">Category</label>
-        <select id="recipeCategory" name="function" type="text" required class="form-control">
+        <select id="recipeCategory" name="category" type="text" required class="form-control">
             <!--/*@thymesVar id="categories" type="java.util.List"*/-->
             <!--/*@thymesVar id="category" type="ch.hsr.apparch.recipe.model.Category"*/-->
             <option th:each="category : ${categories}" th:text="${category.getName()}" th:value="${category.getId()}">
