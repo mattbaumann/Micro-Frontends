@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/category")
+@RequestMapping("/controller/category")
 public class CategoryController {
 
-    private static final String REDIRECT_CONTROLLER_LIST_VIEW = "redirect:/category/list";
+    private static final String REDIRECT_CONTROLLER_LIST_VIEW = "redirect:/controller/category/list";
     private static final String SINGULAR_MODEL_KEY = "model";
     private static final String PLURAL_MODEL_KEY = "models";
     private static final String POSTURL_KEY = "posturl";
@@ -33,7 +33,7 @@ public class CategoryController {
     @GetMapping({"/edit", "/{id}/edit"})
     public String edit(@PathVariable(value = "id", required = false) final Optional<Long> id, final Model model) {
         model.addAttribute(SINGULAR_MODEL_KEY, categoryService.findOrNew(id));
-        model.addAttribute(POSTURL_KEY, id.map(i -> "/category/" + i + "/update").orElse("/category/add"));
+        model.addAttribute(POSTURL_KEY, id.map(i -> "/controller/category/" + i + "/update").orElse("/controller/category/add"));
         return "category/edit";
     }
 

@@ -8,7 +8,7 @@
 <h1 th:text="${listingTitle}"></h1>
 
 <div class="btn-group">
-    <a class="btn btn-secondary" href="/recipe/edit"><i class="fas fa-plus"></i> Add</a>
+    <a class="btn btn-secondary" href="/controller/recipe/edit"><i class="fas fa-plus"></i> Add</a>
 </div>
 
 <table class="table" th:fragment="content">
@@ -26,7 +26,8 @@
     <!--/*@thymesVar id="models" type="java.util.Collection"*/-->
     <tr th:each="model : ${models}">
         <td th:text="${model.getName()}">Name</td>
-        <td><a th:href="@{/recipe/list/category/{categoryId}/list/(categoryId=${model.getCategory().getId()})}"
+        <td>
+            <a th:href="@{/controller/recipe/list/category/{categoryId}/list/(categoryId=${model.getCategory().getId()})}"
                th:text="${model.getCategory().getName()}">Category</a></td>
         <td>
             <ul>
@@ -38,9 +39,9 @@
                 <li th:each="item : ${model.getInstructions()}" th:text="${item.getDescription()}"></li>
             </ol>
         </td>
-        <td><a class="btn btn-link" th:href="@{/recipe/{recipeId}/edit(recipeId=${model.getId()})}">
+        <td><a class="btn btn-link" th:href="@{/controller/recipe/{recipeId}/edit(recipeId=${model.getId()})}">
             <i class="fas fa-pen"></i></a></td>
-        <td><a class="btn btn-link" th:href="@{/recipe/{recipeId}/delete(recipeId=${model.getId()})}">
+        <td><a class="btn btn-link" th:href="@{/controller/recipe/{recipeId}/delete(recipeId=${model.getId()})}">
             <i class="fas fa-trash"></i></a></td>
     </tr>
     </tbody>

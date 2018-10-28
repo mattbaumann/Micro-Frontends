@@ -11,10 +11,10 @@ import java.text.MessageFormat;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/recipe")
+@RequestMapping("/controller/recipe")
 public class RecipeController {
 
-    private static final String REDIRECT_CONTROLLER_LIST_VIEW = "redirect:/recipe/list";
+    private static final String REDIRECT_CONTROLLER_LIST_VIEW = "redirect:/controller/recipe/list";
     private static final String SINGULAR_MODEL_KEY = "model";
     private static final String PLURAL_MODEL_KEY = "models";
     private static final String POSTURL_KEY = "posturl";
@@ -52,7 +52,7 @@ public class RecipeController {
     public String edit(@PathVariable(value = "id", required = false) final Optional<Long> id, final Model model) {
         model.addAttribute(SINGULAR_MODEL_KEY, recipeService.findRecipeOrNew(id));
         model.addAttribute(CATEGORIES_KEY, categoryService.listCategories());
-        model.addAttribute(POSTURL_KEY, id.map(i -> "/recipe/" + i + "/update").orElse("/recipe/add"));
+        model.addAttribute(POSTURL_KEY, id.map(i -> "/controller/recipe/" + i + "/update").orElse("/controller/recipe/add"));
         return "recipe/edit";
     }
 
