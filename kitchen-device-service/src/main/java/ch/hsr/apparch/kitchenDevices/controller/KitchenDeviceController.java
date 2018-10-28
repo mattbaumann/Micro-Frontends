@@ -12,10 +12,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @Controller
-@RequestMapping()
+@RequestMapping("/controller")
 public class KitchenDeviceController {
 
-    private static final String REDIRECT_CONTROLLER_LIST_VIEW = "redirect:/kitchenDevice/list";
+    private static final String BASE_PATH = "/controller/kitchenDevice/";
+    private static final String REDIRECT_CONTROLLER_LIST_VIEW = "redirect:" + BASE_PATH + "/list";
     private final KitchenDeviceRepository kitchenDevices;
 
     @Autowired
@@ -37,7 +38,7 @@ public class KitchenDeviceController {
     @GetMapping({"/kitchenDevice/edit", "/kitchenDevice/{id}/edit"})
     public String listView(@PathVariable(value = "id", required = false) final Optional<Long> id, final Model model) {
         model.addAttribute("model", id.flatMap(kitchenDevices::findById).orElse(new KitchenDevice()));
-        model.addAttribute("posturl", id.map(i -> "/kitchenDevice/" + i + "/update").orElse("/kitchenDevice/add"));
+        model.addAttribute("posturl", id.map(i -> BASE_PATH + '/' + i + "/update").orElse(BASE_PATH + "/add"));
         return "edit";
     }
 

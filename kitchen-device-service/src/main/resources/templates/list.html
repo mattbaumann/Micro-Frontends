@@ -6,7 +6,7 @@
 <p th:replace="helpers/menu :: main-nav">
 
 <div class="btn-group">
-    <a class="btn btn-secondary" href="/kitchenDevice/edit"><i class="fas fa-plus"></i> Add</a>
+    <a class="btn btn-secondary" href="/controller/kitchenDevice/edit"><i class="fas fa-plus"></i> Add</a>
 </div>
 
 <table class="table" th:fragment="content">
@@ -24,9 +24,9 @@
         <td th:text="${model.getFunction()}">Function</td>
         <td><i class="fas fa-check" th:if="${model.isAvailable()}"></i> <i class="fas fa-times"
                                                                            th:if="${!model.isAvailable()}"></i></td>
-        <td><a class="btn btn-link" th:href="@{/kitchenDevice/{kdid}/edit(kdid=${model.getId()})}"><i
+        <td><a class="btn btn-link" th:href="@{/controller/kitchenDevice/{kdid}/edit(kdid=${model.getId()})}"><i
                 class="fas fa-pen"></i></a></td>
-        <td><a class="btn btn-link" th:href="@{/kitchenDevice/{kdid}/delete(kdid=${model.getId()})}">
+        <td><a class="btn btn-link" th:href="@{/controller/kitchenDevice/{kdid}/delete(kdid=${model.getId()})}">
             <i class="fas fa-trash"></i></a></td>
     </tr>
     </tbody>

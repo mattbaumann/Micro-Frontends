@@ -15,7 +15,11 @@
             <AppenderRef ref="ConsoleAppender"/>
         </Logger>
 
-        <Root level="warn">
+        <Logger name="ch.hsr.apparch.kitchenDevices.Application" level="info">
+            <AppenderRef ref="ConsoleAppender"/>
+        </Logger>
+
+        <Root level="error">
             <AppenderRef ref="ConsoleAppender"/>
         </Root>
     </Loggers>

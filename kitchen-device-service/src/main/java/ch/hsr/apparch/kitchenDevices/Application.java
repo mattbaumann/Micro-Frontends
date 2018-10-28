@@ -2,6 +2,9 @@ package ch.hsr.apparch.kitchenDevices;
 
 import ch.hsr.apparch.kitchenDevices.model.KitchenDevice;
 import ch.hsr.apparch.kitchenDevices.repository.KitchenDeviceRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,6 +19,8 @@ import java.util.Random;
 public class Application {
 
     private static final Map<String, String> SAMPLE_MACHINE_NAMES_FUNCTIONS = new HashMap<>();
+
+    private static final Logger LOGGER = LogManager.getLogger();
 
     public static void main(String[] args) {
         SAMPLE_MACHINE_NAMES_FUNCTIONS.put("mixer", "Mixes liquids");
@@ -36,5 +41,10 @@ public class Application {
                 lists.save(new KitchenDevice(current_entry.getKey().toString(), current_entry.getValue().toString(), random.nextBoolean()));
             }
         };
+    }
+
+    @Bean
+    public CommandLineRunner showPort(@Value("${server.port}") int port) {
+        return args -> LOGGER.info("Spring Server 'Kitchen Devices' is running under port {}", port);
     }
 }
