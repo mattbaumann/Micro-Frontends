@@ -4,5 +4,5 @@
 </header>
 <body>
 <nav th:replace="helpers/menu :: main-nav"></nav>
-<div th:insert="http://localhost:9602/purchaseList/list :: table">...</div>
+<div th:insert="${targetSite} :: ${targetElement}">...</div>
 </body>
