@@ -1,0 +1,8 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<header th:replace="helpers/headers :: html-head('Add new kitchen device')">
+</header>
+<body>
+<nav th:replace="helpers/menu :: main-nav"></nav>
+<div th:insert="http://localhost:9602/purchaseList/list :: table">...</div>
+</body>

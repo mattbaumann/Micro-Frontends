@@ -3,6 +3,9 @@ server.port: 9601
 server.servlet.session.timeout: 600s
 
 spring:
+  thymeleaf:
+    cache: false
+
   h2.console:
     enabled: true
     path: /h2
