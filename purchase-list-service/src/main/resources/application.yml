@@ -1,5 +1,5 @@
 
-server.port: 9601
+server.port: 9602
 server.servlet.session.timeout: 600s
 
 spring:
