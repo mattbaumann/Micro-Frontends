@@ -20,7 +20,7 @@ public class Application {
 
     private static final Map<String, String> SAMPLE_MACHINE_NAMES_FUNCTIONS = new HashMap<>();
 
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger("Application");
 
     public static void main(String[] args) {
         SAMPLE_MACHINE_NAMES_FUNCTIONS.put("mixer", "Mixes liquids");
@@ -44,7 +44,7 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner showPort(@Value("${server.port}") int port) {
+    public CommandLineRunner logPortAtStartup(@Value("${server.port}") int port) {
         return args -> LOGGER.info("Spring Server 'Kitchen Devices' is running under port {}", port);
     }
 }

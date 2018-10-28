@@ -33,6 +33,6 @@ public class PurchaseList implements Serializable {
     private LocalDate date;
 
     @NonNull
-    @OneToMany(mappedBy = "list")
+    @OneToMany(mappedBy = "list", cascade = CascadeType.REMOVE)
     private Collection<PurchaseListItem> ingredients;
 }

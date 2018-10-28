@@ -10,19 +10,20 @@ import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Optional;
 
 @Controller
-public class Views {
+@RequestMapping("/controller")
+public class PurchaseListController {
 
-    private static final String REDIRECT_CONTROLLER_LIST_VIEW = "redirect:/purchaseList/list";
+    private static final String BASE_URL = "/controller/purchaseList";
+    private static final String PURCHASE_LIST_ITEM_REDIRECT_URL = "redirect:" + BASE_URL + "/{0}/list";
+    private static final String REDIRECT_CONTROLLER_LIST_VIEW = "redirect:" + BASE_URL + "/list";
     private static final String SINGULAR_MODEL_KEY = "model";
     private static final String PLURAL_MODEL_KEY = "models";
     private static final String POSTURL_KEY = "posturl";
@@ -32,7 +33,7 @@ public class Views {
     private final PurchaseListItemRepository purchaseListItems;
 
     @Autowired
-    public Views(PurchaseListRepository purchaseLists, PurchaseListItemRepository purchaseListItems) {
+    public PurchaseListController(PurchaseListRepository purchaseLists, PurchaseListItemRepository purchaseListItems) {
         this.purchaseLists = purchaseLists;
         this.purchaseListItems = purchaseListItems;
     }
@@ -55,10 +56,10 @@ public class Views {
                     id.orElseThrow(ResourceNotFoundException::new)
             ).orElseThrow(ResourceNotFoundException::new);
             model.addAttribute(SINGULAR_MODEL_KEY, toEdit);
-            model.addAttribute(POSTURL_KEY, "/purchaseList/" + toEdit.getId() + "/update");
+            model.addAttribute(POSTURL_KEY, BASE_URL + '/' + toEdit.getId() + "/update");
         } else {
             model.addAttribute(SINGULAR_MODEL_KEY, new PurchaseList());
-            model.addAttribute(POSTURL_KEY, "/purchaseList/add");
+            model.addAttribute(POSTURL_KEY, BASE_URL + "/add");
         }
         return "list/edit";
     }
@@ -67,7 +68,7 @@ public class Views {
     public String addPurchaseList(@RequestParam("name") String name,
                                   @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         purchaseLists.save(new PurchaseList(name, date, Collections.emptyList()));
-        return Views.REDIRECT_CONTROLLER_LIST_VIEW;
+        return PurchaseListController.REDIRECT_CONTROLLER_LIST_VIEW;
     }
 
     @PostMapping("/purchaseList/{id}/update")
@@ -78,13 +79,13 @@ public class Views {
                 .map(purchaseList -> purchaseList.setName(name).setDate(date))
                 .map(purchaseLists::save)
                 .orElseThrow(ResourceNotFoundException::new);
-        return Views.REDIRECT_CONTROLLER_LIST_VIEW;
+        return PurchaseListController.REDIRECT_CONTROLLER_LIST_VIEW;
     }
 
     @GetMapping("/purchaseList/{id}/delete")
     public String deletePurchaseList(@PathVariable("id") long id) {
         purchaseLists.deleteById(id);
-        return Views.REDIRECT_CONTROLLER_LIST_VIEW;
+        return PurchaseListController.REDIRECT_CONTROLLER_LIST_VIEW;
     }
 
     @GetMapping("/purchaseList/{plid}/list")
@@ -107,8 +108,8 @@ public class Views {
                                         @PathVariable(value = "id", required = false) Optional<Long> id,
                                         Model model) {
         model.addAttribute(POSTURL_KEY,
-                id.map(i -> "/purchaseList/" + plid + "/item/" + i + "/update")
-                        .orElse("/purchaseList/" + plid + "/item/add")
+                id.map(i -> BASE_URL + '/' + plid + "/item/" + i + "/update")
+                        .orElse(BASE_URL + '/' + plid + "/item/add")
         );
         model.addAttribute(SINGULAR_MODEL_KEY,
                 id.flatMap(purchaseListItems::findById)
@@ -124,7 +125,7 @@ public class Views {
                 .map(list -> new PurchaseListItem(name, list))
                 .map(purchaseListItems::save)
                 .orElseThrow(ResourceNotFoundException::new);
-        return "redirect:/purchaseList/" + plid + "/list";
+        return MessageFormat.format(PURCHASE_LIST_ITEM_REDIRECT_URL, plid);
     }
 
     @PostMapping("/purchaseList/{plid}/item/{id}/update")
@@ -135,13 +136,13 @@ public class Views {
                 .map(item -> item.setName(name))
                 .map(purchaseListItems::save)
                 .orElseThrow(ResourceNotFoundException::new);
-        return "redirect:/purchaseList/" + plid + "/list";
+        return MessageFormat.format(PURCHASE_LIST_ITEM_REDIRECT_URL, plid);
     }
 
     @GetMapping("/purchaseList/{plid}/item/{id}/remove")
     public String removePurchaseListItem(@PathVariable("plid") long plid,
                                          @PathVariable("id") long id) {
         purchaseListItems.deleteById(id);
-        return "redirect:/purchaseList/" + plid + "/list";
+        return MessageFormat.format(PURCHASE_LIST_ITEM_REDIRECT_URL, plid);
     }
 }
