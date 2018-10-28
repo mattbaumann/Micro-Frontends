@@ -23,6 +23,10 @@ import java.util.Optional;
 public class Views {
 
     private static final String REDIRECT_CONTROLLER_LIST_VIEW = "redirect:/purchaseList/list";
+    private static final String SINGULAR_MODEL_KEY = "model";
+    private static final String PLURAL_MODEL_KEY = "models";
+    private static final String POSTURL_KEY = "posturl";
+
     private final PurchaseListRepository purchaseLists;
 
     private final PurchaseListItemRepository purchaseListItems;
@@ -40,7 +44,7 @@ public class Views {
 
     @GetMapping("/purchaseList/list")
     public String listPurchaseLists(Model model) {
-        model.addAttribute("purchaseLists", purchaseLists.findAll());
+        model.addAttribute(PLURAL_MODEL_KEY, purchaseLists.findAll());
         return "list/list";
     }
 
@@ -50,11 +54,11 @@ public class Views {
             PurchaseList toEdit = purchaseLists.findById(
                     id.orElseThrow(ResourceNotFoundException::new)
             ).orElseThrow(ResourceNotFoundException::new);
-            model.addAttribute("purchaseList", toEdit);
-            model.addAttribute("posturl", "/purchaseList/" + toEdit.getId() + "/update");
+            model.addAttribute(SINGULAR_MODEL_KEY, toEdit);
+            model.addAttribute(POSTURL_KEY, "/purchaseList/" + toEdit.getId() + "/update");
         } else {
-            model.addAttribute("purchaseList", new PurchaseList());
-            model.addAttribute("posturl", "/purchaseList/add");
+            model.addAttribute(SINGULAR_MODEL_KEY, new PurchaseList());
+            model.addAttribute(POSTURL_KEY, "/purchaseList/add");
         }
         return "list/edit";
     }
@@ -86,7 +90,7 @@ public class Views {
     @GetMapping("/purchaseList/{plid}/list")
     public String listPurchaseListItems(@PathVariable("plid") long id,
                                         Model model) {
-        model.addAttribute("models",
+        model.addAttribute(PLURAL_MODEL_KEY,
                 purchaseLists.findById(id)
                         .map(PurchaseList::getIngredients)
                         .orElseThrow(ResourceNotFoundException::new)
@@ -102,11 +106,11 @@ public class Views {
     public String editPurchaseListItems(@PathVariable("plid") long plid,
                                         @PathVariable(value = "id", required = false) Optional<Long> id,
                                         Model model) {
-        model.addAttribute("posturl",
+        model.addAttribute(POSTURL_KEY,
                 id.map(i -> "/purchaseList/" + plid + "/item/" + i + "/update")
                         .orElse("/purchaseList/" + plid + "/item/add")
         );
-        model.addAttribute("model",
+        model.addAttribute(SINGULAR_MODEL_KEY,
                 id.flatMap(purchaseListItems::findById)
                         .orElseGet(PurchaseListItem::new)
         );

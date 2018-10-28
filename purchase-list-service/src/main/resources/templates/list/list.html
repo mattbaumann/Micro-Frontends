@@ -17,9 +17,9 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="purchaseList : ${kitchenDevices}">
+    <tr th:each="purchaseList : ${models}">
         <td><a class="btn btn-link" th:href="@{/purchaseList/{plid}/list(plid=${purchaseList.getId()})}"
-               th:text="${purchaseList.name}">Name</a></td>
+               th:text="${purchaseList.getName()}">Name</a></td>
         <td th:text="${purchaseList.getDate()}">Date</td>
         <td><a class="btn btn-link" th:href="@{/purchaseList/edit/{plid}(plid=${purchaseList.getId()})}"><i
                 class="fas fa-pen"></i></a></td>

@@ -8,6 +8,11 @@ public class BackendIntegrationController {
 
     @GetMapping("/purchaseList/list")
     public String listPurchaseLists() {
-        return "purchase-list/listPurchaseList";
+        return "purchase-list/list";
+    }
+
+    @GetMapping("purchaseList/edit")
+    public String editPurchaseList() {
+        return
     }
 }
