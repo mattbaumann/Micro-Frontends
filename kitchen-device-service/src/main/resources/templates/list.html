@@ -9,27 +9,52 @@
     <a class="btn btn-secondary" href="/controller/kitchenDevice/edit"><i class="fas fa-plus"></i> Add</a>
 </div>
 
-<table class="table" th:fragment="content">
-    <thead>
-    <tr>
-        <th>name</th>
-        <th>function</th>
-        <th>available</th>
-    </tr>
-    </thead>
-    <tbody>
-    <!--/*@thymesVar id="model" type="ch.hsr.apparch.kitchenDevices.model.KitchenDevice"*/-->
-    <tr th:each="model : ${models}">
-        <td th:text="${model.getName()}">Name</td>
-        <td th:text="${model.getFunction()}">Function</td>
-        <td><i class="fas fa-check" th:if="${model.isAvailable()}"></i> <i class="fas fa-times"
-                                                                           th:if="${!model.isAvailable()}"></i></td>
-        <td><a class="btn btn-link" th:href="@{/controller/kitchenDevice/{kdid}/edit(kdid=${model.getId()})}"><i
-                class="fas fa-pen"></i></a></td>
-        <td><a class="btn btn-link" th:href="@{/controller/kitchenDevice/{kdid}/delete(kdid=${model.getId()})}">
-            <i class="fas fa-trash"></i></a></td>
-    </tr>
-    </tbody>
-</table>
+<div id="fragment">
+    <table class="table" th:fragment="content">
+        <thead>
+        <tr>
+            <th>name</th>
+            <th>function</th>
+            <th>available</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!--/*@thymesVar id="model" type="ch.hsr.apparch.kitchenDevices.model.KitchenDevice"*/-->
+        <tr th:each="model : ${models}">
+            <td th:text="${model.getName()}">Name</td>
+            <td th:text="${model.getFunction()}">Function</td>
+            <td><i class="fas fa-check" th:if="${model.isAvailable()}"></i> <i class="fas fa-times"
+                                                                               th:if="${!model.isAvailable()}"></i></td>
+            <!--/*@thymesVar id="integrationPort" type="java.util.Optional"*/-->
+            <td>
+                <th:block th:if="${integrationPort.isPresent()}">
+                    <a class="btn btn-link"
+                       th:href="@{http://localhost:{iP}/SSFragmentCompositionController/kitchenDevice/{kdid}/edit(kdid=${model.getId()}, iP=${integrationPort.get()})}"><i
+                            class="fas fa-pen"></i></a>
+                </th:block>
+                <th:block th:if="!${integrationPort.isPresent()}">
+                    <a class="btn btn-link" th:href="@{/controller/kitchenDevice/{kdid}/edit(kdid=${model.getId()})}"><i
+                            class="fas fa-pen"></i></a>
+                </th:block>
+            </td>
+
+            <td>
+                <th:block th:if="${integrationPort.isPresent()}">
+                    <a class="btn btn-link"
+                       th:href="@{http://localhost:{iP}/SSFragmentCompositionController/kitchenDevice/{kdid}/delete(kdid=${model.getId()}, iP=${integrationPort.get()})}">
+                        <i class="fas fa-trash"></i></a>
+                </th:block>
+                <th:block th:if="!${integrationPort.isPresent()}">
+                    <a class="btn btn-link" th:href="@{/controller/kitchenDevice/{kdid}/delete(kdid=${model.getId()})}">
+                        <i class="fas fa-trash"></i></a>
+                </th:block>
+            </td>
+            <td><a class="btn btn-link" th:href="@{/controller/kitchenDevice/{kdid}/delete(kdid=${model.getId()})}">
+                <i class="fas fa-trash"></i></a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
 </body>
 </html>
