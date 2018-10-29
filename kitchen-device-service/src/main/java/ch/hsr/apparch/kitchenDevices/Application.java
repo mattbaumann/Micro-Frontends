@@ -45,6 +45,6 @@ public class Application {
 
     @Bean
     public CommandLineRunner logPortAtStartup(@Value("${server.port}") int port) {
-        return args -> LOGGER.info("Spring Server 'Kitchen Devices' is running under port {}", port);
+        return args -> LOGGER.info("Spring Server 'Recipe' is running under port {}", port);
     }
 }
