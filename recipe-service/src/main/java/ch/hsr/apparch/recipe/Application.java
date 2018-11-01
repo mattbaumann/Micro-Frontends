@@ -14,6 +14,12 @@ import org.springframework.context.annotation.Bean;
 
 import java.util.Collections;
 
+/**
+ * Main class of the application.
+ * <p>
+ * While it uses the startup process of <em>Spring Boot</em> it defines it's own additions to it. The Function {@link #insertSampleData(RecipeRepository, CategoryRepository)}
+ * inserts sample data into the database before running the application. And {@link #logPortAtStartup(int)} logs the port after loading the appliation container.
+ */
 @SpringBootApplication
 public class Application {
 

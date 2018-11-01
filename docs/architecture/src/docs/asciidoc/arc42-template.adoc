@@ -23,10 +23,10 @@ ifdef::basebackend-html[]
 endif::basebackend-html[]
 
 // configure EN settings for asciidoc
-include::src/docs/config.adoc[]
+include::config.adoc[]
 
 
-include::src/docs/about-arc42.adoc[]
+include::about-arc42.adoc[]
 
 // horizontal line
 ***
@@ -39,50 +39,50 @@ include::src/docs/about-arc42.adoc[]
 
 <<<<
 // 1. Introduction and Goals
-include::src/docs/01_introduction_and_goals.adoc[]
+include::sections/01_introduction_and_goals.adoc[]
 
 <<<<
 // 2. Architecture Constraints
-include::src/docs/02_architecture_constraints.adoc[]
+include::sections/02_architecture_constraints.adoc[]
 
 <<<<
 // 3. System Scope and Context
-include::src/docs/03_system_scope_and_context.adoc[]
+include::sections/03_system_scope_and_context.adoc[]
 
 <<<<
 // 4. Solution Strategy
-include::src/docs/04_solution_strategy.adoc[]
+include::sections/04_solution_strategy.adoc[]
 
 <<<<
 // 5. Building Block View
-include::src/docs/05_building_block_view.adoc[]
+include::sections/05_building_block_view.adoc[]
 
 <<<<
 // 6. Runtime View
-include::src/docs/06_runtime_view.adoc[]
+include::sections/06_runtime_view.adoc[]
 
 <<<<
 // 7. Deployment View
-include::src/docs/07_deployment_view.adoc[]
+include::sections/07_deployment_view.adoc[]
 
 <<<<
 // 8. Concepts
-include::src/docs/08_concepts.adoc[]
+include::sections/08_concepts.adoc[]
 
 <<<<
 // 9. Design Decisions
-include::src/docs/09_design_decisions.adoc[]
+include::sections/09_design_decisions.adoc[]
 
 <<<<
 // 10. Quality Scenarios
-include::src/docs/10_quality_scenarios.adoc[]
+include::sections/10_quality_scenarios.adoc[]
 
 <<<<
 // 11. Technical Risks
-include::src/docs/11_technical_risks.adoc[]
+include::sections/11_technical_risks.adoc[]
 
 <<<<
 // 12. Glossary
-include::src/docs/12_glossary.adoc[]
+include::sections/12_glossary.adoc[]
 
 

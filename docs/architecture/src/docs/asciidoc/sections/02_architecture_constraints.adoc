@@ -1,0 +1,6 @@
+[[section-architecture-constraints]]
+== Architecture Constraints
+
+The _backend_ is best implemented with Spring. Because the Spring server is thought in the lecture.
+
+The _frontend_ is implemented in Javascript.

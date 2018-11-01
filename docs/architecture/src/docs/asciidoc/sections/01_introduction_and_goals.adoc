@@ -23,13 +23,13 @@ The user wants to manage his collection of recipes.
 
 *User Stories*
 
-UC01-US01: AS A user I CAN view a menu, SO THAT I can cook that menu.
+UC01-US01: _As a_ user _I can_ view a menu, _so that I_ can cook that menu.
 
-UC01-US02: AS A user I CAN add a menu, SO THAT that menu is stored.
+UC01-US02: _As a_ user _I can_ add a menu, SO THAT that menu is stored.
 
-UC01-US03: AS A suer I CAN modify a menu, SO THAT that menu has new information.
+UC01-US03: _As a_ suer _I can_ modify a menu, SO THAT that menu has new information.
 
-UC01-US04: AS A user I CAN remove a menu, SO THAT I can slim my cookbook.
+UC01-US04: _As a_ user _I can_ remove a menu, _so that I_ can slim my cookbook.
 
 
 === Use Case UC02: CRUD Cooking Instructions ===
@@ -38,13 +38,13 @@ The user wants to add cooking instructions to a recipe. Instructions tell him wh
 
 *User Stories*
 
-UC02-US01: AS A user I CAN view cooking instructions, SO THAT I know how to cook.
+UC02-US01: _As a_ user _I can_ view cooking instructions, _so that I_ know how to cook.
 
-UC02-US02: AS A user I CAN add cooking instructions, SO THAT I know how to cook my menus.
+UC02-US02: _As a_ user _I can_ add cooking instructions, _so that I_ know how to cook my menus.
 
-UC02-US03: AS A user I CAN modify cooking instructions, SO THAT I can update the information in the instruction.
+UC02-US03: _As a_ user _I can_ modify cooking instructions, _so that I_ can update the information in the instruction.
 
-UC02-US04: AS A user I CAN remove cooking instructions, SO THAT I can remove unnecessary steps.
+UC02-US04: _As a_ user _I can_ remove cooking instructions, _so that I_ can remove unnecessary steps.
 
 === Use Case UC03: CRUD Ingredients ===
 
@@ -52,13 +52,13 @@ The user wants to add ingredients to a recipe. Ingredients tell the user what to
 
 *User Stories*
 
-UC03-US01: AS A user I CAN view ingredients, SO THAT I know what to prepare before cooking.
+UC03-US01: _As a_ user _I can_ view ingredients, _so that I_ know what to prepare before cooking.
 
-UC03-US02: AS A user I CAN add ingredients, SO THAT I remember next time what to prepare.
+UC03-US02: _As a_ user _I can_ add ingredients, _so that I_ remember next time what to prepare.
 
-UC03-US03: AS A user I CAN remove ingredients, SO THAT I can remove unnessary garnishes.
+UC03-US03: _As a_ user _I can_ remove ingredients, _so that I_ can remove unnessary garnishes.
 
-UC03-US04: AS A user I CAN modify ingredients, SO THAT I can save ingredients next time.
+UC03-US04: _As a_ user _I can_ modify ingredients, _so that I_ can save ingredients next time.
 
 === Use Case UC04: CRUD Recipe Category ===
 
@@ -66,17 +66,17 @@ The user wants to add recipes to categories. These categories represent cook boo
 
 *User Stories*
 
-UC04-US01: AS A user I CAN add a category, SO THAT the recipes are nicely grouped into sections.
+UC04-US01: _As a_ user _I can_ add a category, SO THAT the recipes are nicely grouped into sections.
 
-UC04-US02: AS A user I CAN modify the category title, SO THAT it describes better the recipes in the category.
+UC04-US02: _As a_ user _I can_ modify the category title, SO THAT it describes better the recipes in the category.
 
-UC04-US03: AS A user I CAN modify the category recipes, SO THAT I can add my cool new recipe.
+UC04-US03: _As a_ user _I can_ modify the category recipes, _so that I_ can add my cool new recipe.
 
-UC04-US04: AS A user I CAN modify the category recipes, SO THAT I can remove old, stinky recipes.
+UC04-US04: _As a_ user _I can_ modify the category recipes, _so that I_ can remove old, stinky recipes.
 
-UC04-US05 AS A user I CAN remove a category, SO THAT I can clean up my category list.
+UC04-US05 _As a_ user _I can_ remove a category, _so that I_ can clean up my category list.
 
-UC04-US06: AS A user I CAN view the category, SO THAT I see the category title and the recipes stored inside.
+UC04-US06: _As a_ user _I can_ view the category, _so that I_ see the category title and the recipes stored inside.
 
 === Use Case UC05: CRUD Kitchen Devices ===
 
@@ -84,15 +84,15 @@ The user wants to store a list of kitchen devices. These devices stand in his ki
 
 *User Stories*
 
-UC05-US01: AS A user I CAN view my kitchen devices, SO THAT I have an overview over my devices.
+UC05-US01: _As a_ user _I can_ view my kitchen devices, _so that I_ have an overview over my devices.
 
-UC05-US02: AS A user I CAN add a kitchen device, SO THAT I can inventory my devices.
+UC05-US02: _As a_ user _I can_ add a kitchen device, _so that I_ can inventory my devices.
 
-UC05-US03: AS A user I CAN modify the device, SO THAT I can set my device unfunctional.
+UC05-US03: _As a_ user _I can_ modify the device, _so that I_ can set my device unfunctional.
 
-UC05-US04: AS A user I CAN modify the device, SO THAT I can correct my spelling errors.
+UC05-US04: _As a_ user _I can_ modify the device, _so that I_ can correct my spelling errors.
 
-UC05-US05: AS A user I CAN remove a device, SO THAT I can clean up unfunctional devices.
+UC05-US05: _As a_ user _I can_ remove a device, _so that I_ can clean up unfunctional devices.
 
 === Use Case UC06: CRUD Purchase Lists ===
 
@@ -100,13 +100,13 @@ The user wants to modify his purchase lists. These lists are used by the user in
 
 *User Stories*
 
-UC06-US01: AS A user I CAN view purchase lists, SO THAT I can select the actual list.
+UC06-US01: _As a_ user _I can_ view purchase lists, _so that I_ can select the actual list.
 
-UC06-US03: AS A user I CAN add a purchase list, SO THAT I can send ingredients to it afterwards.
+UC06-US03: _As a_ user _I can_ add a purchase list, _so that I_ can send ingredients to it afterwards.
 
-UC06-US04: AS A user I CAN remove a purchase list, SO THAT I can remove unused lists.
+UC06-US04: _As a_ user _I can_ remove a purchase list, _so that I_ can remove unused lists.
 
-UC06-US05: AS A user I CAN update a purchase list, SO THAT I can modify it's name.
+UC06-US05: _As a_ user _I can_ update a purchase list, _so that I_ can modify it's name.
 
 
 === Use Case UC07: CRUD Purchase List Items ===
@@ -115,11 +115,11 @@ The user wants to modify the contents of his purchase lists.
 
 *User Stories*
 
-UC07-US01: AS A user I CAN view the items of a purchase list, SO THAT I know what to buy.
+UC07-US01: _As a_ user _I can_ view the items of a purchase list, _so that I_ know what to buy.
 
-UC07-US02: AS A user I CAN add a purchase list item, SO THAT I can buy whatever I want.
+UC07-US02: _As a_ user _I can_ add a purchase list item, _so that I_ can buy whatever I want.
 
-UC07-US03: AS A user I CAN remove a purchase list item, SO THAT I can save money.
+UC07-US03: _As a_ user _I can_ remove a purchase list item, _so that I_ can save money.
 
 === Optional Use Case UC08: Print recipe ===
 
@@ -127,7 +127,7 @@ The user wants to print the entire recipe with the title, ingredients and instru
 
 *User Stories*
 
-UC08-US01: AS A user I CAN print the recipe, SO THAT I can cook after it.
+UC08-US01: _As a_ user _I can_ print the recipe, _so that I_ can cook after it.
 
 === Optional Use Case UC09: Print Purchase List ===
 
@@ -135,7 +135,7 @@ The user wants to print the entire purchase list with all items.
 
 *User Stories*
 
-UC08-US01: AS A user I CAN print the purchase list, SO THAT I can buy the items.
+UC08-US01: _As a_ user _I can_ print the purchase list, _so that I_ can buy the items.
 
 === Optional Use Case UC10: Attach a Cooking Device to Cooking Instructions ===
 
@@ -143,20 +143,20 @@ The user wants to see his device in the cooking instructions so that he immediat
 
 *User Stories*
 
-UC10-US01: AS A user I CAN see the device in the cooking instructions, SO THAT I know faster what to do.
+UC10-US01: _As a_ user _I can_ see the device in the cooking instructions, _so that I_ know faster what to do.
 
-UC10-US02: AS A user I CAN set the device in the cooking instructions editor pane, SO THAT I know next time what device I should use.
+UC10-US02: _As a_ user _I can_ set the device in the cooking instructions editor pane, _so that I_ know next time what device I should use.
 
 === Optional Use Case UC11: Add Menu Ingredients to Purchase List ===
 
 The user wants to add menu ingredients to purchase list.
 
 *User Stories*
-UC11-US01: AS A user I CAN select the purchase list in the recipe view, SO THAT all ingredients are sent to the purchase list.
+UC11-US01: _As a_ user _I can_ select the purchase list in the recipe view, SO THAT all ingredients are sent to the purchase list.
 
 === Optional Use Case UC12: Mark Purchase Item as Bought ===
 
 The user wants to use the application in the store, therefore he wants to mark items as purchased.
 
 *User Stories*
-UC12-US01: AS A user I CAN mark bought purchase items as done, SO THAT I know what to buy next.
+UC12-US01: _As a_ user _I can_ mark bought purchase items as done, _so that I_ know what to buy next.
