@@ -1,7 +1,7 @@
 package ch.hsr.apparch.recipe.service;
 
 import ch.hsr.apparch.recipe.exceptions.DuplicateResourceException;
-import ch.hsr.apparch.recipe.exceptions.NotEmptyCategoryException;
+import ch.hsr.apparch.recipe.exceptions.InternalPreconditionFailedException;
 import ch.hsr.apparch.recipe.exceptions.ResourceNotFoundException;
 import ch.hsr.apparch.recipe.model.Category;
 import ch.hsr.apparch.recipe.repository.CategoryRepository;
@@ -38,7 +38,7 @@ public class CategoryService {
     @Transactional
     public Category update(final long id, String description) {
         categoryRepository.findByName(description).ifPresent(category -> {
-            throw NotEmptyCategoryException.withCategoryNotEmptyMessage(category);
+            throw InternalPreconditionFailedException.withCategoryNotEmptyMessage(category);
         });
         return categoryRepository.findById(id)
                 .map(category -> category.setName(description))
@@ -59,7 +59,7 @@ public class CategoryService {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(ResourceNotFoundException.withRecordNotFoundMessage(Category.class, id));
         if (!recipeRepository.findAllByCategory(category).isEmpty()) {
-            throw NotEmptyCategoryException.withCategoryNotEmptyMessage(category);
+            throw InternalPreconditionFailedException.withCategoryNotEmptyMessage(category);
         }
         categoryRepository.delete(category);
     }
