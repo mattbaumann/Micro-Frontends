@@ -1,12 +1,12 @@
 package ch.hsr.apparch.purchaselist.controller;
 
 
+import ch.hsr.apparch.purchaselist.exceptions.ResourceNotFoundException;
 import ch.hsr.apparch.purchaselist.model.PurchaseList;
 import ch.hsr.apparch.purchaselist.model.PurchaseListItem;
 import ch.hsr.apparch.purchaselist.repository.PurchaseListItemRepository;
 import ch.hsr.apparch.purchaselist.repository.PurchaseListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -53,8 +53,8 @@ public class PurchaseListController {
     public String listView(@PathVariable(value = "id", required = false) Optional<Long> id, Model model) {
         if (id.isPresent()) {
             PurchaseList toEdit = purchaseLists.findById(
-                    id.orElseThrow(ResourceNotFoundException::new)
-            ).orElseThrow(ResourceNotFoundException::new);
+                    id.orElseThrow(ResourceNotFoundException.withRecordNotFoundMessage(PurchaseList.class, id.get()))
+            ).orElseThrow(ResourceNotFoundException.withRecordNotFoundMessage(PurchaseList.class, id.get()));
             model.addAttribute(SINGULAR_MODEL_KEY, toEdit);
             model.addAttribute(POSTURL_KEY, BASE_URL + '/' + toEdit.getId() + "/update");
         } else {
@@ -78,7 +78,7 @@ public class PurchaseListController {
         purchaseLists.findById(id)
                 .map(purchaseList -> purchaseList.setName(name).setDate(date))
                 .map(purchaseLists::save)
-                .orElseThrow(ResourceNotFoundException::new);
+                .orElseThrow(ResourceNotFoundException.withRecordNotFoundMessage(PurchaseList.class, id));
         return PurchaseListController.REDIRECT_CONTROLLER_LIST_VIEW;
     }
 
@@ -94,7 +94,7 @@ public class PurchaseListController {
         model.addAttribute(PLURAL_MODEL_KEY,
                 purchaseLists.findById(id)
                         .map(PurchaseList::getIngredients)
-                        .orElseThrow(ResourceNotFoundException::new)
+                        .orElseThrow(ResourceNotFoundException.withRecordNotFoundMessage(PurchaseList.class, id))
         );
         model.addAttribute("plid", id);
         return "items/list";
@@ -124,7 +124,7 @@ public class PurchaseListController {
         purchaseLists.findById(plid)
                 .map(list -> new PurchaseListItem(name, list))
                 .map(purchaseListItems::save)
-                .orElseThrow(ResourceNotFoundException::new);
+                .orElseThrow(ResourceNotFoundException.withRecordNotFoundMessage(PurchaseList.class, plid));
         return MessageFormat.format(PURCHASE_LIST_ITEM_REDIRECT_URL, plid);
     }
 
@@ -135,7 +135,7 @@ public class PurchaseListController {
         purchaseListItems.findById(id)
                 .map(item -> item.setName(name))
                 .map(purchaseListItems::save)
-                .orElseThrow(ResourceNotFoundException::new);
+                .orElseThrow(ResourceNotFoundException.withRecordNotFoundMessage(PurchaseListItem.class, id));
         return MessageFormat.format(PURCHASE_LIST_ITEM_REDIRECT_URL, plid);
     }
 

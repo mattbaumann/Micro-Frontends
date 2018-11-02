@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<!--/*@thymesVar id="status" type="ch.hsr.apparch.recipe.exceptions.ErrorHttpStatus"*/-->
+<header th:replace="helpers/headers :: html-head('404 error occured')"></header>
+<body>
+<nav th:replace="helpers/menu :: main-nav"></nav>
+<header>
+    <h1>404
+        <small>Not found</small>
+    </h1>
+</header>
+<main>
+    <section>
+        <p class="lead">
+            To recover the error, go to the <a href="/controller/home">home page</a>.
+        </p>
+        <p>
+            The path was not found on the server.
+        </p>
+    </section>
+</main>
+<footer>
+    <p>
+        The execution of your current transaction was canceled. Data on the database was not changed.
+    </p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<!--/*@thymesVar id="status" type="org.springframework.http.HttpStatus"*/-->
+<header th:replace="helpers/headers :: html-head(${status.getStatusValue()} + ' error occured')"></header>
+<body>
+<nav th:replace="helpers/menu :: main-nav"></nav>
+<header>
+    <h1 th:utext="${status.value()} + '<small> ' + ${status.name()} + '</small>'"></h1>
+</header>
+<main>
+    <section>
+        <p class="lead">
+            To recover the error, go to the <a href="/controller/home">home page</a>.
+        </p>
+        <p>
+            <!--/*@thymesVar id="type" type="java.lang.String"*/-->
+            An error of the type <em th:text="${type}"></em> was thrown. With the following message
+        </p>
+        <!--/*@thymesVar id="message" type="java.lang.String"*/-->
+        <p th:text="${message}">
+        </p>
+    </section>
+    <button class="btn btn-primary" data-toggle="collapse" type="button" data-target="#stacktraceControl"
+            aria-expanded="false" aria-controls="stacktraceControl">Show stack trace
+    </button>
+    <section class="collapse" id="stacktraceControl">
+        <!--/*@thymesVar id="stacktrace" type="java.lang.StackTraceElement[]"*/-->
+        <table>
+            <thead>
+            <tr>
+                <th>Class</th>
+                <th>Line Nr.</th>
+                <th>Method</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${stacktrace}">
+                <td th:text="${item.getClassName()}"></td>
+                <td th:text="${item.getLineNumber()}"></td>
+                <td th:text="${item.getMethodName()}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+<footer>
+    <p>
+        The execution of your current transaction was canceled. Data on the database was not changed.
+    </p>
+</footer>
+</body>
+</html>
