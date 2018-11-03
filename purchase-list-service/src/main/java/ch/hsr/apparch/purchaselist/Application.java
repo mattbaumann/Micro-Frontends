@@ -51,7 +51,7 @@ public class Application {
 
                 for (int j = 0; j < 3; j++) {
                     String chosen_item_description = SAMPLE_ITEMS[random.nextInt(SAMPLE_ITEMS.length)];
-                    list.getIngredients().add(listItems.save(new PurchaseListItem(chosen_item_description, list)));
+                    list.getItems().add(listItems.save(new PurchaseListItem(chosen_item_description, list)));
                 }
             }
         };

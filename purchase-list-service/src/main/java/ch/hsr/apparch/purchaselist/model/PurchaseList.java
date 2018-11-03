@@ -34,5 +34,5 @@ public class PurchaseList implements Serializable {
 
     @NonNull
     @OneToMany(mappedBy = "list", cascade = CascadeType.REMOVE)
-    private Collection<PurchaseListItem> ingredients;
+    private Collection<PurchaseListItem> items;
 }

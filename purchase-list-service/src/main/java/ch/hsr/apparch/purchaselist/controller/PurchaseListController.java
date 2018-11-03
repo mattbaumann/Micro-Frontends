@@ -50,7 +50,7 @@ public class PurchaseListController {
     }
 
     @GetMapping({"/purchaseList/edit", "/purchaseList/edit/{id}"})
-    public String listView(@PathVariable(value = "id", required = false) Optional<Long> id, Model model) {
+    public String editPurchaseList(@PathVariable(value = "id", required = false) Optional<Long> id, Model model) {
         if (id.isPresent()) {
             PurchaseList toEdit = purchaseLists.findById(
                     id.orElseThrow(ResourceNotFoundException.withRecordNotFoundMessage(PurchaseList.class, id.get()))
@@ -93,7 +93,7 @@ public class PurchaseListController {
                                         Model model) {
         model.addAttribute(PLURAL_MODEL_KEY,
                 purchaseLists.findById(id)
-                        .map(PurchaseList::getIngredients)
+                        .map(PurchaseList::getItems)
                         .orElseThrow(ResourceNotFoundException.withRecordNotFoundMessage(PurchaseList.class, id))
         );
         model.addAttribute("plid", id);
