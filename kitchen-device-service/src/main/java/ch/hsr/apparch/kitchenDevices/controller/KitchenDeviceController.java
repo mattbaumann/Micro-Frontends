@@ -30,13 +30,13 @@ public class KitchenDeviceController {
     }
 
     @GetMapping("/kitchenDevice/list")
-    public String test(final Model model) {
+    public String listKitchenDevice(final Model model) {
         model.addAttribute("models", kitchenDevices.findAll());
         return "list";
     }
 
     @GetMapping({"/kitchenDevice/edit", "/kitchenDevice/{id}/edit"})
-    public String listView(@PathVariable(value = "id", required = false) final Optional<Long> id, final Model model) {
+    public String editKitchenDevice(@PathVariable(value = "id", required = false) final Optional<Long> id, final Model model) {
         model.addAttribute("model", id.flatMap(kitchenDevices::findById).orElse(new KitchenDevice()));
         model.addAttribute("posturl", id.map(i -> BASE_PATH + '/' + i + "/update").orElse(BASE_PATH + "/add"));
         return "edit";
@@ -51,7 +51,7 @@ public class KitchenDeviceController {
     }
 
     @PostMapping("/kitchenDevice/{id}/update")
-    public String updatePurchaseList(@PathVariable(value = "id") final long id,
+    public String updateKitchenDevice(@PathVariable(value = "id") final long id,
                                      @RequestParam("name") final String name,
                                      @RequestParam("function") final String function,
                                      @RequestParam(value = "available", required = false) final boolean available) {
