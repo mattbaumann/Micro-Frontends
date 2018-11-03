@@ -18,3 +18,8 @@ spring:
     show-sql: false
     hibernate:
       ddl-auto: create
+
+  data:
+    rest:
+      base-path: "/api"
+      defaultPageSize: 5
