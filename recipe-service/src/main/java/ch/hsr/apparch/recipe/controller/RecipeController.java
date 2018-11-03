@@ -2,7 +2,7 @@ package ch.hsr.apparch.recipe.controller;
 
 import ch.hsr.apparch.recipe.service.CategoryService;
 import ch.hsr.apparch.recipe.service.RecipeService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/controller/recipe")
+@RequiredArgsConstructor
 public class RecipeController {
 
     private static final String REDIRECT_CONTROLLER_LIST_VIEW = "redirect:/controller/recipe/list";
@@ -25,12 +26,6 @@ public class RecipeController {
 
     private final RecipeService recipeService;
     private final CategoryService categoryService;
-
-    @Autowired
-    public RecipeController(final RecipeService recipeService, final CategoryService categoryService) {
-        this.recipeService = recipeService;
-        this.categoryService = categoryService;
-    }
 
     @GetMapping("/list")
     public String list(final Model model) {
@@ -65,7 +60,7 @@ public class RecipeController {
     }
 
     @PostMapping("/add")
-    public String update(@RequestParam("name") final String name,
+    public String add(@RequestParam("name") final String name,
                          @RequestParam("category") final long category_id) {
         recipeService.add(name, category_id);
         return REDIRECT_CONTROLLER_LIST_VIEW;
@@ -76,4 +71,6 @@ public class RecipeController {
         recipeService.delete(id);
         return REDIRECT_CONTROLLER_LIST_VIEW;
     }
+
+
 }

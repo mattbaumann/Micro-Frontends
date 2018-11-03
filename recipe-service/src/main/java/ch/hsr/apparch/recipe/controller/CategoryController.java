@@ -1,7 +1,7 @@
 package ch.hsr.apparch.recipe.controller;
 
 import ch.hsr.apparch.recipe.service.CategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/controller/category")
+@RequiredArgsConstructor
 public class CategoryController {
 
     private static final String REDIRECT_CONTROLLER_LIST_VIEW = "redirect:/controller/category/list";
@@ -18,11 +19,6 @@ public class CategoryController {
     private static final String POSTURL_KEY = "posturl";
 
     private final CategoryService categoryService;
-
-    @Autowired
-    public CategoryController(CategoryService categoryService) {
-        this.categoryService = categoryService;
-    }
 
     @GetMapping("/list")
     public String list(final Model model) {

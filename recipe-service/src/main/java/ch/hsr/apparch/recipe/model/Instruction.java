@@ -7,13 +7,14 @@ import lombok.experimental.Accessors;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 @Data
 @Entity
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Accessors(chain = true)
-public class Instruction {
+public class Instruction implements Comparable<Instruction> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,6 +32,16 @@ public class Instruction {
     @ManyToOne
     private Recipe recipe;
 
+    @NonNull
+    @Positive
+    @Column(nullable = false)
+    private long position;
+
     @Setter
     private int device = 0;
+
+    @Override
+    public int compareTo(Instruction o) {
+        return (int) (this.position - o.position);
+    }
 }
