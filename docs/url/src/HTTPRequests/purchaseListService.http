@@ -1,0 +1,109 @@
+
+# Gets list of links in the repository
+#
+# This URL has to be used in the HAL Browser to start
+# browsing the API.
+
+GET http://localhost:9602/api/
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+
+###
+
+# Ensure availability of purchaseList
+
+HEAD http://localhost:9602/api/purchaseLists
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+
+###
+
+# Get first page of paged repository
+
+GET http://localhost:9602/api/purchaseLists
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+
+###
+
+# The items in purchaseList are paged by default.
+#
+# In order to traverse items, all pages have to be called
+# with the _page_ parameter, the server tells the count of 
+# pages under the _pages_ JSON key.
+
+GET http://localhost:9602/api/purchaseLists?page=0
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+
+###
+
+# Add item to purchaseLists repository (collection)
+
+POST http://localhost:9602/api/purchaseLists
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+
+{"name": "Test-Name", "date": "2100-09-18"}
+
+
+###
+
+# Ensure availability of URL
+
+HEAD http://localhost:9602/api/purchaseLists/1
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+
+###
+
+# Read database record
+
+GET http://localhost:9602/api/purchaseLists/1
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+
+###
+
+# Update database record
+
+PUT http://localhost:9602/api/purchaseLists/1
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+
+{"name": "Test-Name", "date": "2100-09-18"}
+
+###
+
+# Patches the database record
+#
+# Instead of full update, manipulates part of the
+# database record
+
+PATCH http://localhost:9602/api/purchaseLists/1
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+
+{"name": "Test"}
+
+###
+
+# Read purchaseList relationship database record
+#
+# Loads all items registered to the purchase list
+
+GET http://localhost:9602/api/purchaseLists/1/items
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+
+###

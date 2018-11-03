@@ -1,0 +1,720 @@
+= URL Endpoint defintions
+Matt Baumann <matthias.baumann@hsr,ch>
+v1.0, November 3, 2018: DRAFT
+:Author: Matt Baumann
+:Email: matthias.baumann@hsr.ch
+:Date: 3. November 2018
+:Revision: Version 1.0
+:source-highlighter: prettify
+:prewrap!:
+
+Kitchen Device Service
+~~~~~~~~~~~~~~~~~~~~~~
+
+Spring Data REST API
+^^^^^^^^^^^^^^^^^^^^
+
+Exposes a REST interface directly to the backend repository. That allows immediate access to the database and
+is very handy for validating and correcting data.
+
+.GET /api/
+[source,http,options="nowrap"]
+----
+GET http://localhost:9603/api
+Accept: application/json
+Cache-Control: no-cache
+----
+
+.Result GET /api/
+[source,json,options="nowrap"]
+----
+{
+  "_links": {
+    "kitchenDevices": {
+      "href": "http://localhost:9603/api/kitchenDevices{?page,size,sort}",
+      "templated": true
+    },
+    "profile": {
+      "href": "http://localhost:9603/api/profile"
+    }
+  }
+}
+----
+
+.GET /api/kitchenDevices
+[source,http,options="nowrap"]
+----
+GET http://localhost:9603/api/kitchenDevices
+Accept: application/json
+Cache-Control: no-cache
+----
+
+.Result GET /api/kitchenDevices
+[source,json]
+----
+{
+  "_embedded": {
+    "kitchenDevices": [
+      {
+        "name": "oven",
+        "function": "Bakes bread",
+        "available": true,
+        "_links": {
+          "self": {
+            "href": "http://localhost:9603/kitchenDevices/1"
+          },
+          "kitchenDevice": {
+            "href": "http://localhost:9603/kitchenDevices/1"
+          }
+        }
+      }
+    ]
+  },
+  "_links": {
+    "self": {
+      "href": "http://localhost:9603/kitchenDevices{?page,size,sort}",
+      "templated": true
+    },
+    "profile": {
+      "href": "http://localhost:9603/profile/kitchenDevices"
+    }
+  },
+  "page": {
+    "size": 20,
+    "totalElements": 5,
+    "totalPages": 1,
+    "number": 0
+  }
+}
+----
+
+.PUT /api/kitchenDevices
+[source,http,options="nowrap"]
+----
+PUT http://localhost:9603/api/kitchenDevices/6
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+
+{"available": true, "function": "Cooking", "name": "grill"}
+----
+
+.Response PUT /api/kitchenDevices
+[source,http,options="nowrap"]
+----
+HTTP/1.1 201
+Location: http://localhost:9603/api/kitchenDevices/7
+Content-Type: application/json;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Sat, 03 Nov 2018 01:27:23 GMT
+
+{
+  "name": "grill",
+  "function": "Cooking",
+  "available": true,
+  "_links": {
+    "self": {
+      "href": "http://localhost:9603/api/kitchenDevices/7"
+    },
+    "kitchenDevice": {
+      "href": "http://localhost:9603/api/kitchenDevices/7"
+    }
+  }
+}
+----
+
+.DELETE /kitchenDevices/7
+[source,http,options="nowrap"]
+----
+DELETE http://localhost:9603/api/kitchenDevices/7
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+----
+
+.Response DELETE /kitchenDevices/7
+[source,http,options="nowrap"]
+----
+HTTP/1.1 204
+Date: Sat, 03 Nov 2018 01:32:26 GMT
+----
+
+
+Spring static assets server
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Static assets used for the Spring WebMVC Controller page.
+
+.Paths for static server
+[%header]
+|===
+| Path | File | Description
+
+| `/` | `static/index.html` | The file `index.html` will be served under `/` (root path). This HTML file contains a redirect to the home-page of the
+                              Spring WebMVC controller's home page under /controller/home.
+| `/static/js` | `/static/static/js` | Bootstrap JS and it's dependecies
+| `/static/css` | `/static/static/css` | Bootstrap CSS and fontawesome
+| `/static/webfonts` | `/static/static/webfonts` | Webfonts for fontawesome
+|===
+
+
+Thymeleaf backend rendered templates server
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Thymeleaf renders the following pages for the spring framework.
+
+.Paths for thymeleaf backend rendered templates server
+[%header]
+|===
+| Path | File | Description
+
+| `/error/404` | /error/404.html` | Rendered when the path was not found
+|===
+
+Spring MVC Controllers
+^^^^^^^^^^^^^^^^^^^^^^
+
+Expose endpoints for the browser to create backend rendered site for administration and fragments to include.
+
+While the `ErrorPageController` handles all errors, that are thrown in the `KitchenDeviceController`.
+
+.Controllers
+[%header]
+|===
+| Name | Scope | Function
+
+| `ErrorPageController` | Cross-Cutting | Serves the error page for all exceptions defined in `exceptions`
+| `KitchenDeviceController` | REST kitchen device | Serves CRUD HTML Administration page
+|===
+
+
+.KitchenDeviceController
+[%header, cols="m,m,e,a"]
+|===
+| Method | Path | Function | Description
+| GET | /controller/home | home() | Service homepage
+| GET | /controller/kitchenDevice/list | listKitchenDevice() | List all kitchen devices
+| GET | /controller/kitchenDevice/edit(/{id}) | editKitchenDevice(id) | Show kitchen device attributes edit page
+| POST | /controller/kitchenDevice/add | addKitchenDevice(name, function, available) | Add new kitchen device
+| POST | /controller/kitchenDevice/{id}/update | update(name, function, available) | Update kitchen device with id
+| GET | /controller/kitchenDevice/{id}/delete | deleteKitchenDevice(id) | Removes the kitchen device
+|===
+
+
+Purchase List Service
+~~~~~~~~~~~~~~~~~~~~~~
+
+A service that manages purchase lists for next grocery shopping. Idea behind the service is to have a service with an
+one to many object relationship entanglement.
+
+The purchase list service is available under: http://localhost:9602/
+
+The following explanations assume the base url above.
+
+Spring Data REST API
+^^^^^^^^^^^^^^^^^^^^
+Exposes a REST interface directly to the backend repository. That allows immediate access to the database and
+is very handy for validating and correcting data.
+
+.GET /api
+[source,json,options="nowrap"]
+----
+GET http://localhost:9602/api/
+
+HTTP/1.1 200
+Content-Type: application/json;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Sat, 03 Nov 2018 10:06:52 GMT
+
+{
+  "_links": {
+    "purchaseLists": {
+      "href": "http://localhost:9602/api/purchaseLists{?page,size,sort}",
+      "templated": true
+    },
+    "purchaseListItems": {
+      "href": "http://localhost:9602/api/purchaseListItems{?page,size,sort}",
+      "templated": true
+    },
+    "profile": {
+      "href": "http://localhost:9602/api/profile"
+    }
+  }
+}
+
+----
+
+.HEAD /api/purchaseLists
+[source,http,options="nowrap"]
+----
+HEAD http://localhost:9602/api/purchaseLists
+
+HTTP/1.1 204
+Link: <http://localhost:9602/api/purchaseLists>;rel="self",<http://localhost:9602/api/profile/purchaseLists>;rel="profile"
+Date: Sat, 03 Nov 2018 10:18:49 GMT
+----
+
+Asks the server whether the promised resource in a link is available.
+
+
+.POST /api/purchaseList
+[source,http,options="nowrap"]
+----
+POST http://localhost:9602/api/purchaseLists
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+
+{"name": "Test-Name", "date": "2100-09-18"}
+
+HTTP/1.1 201
+Location: http://localhost:9602/api/purchaseLists/13
+Content-Type: application/json;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Sat, 03 Nov 2018 10:29:18 GMT
+
+{
+  "name": "Test-Name",
+  "date": "2100-09-18",
+  "_links": {
+    "self": {
+      "href": "http://localhost:9602/api/purchaseLists/13"
+    },
+    "purchaseList": {
+      "href": "http://localhost:9602/api/purchaseLists/13"
+    },
+    "ingredients": {
+      "href": "http://localhost:9602/api/purchaseLists/13/ingredients"
+    }
+  }
+}
+
+Response code: 201; Time: 165ms; Content length: 343 bytes
+----
+
+.GET /api/purchaseLists
+[source,http]
+----
+GET http://localhost:9602/api/purchaseLists
+
+HTTP/1.1 200
+Content-Type: application/json;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Sat, 03 Nov 2018 10:36:32 GMT
+
+{
+  "_embedded": {
+    "purchaseLists": [
+      {
+        "name": "2100-10-18",
+        "date": "2100-10-18",
+        "_links": {
+          "self": {
+            "href": "http://localhost:9602/api/purchaseLists/1"
+          },
+          "purchaseList": {
+            "href": "http://localhost:9602/api/purchaseLists/1"
+          },
+          "ingredients": {
+            "href": "http://localhost:9602/api/purchaseLists/1/ingredients"
+          }
+        }
+      }
+    ]
+  },
+  "page": {
+    "size": 5,
+    "totalElements": 4,
+    "totalPages": 1,
+    "number": 0
+  }
+}
+
+Response code: 200; Time: 112ms; Content length: 1977 bytes
+----
+
+Retrieve all purchase list elements from the repository. This API will introduce paging from 5 elements. Paging has to
+be paged with the paging argument:
+
+.GET http://localhost:9602/api/purchaseLists?page=0
+[source,http]
+----
+GET http://localhost:9602/api/purchaseLists?page=0
+
+HTTP/1.1 200
+Content-Type: application/json;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Sat, 03 Nov 2018 10:36:32 GMT
+
+{
+  "_embedded": {
+    "purchaseLists": [
+      {
+        "name": "2100-10-18",
+        "date": "2100-10-18",
+        "_links": {
+          "self": {
+            "href": "http://localhost:9602/api/purchaseLists/1"
+          },
+          "purchaseList": {
+            "href": "http://localhost:9602/api/purchaseLists/1"
+          },
+          "ingredients": {
+            "href": "http://localhost:9602/api/purchaseLists/1/ingredients"
+          }
+        }
+      }
+    ]
+  },
+  "page": {
+    "size": 5,
+    "totalElements": 4,
+    "totalPages": 1,
+    "number": 0
+  }
+}
+
+----
+
+The _page_ attribute tells the client how many elements are delivered by a single page and the remaining number of
+pages.
+
+A single item is manipulated by browsing the `_self_` link. The next excerpts will document the URL capabilities.
+
+.HEAD /api/purchaseLists/1
+[source,http]
+----
+HTTP/1.1 204 
+Link: <http://localhost:9602/api/purchaseLists/1>;rel="self",<http://localhost:9602/api/purchaseLists/1>;rel="purchaseList"
+Date: Sat, 03 Nov 2018 11:18:00 GMT
+----
+
+The server confirms with the '204' response the link availability.
+
+.GET /api/purchaseLists/1
+[source,http]
+----
+
+HTTP/1.1 200
+Content-Type: application/json;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Sat, 03 Nov 2018 11:15:54 GMT
+
+{
+  "name": "2100-10-18",
+  "date": "2100-10-18",
+  "_links": {
+    "self": {
+      "href": "http://localhost:9602/api/purchaseLists/1"
+    },
+    "purchaseList": {
+      "href": "http://localhost:9602/api/purchaseLists/1"
+    },
+    "ingredients": {
+      "href": "http://localhost:9602/api/purchaseLists/1/ingredients"
+    }
+  }
+}
+----
+
+This reads a single value out. Good fit for the editor pane.
+
+.PUT /api/purchaseList/1
+[source,http]
+----
+PUT http://localhost:9602/api/purchaseLists/1
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+
+{"name": "Test-Name", "date": "2100-09-18"}
+
+HTTP/1.1 200
+Location: http://localhost:9602/api/purchaseLists/1
+Content-Type: application/json;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Sat, 03 Nov 2018 11:35:20 GMT
+
+{
+  "name": "Test-Name",
+  "date": "2100-09-18",
+  "_links": {
+    "self": {
+      "href": "http://localhost:9602/api/purchaseLists/1"
+    },
+    "purchaseList": {
+      "href": "http://localhost:9602/api/purchaseLists/1"
+    },
+    "ingredients": {
+      "href": "http://localhost:9602/api/purchaseLists/1/ingredients"
+    }
+  }
+}
+
+Response code: 200; Time: 32ms; Content length: 340 bytes
+----
+
+Updates the entire record with new data.
+
+
+.PATCH /api/purchaseList/1
+[source,http]
+----
+PATCH http://localhost:9602/api/purchaseLists/1
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+
+{"name": "Test"}
+
+HTTP/1.1 200
+Content-Type: application/json;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Sat, 03 Nov 2018 11:36:25 GMT
+
+{
+  "name": "Test",
+  "date": "2100-09-18",
+  "_links": {
+    "self": {
+      "href": "http://localhost:9602/api/purchaseLists/1"
+    },
+    "purchaseList": {
+      "href": "http://localhost:9602/api/purchaseLists/1"
+    },
+    "ingredients": {
+      "href": "http://localhost:9602/api/purchaseLists/1/ingredients"
+    }
+  }
+}
+
+Response code: 200; Time: 34ms; Content length: 335 bytes
+----
+
+Partial update of the database record.
+
+.GET /api/purchaseList/1/items
+[source,http]
+----
+GET http://localhost:9602/api/purchaseLists/1/items
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+
+HTTP/1.1 200
+Content-Type: application/json;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Sat, 03 Nov 2018 16:17:05 GMT
+
+{
+  "_embedded": {
+    "purchaseListItems": [{
+      "name": "bread",
+      "_links": {
+        "self": {
+          "href": "http://localhost:9602/api/purchaseListItems/2"
+        },
+        "purchaseListItem": {
+          "href": "http://localhost:9602/api/purchaseListItems/2"
+        },
+        "list": {
+          "href": "http://localhost:9602/api/purchaseListItems/2/list"
+        }
+      }
+    }]
+  },
+  "_links": {
+    "self": {
+      "href": "http://localhost:9602/api/purchaseLists/1/items"
+    }
+  }
+}
+
+----
+
+==== Listing of all Repositories
+
+.KitchenDeviceController
+[%header, cols="m,m,e,a"]
+|===
+| Repository URL | Type | Element Type
+| /api/purchaseLists | global | PurchaseList
+| /api/purchaseListItems | global | PurchaseListItem
+| /api/purchaseLists/{id}/items | local view | PurchaseListItem
+| /api/purchaseListItems/{id}/list | single element | PurchaseList
+|===
+
+Spring static assets server
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Static assets used for the Spring WebMVC Controller page.
+
+.Paths for static server
+[%header]
+|===
+| Path | File | Description
+
+| `/` | `static/index.html` | The file `index.html` will be served under `/` (root path). This HTML file contains a redirect to the home-page of the
+                              Spring WebMVC controller's home page under /controller/home.
+| `/static/js` | `/static/static/js` | Bootstrap JS and it's dependecies
+| `/static/css` | `/static/static/css` | Bootstrap CSS and fontawesome
+| `/static/webfonts` | `/static/static/webfonts` | Webfonts for fontawesome
+|===
+
+
+Thymeleaf backend rendered templates server
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Thymeleaf renders the following pages for the spring framework.
+
+.Paths for thymeleaf backend rendered templates server
+[%header]
+|===
+| Path | File | Description
+
+| `/error/404` | /error/404.html` | Rendered when the path was not found
+|===
+
+Spring MVC Controllers
+^^^^^^^^^^^^^^^^^^^^^^
+
+Expose endpoints for the browser to create backend rendered site for administration and fragments to include.
+
+While the `ErrorPageController` handles all errors, that are thrown in the `KitchenDeviceController`.
+
+.Controllers
+[%header]
+|===
+| Name | Scope | Function
+
+| `ErrorPageController` | Cross-Cutting | Serves the error page for all exceptions defined in `exceptions`
+| `PurchaseListController` | REST purchase lists and items | Serves CRUD HTML Administration page
+|===
+
+
+.KitchenDeviceController
+[%header, cols="m,m,e,a"]
+|===
+| Method | Path | Function | Description
+
+| GET | /controller/home | home() | Service homepage
+| GET | /controller/purchaseList/list | listPurchaseLists() | List all kitchen devices
+| GET | /controller/purchaseList/edit(/{id}) | editPurchaseList(id) | Show kitchen device attributes edit page
+| POST | /controller/purchaseList/add | addPurchaseList(name, function, available) | Add new kitchen device
+| POST | /controller/purchaseList/{id}/update | updatePurchaseList(name, function, available) | Update kitchen device with id
+| GET | /controller/purchaseList/{id}/delete | deletePurchaseList(id) | Removes the kitchen device
+| GET | /controller/purchaseList/{id}/list | listPurchaseListItems(id) | List items inside specific list
+| GET | /controller/purchaseList/{plid}/item/({id})/edit | editPurchaseListItems(plid, id) | Edit specific item or add new
+| POST | /controller/purchaseList/{plid}/item/add | addPurchaseListItem(plid, name) | Append new element to list
+| POST | /controller/purchaseList/{plid}/item/{id}/update | updatePurchaseListItem(plid, id, name) | Update value and redirect to purchaseList listing
+| GET | /controller/purchaseList/{plid}/item/{id}/remove | removePurchaseListItem(plid, id) | Removes the item and redirect to purchaseList listing
+|===
+
+
+
+Recipe Service
+~~~~~~~~~~~~~~
+
+A service that manages recipes and is the main use case for the client. A recipe has _recipe items_ (instructions) and
+_recipe ingredients_. Also are all recipe categorized in categories to help searching.
+
+The recipe service is available under: http://localhost:9601/
+
+The following explanations assume the base url above.
+
+Spring Data REST API
+^^^^^^^^^^^^^^^^^^^^
+
+./api
+[%header, cols="m,m,e,a"]
+|===
+| Path | Type | Element Type
+
+| /api | linking | Links to Repositoies
+| /api/categories | global | Global paging and sorting Repository
+| /api/categories/search/findByName{?name} | specific query | Searches category by name
+| /api/recipes | global | Global paging and sorting Repository
+| /api/instructions | global | Global paging and sorting Repository
+| /api/instructions/search/findAllByRecipe{?recipe} | specific query | Searches instructions with recipe
+| /api/instructions/search/findAllByRecipeId{?recipeId} | specific query | Searches instructions with recipe id
+| /api/ingredients | global | Global paging and sorting Repository
+| /api/ingredients/search/findAllByRecipe{?recipe} | specific query | Searches ingredients with recipe
+| /api/ingredients/search/findAllByRecipeId{?recipeId} | specific query | Searches ingredients with recipe id
+| /api/categories/{id}/recipes/ | local children | Children Repository
+| /api/recipes/{id}/category | local parent | Parent Element
+| /api/recipes/{id}/ingredients/ | local children | Children Repository
+| /api/recipes/{id}/instructions/ | local children | Children Repository
+| /api/recipes/search/findAllByCategory{?category} | specific query | Gives recipe of category
+| /api/ingredients/{id}/recipe | local parent | Parent Element
+| /api/instructions/{id}/recipe local parent | Parent Element
+|===
+
+Spring static assets server
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Static assets used for the Spring WebMVC Controller page.
+
+.Paths for static server
+[%header]
+|===
+| Path | File | Description
+
+| `/` | `static/index.html` | The file `index.html` will be served under `/` (root path). This HTML file contains a redirect to the home-page of the
+                              Spring WebMVC controller's home page under /controller/home.
+| `/static/js` | `/static/static/js` | Bootstrap JS and it's dependecies
+| `/static/css` | `/static/static/css` | Bootstrap CSS and fontawesome
+| `/static/webfonts` | `/static/static/webfonts` | Webfonts for fontawesome
+|===
+
+
+Thymeleaf backend rendered templates server
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Thymeleaf renders the following pages for the spring framework.
+
+.Paths for thymeleaf backend rendered templates server
+[%header]
+|===
+| Path | File | Description
+
+| `/error/404` | /error/404.html` | Rendered when the path was not found
+|===
+
+Spring MVC Controllers
+^^^^^^^^^^^^^^^^^^^^^^
+
+Expose endpoints for the browser to create backend rendered site for administration and fragments to include.
+
+While the `ErrorPageController` handles all errors, that are thrown in the `CRUD Controllers`.
+
+Page Controllers are:
+
+* CategoryController
+* HomeController
+* RecipeController
+
+
+.CategoryController
+[%header, cols="m,m,e,a"]
+|===
+| Method | Path | Function | Description
+
+| GET | /controller/category/list | list() | List all categories
+| GET | /controller/category/{id}/edit | edit(id) | Edit new or existing category
+| POST | /controller/category/{id}/update | update(id, name) | Update existing record
+| POST | /controller/category/{id}/add | add(name) | Add new record
+| GET | /controller/category/{id}/delete | delete(id) | Removes the record
+|===
+
+.RecipeController
+[%header, cols="m,m,e,a"]
+|===
+| Method | Path | Function | Description
+
+| GET | /controller/recipe/list | list() | List all recipes
+| GET | /controller/recipe/list/category/{id}/list | listByCategory(id) | List recipes in category
+| GET | /controller/recipe/({id})/edit | edit(id) | Edit new or existing record
+| POST | /controller/recipe/{id}/update | update(id, name, categoryId) | Update record
+| POST | /controller/recipe/add | add(name, categoryId) | Add new record
+| GET | /controller/recipe/{id}/delete | delete(id) | Remove record
+

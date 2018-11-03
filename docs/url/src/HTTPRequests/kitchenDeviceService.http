@@ -1,0 +1,36 @@
+DELETE http://localhost:9603/api/kitchenDevices/7
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+
+###
+
+GET http://localhost:9603/api/kitchenDevices/7
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+
+<> 2018-11-03T023213.200.json
+
+###
+
+GET http://localhost:9603/api/kitchenDevices
+Accept: application/json
+Cache-Control: no-cache
+
+<> 2018-11-03T023115.200.json
+
+###
+
+GET http://localhost:9603/api/kitchenDevices/6
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+
+###
+
+DELETE http://localhost:9603/api/kitchenDevices/6
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+###
