@@ -1,4 +1,12 @@
 = Micro-Frontends
+Matt Baumann <matthias.baumann@hsr,ch>
+v1.0, November 4, 2018
+:Author: Matt Baumann
+:Email: matthias.baumann@hsr.ch
+:Date: 4. November 2018
+:Revision: Version 1.0
+:source-highlighter: prettify
+:prewrap!:
 
 Term project of Matthias Baumann concerning with the integration of frontends into micro-services.
 
@@ -17,3 +25,52 @@ This folder contains the following subprojects:
 | kitchen-device-service | Kitchen device (slave) service
 | purchase-list-service | Purchase list (slave) service
 | recipe-service | Recipe (master) service
+
+== Ausführung (Mac, Linux)
+
+.Git clone in user dir
+[source,bash]
+----
+cd
+git clone https://github.com/mattbaumann/Micro-Frontends.git && cd Micro-Frontends
+----
+
+.make gradlew executable
+[source,bash]
+----
+chmod +x ./gradlew
+----
+
+.Build documentation
+[source,bash]
+----
+./gradlew asciidoc
+----
+
+*Attention*: First time you start _gradle_ it will use a lot of time, disk space (3GB) and cpu power to initialize the repository. Just keep waiting, further commands will execute blaizingly fast.
+
+.Run kitchen-device-service
+[source,bash]
+----
+./gradlew kitchen-device-service:bootRun
+----
+
+.Run purchase-list-service
+[source,bash]
+----
+./gradlew purchase-list-service:bootRun
+----
+
+.Run recipe-service
+[source,bash]
+----
+./gradlew recipe-service:bootRun
+----
+
+.Clean all up
+[source,bash]
+----
+cd ..
+rm -r Micro-Frontends 
+rm -r .gradle
+----
