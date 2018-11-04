@@ -17,9 +17,6 @@
 .gradle/
 out/
 build/
-<<<<<<< HEAD
-=======
 
 # HTTP Request Log
 httpRequests/
->>>>>>> Exclude http request log folder
