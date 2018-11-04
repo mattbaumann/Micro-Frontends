@@ -45,41 +45,74 @@ ext {
 
 
 
-// Remove all dependencies to logback
+// Remove all dependencies to logback (Logging framework) - we use Log4J2
 configurations.all({
     exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
 })
 
 dependencies {
+
     asciidoctor "org.springframework.restdocs:spring-restdocs-asciidoctor:2.0.2.RELEASE"
     asciidoclet 'org.asciidoctor:asciidoclet:1.+'
 
+    //
+    // Core
+    //
     implementation('org.apache.commons:commons-lang3:3.7')
     implementation('org.springframework.boot:spring-boot-starter')
+    // Logging with Log4J2 - https://logging.apache.org/log4j/2.x/
     implementation('org.springframework.boot:spring-boot-starter-log4j2')
-	implementation('org.springframework.boot:spring-boot-starter-data-jpa')
-	implementation('org.springframework.boot:spring-boot-starter-data-rest')
-	implementation('org.springframework.boot:spring-boot-starter-hateoas')
+
+    //
+    // Spring web services
+    //
+
+    // Controllers - Thymeleaf rendering - https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html
 	implementation('org.springframework.boot:spring-boot-starter-thymeleaf')
+    // https://spring.io/guides/gs/rest-hateoas/
+    implementation('org.springframework.boot:spring-boot-starter-hateoas')
+    // WebMVC https://docs.spring.io/spring/docs/5.0.0.BUILD-SNAPSHOT/spring-framework-reference/htmlsingle
 	implementation('org.springframework.boot:spring-boot-starter-web')
+
+    // Backend composition see https://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/#boot-features-webclient
     implementation('org.springframework.boot:spring-boot-starter-webflux')
-	implementation('org.springframework.data:spring-data-rest-hal-browser')
+    // Reactor: https://www.infoq.com/articles/reactor-by-example/
+    implementation('io.projectreactor:reactor-core:3.2.0.M1')
+    implementation('io.projectreactor:reactor-pipe:3.0.0.BUILD-SNAPSHOT')
+    implementation('io.projectreactor:reactor-stream:2.5.0.BUILD-SNAPSHOT')
+
+    // REST API - https://docs.spring.io/spring-data/rest/docs/current/reference/html/
+    implementation('org.springframework.boot:spring-boot-starter-data-rest')
+    implementation('org.springframework.data:spring-data-rest-hal-browser')
+
+    // Database backend - https://docs.spring.io/spring-data/jpa/docs/current/reference/html/
+    implementation('org.springframework.boot:spring-boot-starter-data-jpa')
 	runtimeOnly('com.h2database:h2')
 
+    // https://projectlombok.org/features/all
     compileOnly('org.projectlombok:lombok:1.18.4')
+
+    // Javadoc needs this dependency to compile
     compile ('javax.interceptor:javax.interceptor-api:1.2.2')
 
     annotationProcessor 'org.projectlombok:lombok'
     annotationProcessor 'org.apache.logging.log4j:log4j-core'
 
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+    //
+    // Testing
+	//
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.mockito', module: 'mockito-core'
         exclude group: 'junit', module: 'junit'
     }
+    // HTTP REST API Testing - http://rest-assured.io/
     testImplementation group: 'io.rest-assured', name: 'spring-mock-mvc'
+    // Document API from tests - https://docs.spring.io/spring-restdocs/docs/2.0.2.RELEASE/reference/html5/
     testImplementation group: 'org.springframework.restdocs', name: 'spring-restdocs-restassured'
+    // JUnit 5 Runner - https://junit.org/junit5/
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api'
     testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine'
+    // Mocking framework - https://site.mockito.org/
     testImplementation group: 'org.mockito', name: 'mockito-core'
 }
 

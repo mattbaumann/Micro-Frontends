@@ -13,5 +13,7 @@
  * identity of the error.
  * <p>
  * {@link ch.hsr.apparch.recipe.exceptions.ErrorHttpStatus} allows the _Exception_ types to define custom _HTTP codes_.
+ *
+ * https://www.journaldev.com/2651/spring-mvc-exception-handling-controlleradvice-exceptionhandler-handlerexceptionresolver
  */
 package ch.hsr.apparch.recipe.exceptions;
