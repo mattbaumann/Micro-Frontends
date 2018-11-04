@@ -27,7 +27,7 @@ This folder contains the following subprojects:
 | recipe-service | Recipe (master) service
 |===
 
-== Ausführung (Mac, Linux)
+== Execute under Mac and Linux
 
 .Git clone in user dir
 [source,bash]
@@ -84,7 +84,7 @@ rm -r .gradle
 ----
 
 
-== Ausführung Windows Powershell
+== Execute under Windows Powershell
 
 .Git clone in user dir
 [source,bash]
