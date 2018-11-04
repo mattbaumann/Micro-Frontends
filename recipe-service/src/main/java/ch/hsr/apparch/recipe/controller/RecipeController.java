@@ -71,6 +71,4 @@ public class RecipeController {
         recipeService.delete(id);
         return REDIRECT_CONTROLLER_LIST_VIEW;
     }
-
-
 }

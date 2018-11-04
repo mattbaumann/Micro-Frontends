@@ -83,7 +83,6 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     annotationProcessor 'org.apache.logging.log4j:log4j-core'
 
-
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.mockito', module: 'mockito-core'
         exclude group: 'junit', module: 'junit'
