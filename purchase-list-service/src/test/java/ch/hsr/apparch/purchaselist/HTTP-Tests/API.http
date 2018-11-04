@@ -1,0 +1,384 @@
+#
+# API endpoint tests
+#
+
+
+# Gets list of links in the repository
+#
+# This URL has to be used in the HAL Browser to start
+# browsing the API.
+
+GET http://localhost:9602/api/
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+
+
+
+HTTP/1.1 200 
+Content-Type: application/json;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Sun, 04 Nov 2018 20:39:16 GMT
+
+{
+  "_links": {
+    "purchaseLists": {
+      "href": "http://localhost:9602/api/purchaseLists{?page,size,sort}",
+      "templated": true
+    },
+    "purchaseListItems": {
+      "href": "http://localhost:9602/api/purchaseListItems{?page,size,sort}",
+      "templated": true
+    },
+    "profile": {
+      "href": "http://localhost:9602/api/profile"
+    }
+  }
+}
+
+
+###
+
+# Ensure availability of purchaseList
+
+HEAD http://localhost:9602/api/purchaseLists
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+
+# HTTP/1.1 204 
+# Link: <http://localhost:9602/api/purchaseLists>;rel="self",<http://localhost:9602/api/profile/purchaseLists>;rel="profile"
+# Date: Sun, 04 Nov 2018 20:42:11 GMT
+
+
+###
+
+# Get first page of paged repository
+
+GET http://localhost:9602/api/purchaseLists
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+
+
+
+HTTP/1.1 200 
+Content-Type: application/json;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Sun, 04 Nov 2018 20:42:37 GMT
+
+{
+  "_embedded": {
+    "purchaseLists": [{
+      "name": "2090-04-30",
+      "date": "2090-04-30",
+      "_links": {
+        "self": {
+          "href": "http://localhost:9602/api/purchaseLists/1"
+        },
+        "purchaseList": {
+          "href": "http://localhost:9602/api/purchaseLists/1"
+        },
+        "items": {
+          "href": "http://localhost:9602/api/purchaseLists/1/items"
+        }
+      }
+    }]
+  },
+  "_links": {
+    "self": {
+      "href": "http://localhost:9602/api/purchaseLists{?page,size,sort}",
+      "templated": true
+    },
+    "profile": {
+      "href": "http://localhost:9602/api/profile/purchaseLists"
+    }
+  },
+  "page": {
+    "size": 5,
+    "totalElements": 3,
+    "totalPages": 1,
+    "number": 0
+  }
+}
+
+
+###
+
+# The items in purchaseList are paged by default.
+#
+# In order to traverse items, all pages have to be called
+# with the _page_ parameter, the server tells the count of 
+# pages under the _pages_ JSON key.
+
+GET http://localhost:9602/api/purchaseLists?page=0
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+
+
+
+HTTP/1.1 200 
+Content-Type: application/json;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Sun, 04 Nov 2018 21:07:20 GMT
+
+{
+  "_embedded": {
+    "purchaseLists": [{
+      "name": "2090-04-30",
+      "date": "2090-04-30",
+      "_links": {
+        "self": {
+          "href": "http://localhost:9602/api/purchaseLists/1"
+        },
+        "purchaseList": {
+          "href": "http://localhost:9602/api/purchaseLists/1"
+        },
+        "items": {
+          "href": "http://localhost:9602/api/purchaseLists/1/items"
+        }
+      }
+    }] // maximum 5 elements
+  },
+  "_links": {
+    "self": {
+      "href": "http://localhost:9602/api/purchaseLists{?page,size,sort}",
+      "templated": true
+    },
+    "profile": {
+      "href": "http://localhost:9602/api/profile/purchaseLists"
+    }
+  },
+  "page": {
+    "size": 5,
+    "totalElements": 3,
+    "totalPages": 1,
+    "number": 0
+  }
+}
+
+###
+
+# Add item to purchaseLists repository (collection)
+
+POST http://localhost:9602/api/purchaseLists
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+
+{"name": "Test-Name", "date": "2100-09-18"}
+
+
+HTTP/1.1 201 
+Location: http://localhost:9602/api/purchaseLists/13
+Content-Type: application/json;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Sun, 04 Nov 2018 21:08:27 GMT
+
+{
+  "name": "Test-Name",
+  "date": "2100-09-18",
+  "_links": {
+    "self": {
+      "href": "http://localhost:9602/api/purchaseLists/13"
+    },
+    "purchaseList": {
+      "href": "http://localhost:9602/api/purchaseLists/13"
+    },
+    "items": {
+      "href": "http://localhost:9602/api/purchaseLists/13/items"
+    }
+  }
+}
+
+###
+
+# Ensure availability of URL
+
+HEAD http://localhost:9602/api/purchaseLists/1
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+
+##
+# HTTP/1.1 204 
+# Link: <http://localhost:9602/api/purchaseLists/1>;rel="self",<http://localhost:9602/api/purchaseLists/1>;rel="purchaseList"
+# Date: Sun, 04 Nov 2018 21:08:49 GMT
+
+
+###
+
+# Read database record
+
+GET http://localhost:9602/api/purchaseLists/1
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+
+
+
+HTTP/1.1 200 
+Content-Type: application/json;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Sun, 04 Nov 2018 21:09:08 GMT
+
+{
+  "name": "2090-04-30",
+  "date": "2090-04-30",
+  "_links": {
+    "self": {
+      "href": "http://localhost:9602/api/purchaseLists/1"
+    },
+    "purchaseList": {
+      "href": "http://localhost:9602/api/purchaseLists/1"
+    },
+    "items": {
+      "href": "http://localhost:9602/api/purchaseLists/1/items"
+    }
+  }
+}
+
+
+###
+
+# Update database record
+
+PUT http://localhost:9602/api/purchaseLists/1
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+
+{"name": "Test-Name", "date": "2100-09-18"}
+
+
+
+HTTP/1.1 200 
+Location: http://localhost:9602/api/purchaseLists/1
+Content-Type: application/json;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Sun, 04 Nov 2018 21:09:28 GMT
+
+{
+  "name": "Test-Name",
+  "date": "2100-09-18",
+  "_links": {
+    "self": {
+      "href": "http://localhost:9602/api/purchaseLists/1"
+    },
+    "purchaseList": {
+      "href": "http://localhost:9602/api/purchaseLists/1"
+    },
+    "items": {
+      "href": "http://localhost:9602/api/purchaseLists/1/items"
+    }
+  }
+}
+
+
+###
+
+# Patches the database record
+#
+# Instead of full update, manipulates part of the
+# database record
+
+PATCH http://localhost:9602/api/purchaseLists/1
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+
+{"name": "Test"}
+
+
+
+HTTP/1.1 200 
+Content-Type: application/json;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Sun, 04 Nov 2018 21:09:38 GMT
+
+{
+  "name": "Test",
+  "date": "2100-09-18",
+  "_links": {
+    "self": {
+      "href": "http://localhost:9602/api/purchaseLists/1"
+    },
+    "purchaseList": {
+      "href": "http://localhost:9602/api/purchaseLists/1"
+    },
+    "items": {
+      "href": "http://localhost:9602/api/purchaseLists/1/items"
+    }
+  }
+}
+
+###
+
+# Read purchaseList relationship database record
+#
+# Loads all items registered to the purchase list
+
+GET http://localhost:9602/api/purchaseLists/1/items
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+
+
+
+HTTP/1.1 200 
+Content-Type: application/json;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Sun, 04 Nov 2018 21:09:54 GMT
+
+{
+  "_embedded": {
+    "purchaseListItems": [{
+      "name": "carrots",
+      "_links": {
+        "self": {
+          "href": "http://localhost:9602/api/purchaseListItems/2"
+        },
+        "purchaseListItem": {
+          "href": "http://localhost:9602/api/purchaseListItems/2"
+        },
+        "list": {
+          "href": "http://localhost:9602/api/purchaseListItems/2/list"
+        }
+      }
+    }, {
+      "name": "sandwich",
+      "_links": {
+        "self": {
+          "href": "http://localhost:9602/api/purchaseListItems/3"
+        },
+        "purchaseListItem": {
+          "href": "http://localhost:9602/api/purchaseListItems/3"
+        },
+        "list": {
+          "href": "http://localhost:9602/api/purchaseListItems/3/list"
+        }
+      }
+    }, {
+      "name": "bread",
+      "_links": {
+        "self": {
+          "href": "http://localhost:9602/api/purchaseListItems/4"
+        },
+        "purchaseListItem": {
+          "href": "http://localhost:9602/api/purchaseListItems/4"
+        },
+        "list": {
+          "href": "http://localhost:9602/api/purchaseListItems/4/list"
+        }
+      }
+    }]
+  },
+  "_links": {
+    "self": {
+      "href": "http://localhost:9602/api/purchaseLists/1/items"
+    }
+  }
+}
+
+###

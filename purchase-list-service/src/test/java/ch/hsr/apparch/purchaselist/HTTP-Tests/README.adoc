@@ -1,0 +1,71 @@
+= HTTP Tests
+Matt Baumann <matthias.baumann@hsr,ch>
+v1.0, November 4, 2018
+:Author: Matt Baumann
+:Email: matthias.baumann@hsr.ch
+:Date: 4. November 2018
+:Revision: Version 1.0
+:source-highlighter: prettify
+:prewrap!:
+
+These files are executable HTTP Requests. An editor with such capabilities can execute the query and returns the answer. Currently, it's a human task to check the plausibility of the result.
+
+The motivation behind this testing technique: Having a fast method of integration testing while development.
+
+Editors with the capabillity to execute HTTP-files:
+
+* IntelliJ IDEA 2018.2 and upwards
+* Visual Studio Code with "REST Client" Plugin
+
+== Sample Record
+
+.GET /api/
+[source,http,options="nowrap"]
+----
+
+# Gets list of links in the repository <1>
+#
+# This URL has to be used in the HAL Browser to start
+# browsing the API.
+
+GET http://localhost:9602/api/ <2>
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+
+<3>
+
+HTTP/1.1 200 <4>
+Content-Type: application/json;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Sun, 04 Nov 2018 20:39:16 GMT
+
+{ <5>
+  "_links": {
+    "purchaseLists": {
+      "href": "http://localhost:9602/api/purchaseLists{?page,size,sort}",
+      "templated": true
+    },
+    "purchaseListItems": {
+      "href": "http://localhost:9602/api/purchaseListItems{?page,size,sort}",
+      "templated": true
+    },
+    "profile": {
+      "href": "http://localhost:9602/api/profile"
+    }
+  }
+}
+
+
+###
+
+----
+
+. Description of the Request, it describes the following motivations
+.. The answer we can expect from the endpoint 
+.. Reason for the URL Endpoint
+. The request header
+. Separation of 3 lines
+. The response header - validate by comparing to actual result
+. The response body (JSON here) - validate by comparing to actual result
+

@@ -1,0 +1,395 @@
+#
+# Pages delivered by the server
+#
+
+
+# Get Redirect site
+#
+# First time user should find homepage immediately.
+GET http://localhost:9602/
+Accept: text/html
+Cache-Control: no-cache
+
+
+
+HTTP/1.1 200 
+Last-Modified: Sun, 04 Nov 2018 20:34:45 GMT
+Accept-Ranges: bytes
+Content-Type: text/html;charset=UTF-8
+Content-Language: en-US
+Content-Length: 282
+Date: Sun, 04 Nov 2018 21:14:23 GMT
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Redirect Page to system home</title>
+    <meta http-equiv="refresh" content="2;url=/controller/home"/>
+</head>
+<body>
+<a href="/controller/home">If you are not redirected, click here.</a>
+</body>
+</html>
+
+###
+
+# Homepage of the service
+#
+# Gives the new user an overview and orientation help
+
+GET http://localhost:9602/controller/home
+Accept: text/html
+Cache-Control: no-cache
+
+HTTP/1.1 200 
+Content-Type: text/html;charset=UTF-8
+Content-Language: en-US
+Transfer-Encoding: chunked
+Date: Sun, 04 Nov 2018 21:19:47 GMT
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Add new purchase list</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="/static/css/bootstrap-4.1.3.min.css">
+    <link rel="stylesheet" href="/static/css/fontawesome-5.4.1.css">
+    <script src="/static/js/jquery-3.3.1.min.js"></script>
+    <script src="/static/js/popper-1.14.4.min.js"></script>
+    <script src="/static/js/bootstrap-4.1.3.min.js"></script>
+</head>
+<body>
+<ul class="nav">
+        <li class="nav-item">
+            <a class="nav-link active" href="/controller/home">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="/controller/purchaseList/list">list purchase lists</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="/controller/purchaseList/edit">add purchase list</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="/api/browser/index.html#/">REST API Browser</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="/h2">H2 Database</a>
+        </li>
+    </ul>
+<article>
+<!-- Unspecified page contents -->
+</article>
+</body>
+</html>
+
+###
+
+# List all purchase lists
+#
+# Allows selection of items for modification
+
+GET http://localhost:9602/controller/purchaseList/list
+Accept: text/html
+Cache-Control: no-cache
+
+
+HTTP/1.1 200 
+Content-Type: text/html;charset=UTF-8
+Content-Language: en-US
+Transfer-Encoding: chunked
+Date: Sun, 04 Nov 2018 21:27:51 GMT
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>List purchase lists</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="/static/css/bootstrap-4.1.3.min.css">
+    <link rel="stylesheet" href="/static/css/fontawesome-5.4.1.css">
+    <script src="/static/js/jquery-3.3.1.min.js"></script>
+    <script src="/static/js/popper-1.14.4.min.js"></script>
+    <script src="/static/js/bootstrap-4.1.3.min.js"></script>
+</head>
+<body>
+<ul class="nav">
+        <li class="nav-item">
+            <a class="nav-link active" href="/controller/home">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="/controller/purchaseList/list">list purchase lists</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="/controller/purchaseList/edit">add purchase list</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="/api/browser/index.html#/">REST API Browser</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="/h2">H2 Database</a>
+        </li>
+    </ul><div class="btn-group">
+    <a class="btn btn-secondary" href="/controller/purchaseList/edit"><i class="fas fa-plus"></i> Add</a>
+</div>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>list name</th>
+        <th>list date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><a class="btn btn-link" href="/controller/purchaseList/1/list">Test</a></td>
+        <td>2100-09-18</td>
+        <td><a class="btn btn-link" href="/controller/purchaseList/edit/1"><i
+                class="fas fa-pen"></i></a></td>
+        <td><a class="btn btn-link" href="/controller/purchaseList/1/delete">
+            <i class="fas fa-trash"></i></a></td>
+    </tr>
+    <tr>
+        <td><a class="btn btn-link" href="/controller/purchaseList/5/list">2100-10-18</a></td>
+        <td>2100-10-18</td>
+        <td><a class="btn btn-link" href="/controller/purchaseList/edit/5"><i
+                class="fas fa-pen"></i></a></td>
+        <td><a class="btn btn-link" href="/controller/purchaseList/5/delete">
+            <i class="fas fa-trash"></i></a></td>
+    </tr>
+    <tr>
+        <td><a class="btn btn-link" href="/controller/purchaseList/9/list">2100-10-18</a></td>
+        <td>2100-10-18</td>
+        <td><a class="btn btn-link" href="/controller/purchaseList/edit/9"><i
+                class="fas fa-pen"></i></a></td>
+        <td><a class="btn btn-link" href="/controller/purchaseList/9/delete">
+            <i class="fas fa-trash"></i></a></td>
+    </tr>
+    <tr>
+        <td><a class="btn btn-link" href="/controller/purchaseList/13/list">Test-Name</a></td>
+        <td>2100-09-18</td>
+        <td><a class="btn btn-link" href="/controller/purchaseList/edit/13"><i
+                class="fas fa-pen"></i></a></td>
+        <td><a class="btn btn-link" href="/controller/purchaseList/13/delete">
+            <i class="fas fa-trash"></i></a></td>
+    </tr>
+    <tr>
+        <td><a class="btn btn-link" href="/controller/purchaseList/14/list">Test-Name</a></td>
+        <td>2100-09-18</td>
+        <td><a class="btn btn-link" href="/controller/purchaseList/edit/14"><i
+                class="fas fa-pen"></i></a></td>
+        <td><a class="btn btn-link" href="/controller/purchaseList/14/delete">
+            <i class="fas fa-trash"></i></a></td>
+    </tr>
+    <tr>
+        <td><a class="btn btn-link" href="/controller/purchaseList/15/list">Test-Name</a></td>
+        <td>2100-09-18</td>
+        <td><a class="btn btn-link" href="/controller/purchaseList/edit/15"><i
+                class="fas fa-pen"></i></a></td>
+        <td><a class="btn btn-link" href="/controller/purchaseList/15/delete">
+            <i class="fas fa-trash"></i></a></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
+
+###
+
+# Returns purchase list edit page
+#
+# Allows to edit the properties of the edit page
+
+GET http://localhost:9602/controller/purchaseList/edit/1
+Accept: text/html
+Cache-Control: no-cache
+
+
+HTTP/1.1 200 
+Content-Type: text/html;charset=UTF-8
+Content-Language: en-US
+Transfer-Encoding: chunked
+Date: Sun, 04 Nov 2018 21:29:38 GMT
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Add new purchase list</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="/static/css/bootstrap-4.1.3.min.css">
+    <link rel="stylesheet" href="/static/css/fontawesome-5.4.1.css">
+    <script src="/static/js/jquery-3.3.1.min.js"></script>
+    <script src="/static/js/popper-1.14.4.min.js"></script>
+    <script src="/static/js/bootstrap-4.1.3.min.js"></script>
+</head>
+<body>
+<ul class="nav">
+        <li class="nav-item">
+            <a class="nav-link active" href="/controller/home">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="/controller/purchaseList/list">list purchase lists</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="/controller/purchaseList/edit">add purchase list</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="/api/browser/index.html#/">REST API Browser</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="/h2">H2 Database</a>
+        </li>
+    </ul><form method="post" action="/controller/purchaseList/1/update">
+    <div class="form-group">
+        <label for="purchseListName">Name</label>
+        <input id="purchseListName" name="name" type="text" required class="form-control"
+               value="Test">
+        <small class="form-text text-muted">You can change the name at any time.</small>
+    </div>
+    <div>
+        <label for="purchseListDate">Due at</label>
+        <input id="purchseListDate" name="date" type="date" required class="form-control"
+               value="2100-09-18">
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+</body>
+</html>
+
+###
+
+# Lists the ingredients in the purchase list
+
+GET http://localhost:9602/controller/purchaseList/1/list
+Accept: text/html
+Cache-Control: no-cache
+
+
+HTTP/1.1 200 
+Content-Type: text/html;charset=UTF-8
+Content-Language: en-US
+Transfer-Encoding: chunked
+Date: Sun, 04 Nov 2018 21:32:34 GMT
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>List purchase lists</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="/static/css/bootstrap-4.1.3.min.css">
+    <link rel="stylesheet" href="/static/css/fontawesome-5.4.1.css">
+    <script src="/static/js/jquery-3.3.1.min.js"></script>
+    <script src="/static/js/popper-1.14.4.min.js"></script>
+    <script src="/static/js/bootstrap-4.1.3.min.js"></script>
+</head>
+<body>
+<ul class="nav">
+        <li class="nav-item">
+            <a class="nav-link active" href="/controller/home">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="/controller/purchaseList/list">list purchase lists</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="/controller/purchaseList/edit">add purchase list</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="/api/browser/index.html#/">REST API Browser</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="/h2">H2 Database</a>
+        </li>
+    </ul><div class="btn-group">
+    <a class="btn btn-secondary" href="/controller/purchaseList/1/item/edit"><i
+            class="fas fa-plus"></i>
+        Add</a>
+</div>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Ingredient</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>carrots</td>
+        <td><a href="/controller/purchaseList/1/item/2/edit"><i
+                class="fas fa-pen"></i></a></td>
+        <td><a href="/controller/purchaseList/1/item/2/remove"><i
+                class="fas fa-trash"></i></a></td>
+    </tr>
+    <tr>
+        <td>sandwich</td>
+        <td><a href="/controller/purchaseList/1/item/3/edit"><i
+                class="fas fa-pen"></i></a></td>
+        <td><a href="/controller/purchaseList/1/item/3/remove"><i
+                class="fas fa-trash"></i></a></td>
+    </tr>
+    <tr>
+        <td>bread</td>
+        <td><a href="/controller/purchaseList/1/item/4/edit"><i
+                class="fas fa-pen"></i></a></td>
+        <td><a href="/controller/purchaseList/1/item/4/remove"><i
+                class="fas fa-trash"></i></a></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
+
+###
+
+# Edit purchase list item
+GET http://localhost:9602/controller/purchaseList/1/item/2/edit
+Accept: text/html
+Cache-Control: no-cache
+
+HTTP/1.1 200 
+Content-Type: text/html;charset=UTF-8
+Content-Language: en-US
+Transfer-Encoding: chunked
+Date: Sun, 04 Nov 2018 21:34:36 GMT
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Add new purchase list</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="/static/css/bootstrap-4.1.3.min.css">
+    <link rel="stylesheet" href="/static/css/fontawesome-5.4.1.css">
+    <script src="/static/js/jquery-3.3.1.min.js"></script>
+    <script src="/static/js/popper-1.14.4.min.js"></script>
+    <script src="/static/js/bootstrap-4.1.3.min.js"></script>
+</head>
+<body>
+<ul class="nav">
+        <li class="nav-item">
+            <a class="nav-link active" href="/controller/home">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="/controller/purchaseList/list">list purchase lists</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="/controller/purchaseList/edit">add purchase list</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="/api/browser/index.html#/">REST API Browser</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="/h2">H2 Database</a>
+        </li>
+    </ul><form method="post" action="/controller/purchaseList/1/item/2/update">
+    <div class="form-group">
+        <label for="purchseListItemName">Name</label>
+        <input id="purchseListItemName" name="name" type="text" required class="form-control"
+               value="carrots">
+        <small class="form-text text-muted">You can change the name at any time.</small>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+</body>
+</html>

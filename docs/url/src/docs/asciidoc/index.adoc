@@ -1,6 +1,6 @@
 = URL Endpoint defintions
 Matt Baumann <matthias.baumann@hsr,ch>
-v1.0, November 3, 2018: DRAFT
+v1.0, November 3, 2018
 :Author: Matt Baumann
 :Email: matthias.baumann@hsr.ch
 :Date: 3. November 2018
