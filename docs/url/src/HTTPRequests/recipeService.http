@@ -1,0 +1,16 @@
+GET http://localhost:9601/api
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+
+###
+GET http://localhost:9601/api/categories/search
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+
+###
+GET http://localhost:9601/api/ingredients/search
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
