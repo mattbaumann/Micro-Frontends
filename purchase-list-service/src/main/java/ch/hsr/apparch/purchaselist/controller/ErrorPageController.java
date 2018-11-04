@@ -2,9 +2,11 @@ package ch.hsr.apparch.purchaselist.controller;
 
 import ch.hsr.apparch.purchaselist.exceptions.ResourceNotFoundException;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,11 +26,11 @@ public class ErrorPageController {
     private static final String TYPE_KEY = "type";
     private static final String STACK_TRACE = "stacktrace";
 
-    @ExceptionHandler({ResourceNotFoundException.class})
+    @ExceptionHandler(ResourceNotFoundException.class)
     public String showNotEmptyCategoryError(ResourceNotFoundException exception, Model model, HttpServletResponse response) {
         LOGGER.entry(exception);
 
-        LOGGER.error("Generating error message for InternalPreconditionFailedException");
+        LOGGER.error("Generating error message for ResourceNotFoundException");
         model.addAttribute(STATUS_KEY, exception.getErrorStatus())
                 .addAttribute(MESSAGE_KEY, exception.getMessage())
                 .addAttribute(TYPE_KEY, exception.getClass().getName())

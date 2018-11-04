@@ -24,11 +24,11 @@ public class ErrorPageController {
     private static final String TYPE_KEY = "type";
     private static final String STACK_TRACE = "stacktrace";
 
-    @ExceptionHandler({ResourceNotFoundException.class})
+    @ExceptionHandler(ResourceNotFoundException.class)
     public String showNotEmptyCategoryError(ResourceNotFoundException exception, Model model, HttpServletResponse response) {
         LOGGER.entry(exception);
 
-        LOGGER.error("Generating error message for InternalPreconditionFailedException");
+        LOGGER.error("Generating error message for ResourceNotFoundException");
         model.addAttribute(STATUS_KEY, exception.getErrorStatus())
                 .addAttribute(MESSAGE_KEY, exception.getMessage())
                 .addAttribute(TYPE_KEY, exception.getClass().getName())
