@@ -1,11 +1,19 @@
 # Visual studio code
 *.code-workspace
-/.vscode
+.vscode
 
 # Eclipse
-/.metadata/
-/.settings/
+.metadata/
+.settings/
 .project
 
+# IntelliJ
+*.iml
+*.ipr
+*.iws
+.idea/
+
 # Gradle
-/.gradle/
+.gradle/
+out/
+build/
