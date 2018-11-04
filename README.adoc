@@ -25,6 +25,7 @@ This folder contains the following subprojects:
 | kitchen-device-service | Kitchen device (slave) service
 | purchase-list-service | Purchase list (slave) service
 | recipe-service | Recipe (master) service
+|===
 
 == Ausführung (Mac, Linux)
 
