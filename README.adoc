@@ -42,10 +42,10 @@ git clone https://github.com/mattbaumann/Micro-Frontends.git && cd Micro-Fronten
 chmod +x ./gradlew
 ----
 
-.Build documentation
+.Build
 [source,bash]
 ----
-./gradlew asciidoc
+./gradlew build
 ----
 
 *Attention*: First time you start _gradle_ it will use a lot of time, disk space (3GB) and cpu power to initialize the repository. Just keep waiting, further commands will execute blaizingly fast.
@@ -68,10 +68,66 @@ chmod +x ./gradlew
 ./gradlew recipe-service:bootRun
 ----
 
+.Documentation
+[source,bash]
+----
+./gradlew javadoc
+./gradlew asciidoc
+----
+
 .Clean all up
 [source,bash]
 ----
 cd ..
 rm -r Micro-Frontends 
 rm -r .gradle
+----
+
+
+== Ausführung Windows Powershell
+
+.Git clone in user dir
+[source,bash]
+----
+git clone https://github.com/mattbaumann/Micro-Frontends.git && cd Micro-Frontends
+----
+
+.Build
+[source,bash]
+----
+./gradlew.bat build
+----
+
+*Attention*: First time you start _gradle_ it will use a lot of time, disk space (3GB) and cpu power to initialize the repository. Just keep waiting, further commands will execute blaizingly fast.
+
+.Run kitchen-device-service
+[source,bash]
+----
+./gradlew.bat kitchen-device-service:bootRun
+----
+
+.Run purchase-list-service
+[source,bash]
+----
+./gradlew.bat purchase-list-service:bootRun
+----
+
+.Run recipe-service
+[source,bash]
+----
+./gradlew.bat recipe-service:bootRun
+----
+
+.Documentation
+[source,bash]
+----
+./gradlew.bat javadoc
+./gradlew.bat asciidoc
+----
+
+.Clean all up
+[source,bash]
+----
+rm -r Micro-Frontends 
+rm -r C:/Users/<username>/.gradle 
 ----
