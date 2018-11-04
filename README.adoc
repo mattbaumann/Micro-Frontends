@@ -1,0 +1,19 @@
+= Micro-Frontends
+
+Term project of Matthias Baumann concerning with the integration of frontends into micro-services.
+
+== Folder
+
+This folder contains the following subprojects:
+
+.subprojects
+[%header]
+|===
+| folder | description
+
+| docs/adr | Records of architecture relevant decisions
+| docs/architecture | Architecture documentation based on Arc42
+| docs/url | URL endpints of the services
+| kitchen-device-service | Kitchen device (slave) service
+| purchase-list-service | Purchase list (slave) service
+| recipe-service | Recipe (master) service
