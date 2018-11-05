@@ -1,14 +1,14 @@
 package ch.hsr.apparch.kitchenDevices.configuration;
 
+import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.web.filter.AbstractRequestLoggingFilter;
 
 import javax.servlet.http.HttpServletRequest;
 
+@Log4j2
 public final class RequestLoggingFilter extends AbstractRequestLoggingFilter {
-
-    private static final Logger LOGGER = LogManager.getLogger("Request-Logging");
 
     @Override
     protected boolean shouldLog(HttpServletRequest request) {

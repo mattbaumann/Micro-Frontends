@@ -4,6 +4,7 @@ import ch.hsr.apparch.recipe.model.Category;
 import ch.hsr.apparch.recipe.model.Recipe;
 import ch.hsr.apparch.recipe.repository.CategoryRepository;
 import ch.hsr.apparch.recipe.repository.RecipeRepository;
+import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,10 +21,9 @@ import java.util.Collections;
  * While it uses the startup process of <em>Spring Boot</em> it defines it's own additions to it. The Function {@link #insertSampleData(RecipeRepository, CategoryRepository)}
  * inserts sample data into the database before running the application. And {@link #logPortAtStartup(int)} logs the port after loading the appliation container.
  */
+@Log4j2
 @SpringBootApplication
 public class Application {
-
-    private static final Logger LOGGER = LogManager.getLogger("Application");
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
