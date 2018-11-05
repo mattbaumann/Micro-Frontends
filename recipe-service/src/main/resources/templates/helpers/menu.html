@@ -1,25 +1,41 @@
-<nav>
-    <ul xmlns:th="http://www.thymeleaf.org" class="nav" th:fragment="main-nav">
-        <li class="nav-item">
-            <a class="nav-link active" href="/controller/home">Home</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link active" href="/controller/recipe/list">list recipes</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link active" href="/controller/recipe/edit">add recipes</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link active" href="/controller/category/list">list categories</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link active" href="/controller/category/edit">add category</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link active" href="/api/browser/index.html#/">REST API Browser</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link active" href="/h2">H2 Database</a>
-        </li>
-    </ul>
+<nav class="navbar navbar-expand-lg navbar-light bg-light" xmlns:th="http://www.thymeleaf.org" th:fragment="main-nav">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="fas fa-bars"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/controller/home">Home</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link dropdown-toggle" href="#" id="menuRecipeDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Recipe Service
+                </a>
+                <div class="dropdown-menu" aria-labelledby="menuRecipeDropdown">
+                    <a class="dropdown-item" href="/controller/recipe/list">list recipes</a>
+                    <a class="dropdown-item" href="/controller/recipe/edit">add recipe</a>
+                </div>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link dropdown-toggle" href="#" id="menuPortalDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Portal Integration
+                </a>
+                <div class="dropdown-menu" aria-labelledby="menuPortalDropdown">
+                    <a class="dropdown-item" href="/controller/purchaseList/list">list purchase lists</a>
+                    <a class="dropdown-item" href="/controller/purchaseList/edit">add purchase list</a>
+                    <a class="dropdown-item" href="/controller/kitchenDevice/list">list kitchen device</a>
+                    <a class="dropdown-item" href="/controller/purchaseList/edit">add kitchen device</a>
+                </div>
+            </li>
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item my-2 my-lg-0">
+                <a class="nav-link" href="/api/browser/index.html#/">REST API Browser</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/h2">H2 Database</a>
+            </li>
+        </ul>
+    </div>
 </nav>

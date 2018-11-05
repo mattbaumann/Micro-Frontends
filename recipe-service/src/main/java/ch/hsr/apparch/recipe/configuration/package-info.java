@@ -5,7 +5,7 @@
  * when activating the Log4J2 logger, the filter will output all requested paths.
  * <p>
  * {@link ch.hsr.apparch.recipe.configuration.WebMVCConfiguration} is used by
- * {@link ch.hsr.apparch.recipe.controller.SSFragmentCompositionController} to add the
+ * {@link ch.hsr.apparch.recipe.controller.PortalCompositionController} to add the
  * {@link org.thymeleaf.templateresolver.UrlTemplateResolver} to _Thymeleaf_. The add-in allows Thymeleaf to resolve
  * _fragments_ from remote hosts to form a portal site.
  */
