@@ -32,6 +32,7 @@ public class Application {
     @Bean
     public CommandLineRunner insertSampleData(RecipeRepository recipeRepository, CategoryRepository categoryRepository) {
         return args -> {
+            LOGGER.info("Insert sample recipes");
             Category sample_category = categoryRepository.save(new Category("Sample Category", Collections.emptyList()));
             Recipe sample_recipe1 = recipeRepository.save(new Recipe("Sample Recipe 1", Collections.emptyList(), Collections.emptyList(), sample_category));
             Recipe sample_recipe2 = recipeRepository.save(new Recipe("Sample Recipe 2", Collections.emptyList(), Collections.emptyList(), sample_category));
@@ -41,6 +42,6 @@ public class Application {
 
     @Bean
     public CommandLineRunner logPortAtStartup(@Value("${server.port}") int port) {
-        return args -> LOGGER.info("Spring Server 'Kitchen Devices' is running under port {}", port);
+        return args -> LOGGER.info("Spring Server 'Recipe' is running under port {}", port);
     }
 }

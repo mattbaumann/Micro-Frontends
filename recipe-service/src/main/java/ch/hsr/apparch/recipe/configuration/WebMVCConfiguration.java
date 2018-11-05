@@ -12,9 +12,6 @@ import org.thymeleaf.templateresolver.UrlTemplateResolver;
 @Configuration
 public class WebMVCConfiguration {
 
-    @Autowired
-    SpringResourceTemplateResolver springResourceTemplateResolver;
-
     @Value("${spring.thymeleaf.cache}")
     Boolean springThymeleafCache;
 

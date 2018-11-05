@@ -10,7 +10,7 @@
  * <p>
  * {@link ch.hsr.apparch.recipe.controller.HomeController} displays the homepage of the controller.
  * <p>
- * {@link ch.hsr.apparch.recipe.controller.SSFragmentCompositionController} Allows the composition of the
+ * {@link ch.hsr.apparch.recipe.controller.PortalCompositionController} Allows the composition of the
  * purchase-list and kitchen-device services into a common portal page. For more information see the
  * informal rich pictures in the architecture documentation.
  */
