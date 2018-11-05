@@ -49,7 +49,7 @@ public class PurchaseListController {
         return "list/list";
     }
 
-    @GetMapping({"/purchaseList/edit", "/purchaseList/edit/{id}"})
+    @GetMapping({"/purchaseList/edit", "/purchaseList/{id}/edit"})
     public String editPurchaseList(@PathVariable(value = "id", required = false) Optional<Long> id, Model model) {
         if (id.isPresent()) {
             PurchaseList toEdit = purchaseLists.findById(

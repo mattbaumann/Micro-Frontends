@@ -21,7 +21,7 @@
         <td><a class="btn btn-link" th:href="@{/controller/purchaseList/{plid}/list(plid=${purchaseList.getId()})}"
                th:text="${purchaseList.getName()}">Name</a></td>
         <td th:text="${purchaseList.getDate()}">Date</td>
-        <td><a class="btn btn-link" th:href="@{/controller/purchaseList/edit/{plid}(plid=${purchaseList.getId()})}"><i
+        <td><a class="btn btn-link" th:href="@{/controller/purchaseList/{plid}/edit(plid=${purchaseList.getId()})}"><i
                 class="fas fa-pen"></i></a></td>
         <td><a class="btn btn-link" th:href="@{/controller/purchaseList/{plid}/delete(plid=${purchaseList.getId()})}">
             <i class="fas fa-trash"></i></a></td>
