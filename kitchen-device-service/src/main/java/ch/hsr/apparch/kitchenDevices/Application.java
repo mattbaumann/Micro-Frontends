@@ -2,6 +2,7 @@ package ch.hsr.apparch.kitchenDevices;
 
 import ch.hsr.apparch.kitchenDevices.model.KitchenDevice;
 import ch.hsr.apparch.kitchenDevices.repository.KitchenDeviceRepository;
+import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,13 +15,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-
+@Log4j2
 @SpringBootApplication
 public class Application {
 
     private static final Map<String, String> SAMPLE_MACHINE_NAMES_FUNCTIONS = new HashMap<>();
-
-    private static final Logger LOGGER = LogManager.getLogger("Application");
 
     public static void main(String[] args) {
         SAMPLE_MACHINE_NAMES_FUNCTIONS.put("mixer", "Mixes liquids");

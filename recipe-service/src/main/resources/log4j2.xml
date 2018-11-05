@@ -11,11 +11,11 @@
             <AppenderRef ref="ConsoleAppender" />
         </Logger>
 
-        <Logger name="Request-Logging" level="WARN">
+        <Logger name="ch.hsr.apparch.recipe.configuration.RequestLoggingFilter" level="WARN">
             <AppenderRef ref="ConsoleAppender" />
         </Logger>
 
-        <Logger name="Application" level="INFO">
+        <Logger name="ch.hsr.apparch.recipe.Application" level="INFO">
             <AppenderRef ref="ConsoleAppender" />
         </Logger>
 

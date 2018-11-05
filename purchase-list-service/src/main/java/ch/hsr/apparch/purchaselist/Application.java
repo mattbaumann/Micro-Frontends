@@ -4,6 +4,7 @@ import ch.hsr.apparch.purchaselist.model.PurchaseList;
 import ch.hsr.apparch.purchaselist.model.PurchaseListItem;
 import ch.hsr.apparch.purchaselist.repository.PurchaseListItemRepository;
 import ch.hsr.apparch.purchaselist.repository.PurchaseListRepository;
+import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,10 +18,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Random;
 
+@Log4j2
 @SpringBootApplication
 public class Application {
-
-    private static final Logger LOGGER = LogManager.getLogger("Application");
 
     private static String[] SAMPLE_ITEMS = new String[]{
             "apples",
