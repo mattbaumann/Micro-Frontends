@@ -17,6 +17,8 @@
 
         <Logger name="ch.hsr.apparch.recipe.controller.PortalCompositionController" level="TRACE" />
 
+        <Logger name="ch.hsr.apparch.recipe.controller.BackendCompositionController" level="TRACE" />
+
         <Root level="ERROR">
             <AppenderRef ref="ConsoleAppender" />
         </Root>
