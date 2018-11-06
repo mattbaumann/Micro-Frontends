@@ -44,6 +44,19 @@ ext {
     snippetsDir = file('build/generated-snippets')
 }
 
+eclipse {
+    classpath {
+        downloadJavadoc = true
+        downloadSources = true
+    }
+}
+
+idea {
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
+}
 
 
 // Remove all dependencies to logback (Logging framework) - we use Log4J2
@@ -72,15 +85,11 @@ dependencies {
 	implementation('org.springframework.boot:spring-boot-starter-thymeleaf')
     // https://spring.io/guides/gs/rest-hateoas/
     // implementation('org.springframework.boot:spring-boot-starter-hateoas')
-    // WebMVC https://docs.spring.io/spring/docs/5.0.0.BUILD-SNAPSHOT/spring-framework-reference/htmlsingle
-	// implementation('org.springframework.boot:spring-boot-starter-web')
+    implementation('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
 
     // Backend composition see https://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/#boot-features-webclient
     implementation('org.springframework.boot:spring-boot-starter-webflux')
     // Reactor: https://www.infoq.com/articles/reactor-by-example/
-    //implementation('io.projectreactor:reactor-core:3.2.0.M1')
-    //implementation('io.projectreactor:reactor-pipe:3.0.0.BUILD-SNAPSHOT')
-    //implementation('io.projectreactor:reactor-stream:2.5.0.BUILD-SNAPSHOT')
 
     // REST API - https://docs.spring.io/spring-data/rest/docs/current/reference/html/
     implementation('org.springframework.boot:spring-boot-starter-data-rest')

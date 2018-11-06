@@ -43,7 +43,19 @@ ext {
     snippetsDir = file('build/generated-snippets')
 }
 
+eclipse {
+    classpath {
+        downloadJavadoc = true
+        downloadSources = true
+    }
+}
 
+idea {
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
+}
 
 // Remove all dependencies to logback (Logging framework) - we use Log4J2
 configurations.all({
