@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<header th:replace="helpers/headers :: html-head('List purchase lists')">
+</header>
+<body>
+<p th:replace="helpers/menu :: main-nav">
+
+<div class="btn-group">
+    <a class="btn btn-secondary" href="/controller/kitchenDevice/edit"><i class="fas fa-plus"></i> Add</a>
+</div>
+
+<div id="fragment">
+    <table class="table" th:fragment="content">
+        <thead>
+        <tr>
+            <th>name</th>
+            <th>function</th>
+            <th>available</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!--/*@thymesVar id="models" type="ch.hsr.apparch.recipe.dto.KitchenDeviceRoot"*/-->
+        <tr th:each="model : ${models.getEmbedded().getKitchenDevices()}">
+            <td th:text="${model.getName()}">Name</td>
+            <td th:text="${model.getFunction()}">Function</td>
+            <td><i class="fas fa-check" th:if="${model.isAvailable()}"></i> <i class="fas fa-times"
+                                                                               th:if="${!model.isAvailable()}"></i></td>
+            <!--/*@thymesVar id="integrationPort" type="java.util.Optional"*/-->
+            <td>
+                     <a class="btn btn-link" th:href="@{/backend/kitchenDevice/{kdid}/edit(kdid=${model.getId()})}"><i
+                            class="fas fa-pen"></i></a>
+            </td>
+
+            <td>
+                    <a class="btn btn-link" th:href="@{/backend/kitchenDevice/{kdid}/delete(kdid=${model.getId()})}">
+                        <i class="fas fa-trash"></i></a>
+            </td>
+            <td>
+                <a class="btn btn-link" th:href="@{/backend/kitchenDevice/{kdid}/delete(kdid=${model.getId()})}">
+                <i class="fas fa-trash"></i></a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

@@ -8,7 +8,7 @@
             <li class="nav-item active">
                 <a class="nav-link" href="/controller/home">Home</a>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item dropdown active">
                 <a class="nav-link dropdown-toggle" href="#" id="menuRecipeDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Recipe Service
                 </a>
@@ -17,7 +17,7 @@
                     <a class="dropdown-item" href="/controller/recipe/edit">add recipe</a>
                 </div>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item dropdown active">
                 <a class="nav-link dropdown-toggle" href="#" id="menuPortalDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Portal Integration
                 </a>
@@ -26,6 +26,17 @@
                     <a class="dropdown-item" href="/controller/purchaseList/edit">add purchase list</a>
                     <a class="dropdown-item" href="/controller/kitchenDevice/list">list kitchen device</a>
                     <a class="dropdown-item" href="/controller/purchaseList/edit">add kitchen device</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown active">
+                <a class="nav-link dropdown-toggle" href="#" id="menuBackendDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Backend Integration
+                </a>
+                <div class="dropdown-menu" aria-labelledby="menuBackendDropdown">
+                    <a class="dropdown-item" href="/backend/purchaseList/list">list purchase lists</a>
+                    <a class="dropdown-item" href="/backend/purchaseList/edit">add purchase list</a>
+                    <a class="dropdown-item" href="/backend/kitchenDevice/list">list kitchen device</a>
+                    <a class="dropdown-item" href="/backend/kitchenDevice/edit">edit kitchen device</a>
                 </div>
             </li>
         </ul>
