@@ -9,11 +9,11 @@
     <Loggers>
         <Logger name="Testing" level="WARN" />
 
-        <Logger name="ch.hsr.apparch.recipe.configuration.RequestLoggingFilter" level="WARN" />
+        <Logger name="ch.hsr.apparch.purchaselist.configuration.RequestLoggingFilter" level="WARN" />
 
-        <Logger name="ch.hsr.apparch.recipe.Application" level="INFO" />
+        <Logger name="ch.hsr.apparch.purchaselist.Application" level="INFO" />
 
-        <Logger name="ch.hsr.apparch.recipe.controller.ErrorPageController" level="ERROR" />
+        <Logger name="ch.hsr.apparch.purchaselist.controller.ErrorPageController" level="ERROR" />
 
         <Root level="OFF">
             <AppenderRef ref="ConsoleAppender" />
