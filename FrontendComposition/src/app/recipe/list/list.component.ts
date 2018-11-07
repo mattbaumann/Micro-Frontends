@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import {RecipeService} from '../shared/service/recipe.service'
-import {RecipeList} from '../shared/model/recipe'
+import {Recipe} from '../shared/model/recipe'
 
 @Component({
   selector: 'app-list',
@@ -10,10 +10,10 @@ import {RecipeList} from '../shared/model/recipe'
 })
 export class ListComponent implements OnInit {
 
-  recipes : RecipeList;
+  recipes : Recipe[];
 
   constructor(private transfer : RecipeService) {
-    transfer.loadRecipes().subscribe(data => this.recipes = data._embedded );
+    transfer.loadRecipes().subscribe(data => this.recipes = data._embedded.recipes );
   }
 
   ngOnInit() {
