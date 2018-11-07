@@ -1,0 +1,39 @@
+plugins {
+  id 'eclipse'
+  id 'idea'
+}
+
+task installAngular(type: Exec) {
+  workingDir "."
+  inputs.dir "."
+  group = BasePlugin.BUILD_GROUP
+  if (System.getProperty("os.name").toUpperCase().contains("WINDOWS")) {
+    commandLine "npm.cmd", "install"
+  } else {
+    commandLine "npm", "install"
+  }
+}
+
+task build(type: Exec) {
+  dependsOn 'installAngular'
+  workingDir "."
+  inputs.dir "."
+  group = BasePlugin.BUILD_GROUP
+  if (System.getProperty("os.name").toUpperCase().contains("WINDOWS")) {
+    commandLine "ng.cmd", "build"
+  } else {
+    commandLine "ng", "build"
+  }
+}
+
+task serve(type: Exec) {
+  dependsOn 'installAngular'
+  workingDir "."
+  inputs.dir "."
+  group = BasePlugin.BUILD_GROUP
+  if (System.getProperty("os.name").toUpperCase().contains("WINDOWS")) {
+    commandLine "ng.cmd", "serve"
+  } else {
+    commandLine "ng", "serve"
+  }
+}
