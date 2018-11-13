@@ -15,25 +15,30 @@ task installAngular(type: Exec) {
 }
 
 task build(type: Exec) {
-  dependsOn 'installAngular'
-  workingDir "."
-  inputs.dir "."
-  group = BasePlugin.BUILD_GROUP
-  if (System.getProperty("os.name").toUpperCase().contains("WINDOWS")) {
-    commandLine "ng.cmd", "build"
-  } else {
-    commandLine "ng", "build"
-  }
+  execNgTask("build");
 }
 
 task serve(type: Exec) {
+  execNgTask("serve")
+}
+
+task e2e(type: Exec) {
+  execNgTask("e2e")
+}
+
+task test(type: Exec) {
+  dependsOn "e2e"
+  execNgTask("test")
+}
+
+def execNgTask(String task) {
   dependsOn 'installAngular'
   workingDir "."
   inputs.dir "."
   group = BasePlugin.BUILD_GROUP
   if (System.getProperty("os.name").toUpperCase().contains("WINDOWS")) {
-    commandLine "ng.cmd", "serve"
+    commandLine "npm.cmd", "run", task
   } else {
-    commandLine "ng", "serve"
+    commandLine "ng", "run", task
   }
 }

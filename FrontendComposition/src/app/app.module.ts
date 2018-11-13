@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {KitchenDeviceModule} from './kitchen-device/kitchen-device.module';
 import {PurchaseListModule} from './purchase-list/purchase-list.module';
 import {RecipeModule} from './recipe/recipe.module';
+import { AppLoggingModule } from './app-logging.module';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,9 @@ import {RecipeModule} from './recipe/recipe.module';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+
+    // Service Modules
+    AppLoggingModule,
 
     // Project Modules
     KitchenDeviceModule,
