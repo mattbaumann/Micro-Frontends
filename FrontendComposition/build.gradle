@@ -37,8 +37,8 @@ def execNgTask(String task) {
   inputs.dir "."
   group = BasePlugin.BUILD_GROUP
   if (System.getProperty("os.name").toUpperCase().contains("WINDOWS")) {
-    commandLine "ng.cmd", task
+    commandLine "npm.cmd", "run", task
   } else {
-    commandLine "ng", task
+    commandLine "ng", "run", task
   }
 }
