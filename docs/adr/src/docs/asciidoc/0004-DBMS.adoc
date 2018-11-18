@@ -1,0 +1,68 @@
+= Selected the build system =
+Matt Baumann <matthias.baumann@hsr,ch>
+v1.0, November 18, 2018
+:Author: Matt Baumann
+:Email: matthias.baumann@hsr.ch
+:Date: 18. November 2018
+:Revision: Version 1.0
+:icons: font
+:y: icon:check[role="green"]
+:n: icon:times[role="red"]
+
+. Status: accepted
+. Deciders: Matthias Baumann, Olaf Zimmermann
+. Date: 2018-11-18
+
+== Context and Problem Statement
+
+We need to store the entity data. It has to be simple to retrieve the data from the file and search after specific datasets.
+
+Also, it is a requirement that each service must have it's own datastore.
+
+== Considered Options
+
+I considered the following datastores
+. XML File
+. Extern Database
+. H2 Database
+
+== Decision Outcome
+
+Chosen option: _option 3_. H2 Database is very simple to attach and runs in the same process as the program. Also, simplifies
+the data retrieval logic for the application.
+
+=== Negative consequences
+
+. Memory consumption of the Spring process increases
+. Performance is nowhere near a production database
+
+== Pros and Cons of the Options
+
+=== H2 Database
+
+http://www.h2database.com/html/main.html[H2 database system]
+
+. {y} Self-installable
+. {y} Spring Integration
+. {y} Simple admin console
+. {n} Performance
+. {n} Maybe too simple for demonstration purposes
+
+===  XML
+
+https://www.w3.org/TR/xml/[XML Specification]
+
+. {y} Understood by the students
+. {n} Hard to implement
+. {n} Difficult data search
+- {n} Memory unfriendly
+
+=== Extern Database
+
+https://www.postgresql.org/[Postgres]
+
+. {y} Performance
+. {y} Understood by the students
+. {y} Realistic example
+. {n} Hard to setup
+. {n} No self-installation

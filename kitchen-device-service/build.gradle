@@ -70,15 +70,15 @@ dependencies {
     implementation('org.springframework.boot:spring-boot-starter')
     // Logging with Log4J2 - https://logging.apache.org/log4j/2.x/
     implementation('org.springframework.boot:spring-boot-starter-log4j2')
-
-
-    // https://spring.io/guides/gs/rest-hateoas/
-    implementation('org.springframework.boot:spring-boot-starter-hateoas')
+    
     // Controllers - Thymeleaf rendering - https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html
     implementation('org.springframework.boot:spring-boot-starter-thymeleaf')
     // WebMVC https://docs.spring.io/spring/docs/5.0.0.BUILD-SNAPSHOT/spring-framework-reference/htmlsingle
     implementation('org.springframework.boot:spring-boot-starter-web')
 
+    // CORS implementation
+    implementation('org.springframework.boot:spring-boot-starter-security')
+    
     // REST API - https://docs.spring.io/spring-data/rest/docs/current/reference/html/
     implementation('org.springframework.boot:spring-boot-starter-data-rest')
     // Database backend - https://docs.spring.io/spring-data/jpa/docs/current/reference/html/

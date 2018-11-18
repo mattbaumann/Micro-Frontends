@@ -1,0 +1,76 @@
+= Selected the webservice framework =
+Matt Baumann <matthias.baumann@hsr,ch>
+v1.0, November 18, 2018
+:Author: Matt Baumann
+:Email: matthias.baumann@hsr.ch
+:Date: 18. November 2018
+:Revision: Version 1.0
+:icons: font
+:y: icon:check[role="green"]
+:n: icon:times[role="red"]
+
+. Status: accepted
+. Deciders: Matthias Baumann, Olaf Zimmermann
+. Date: 2018-11-18
+
+== Context and Problem Statement
+
+We need a testbed application backend for supporting our microfrontends. The backend must provide data on various channels:
+. JSON REST API for Frontend Composition
+. Backend Site generation Portal Composition
+. HTML File generation with Edge Side Includes for API Gateway composition
+. Administration UI for seeing the data saved on the service
+
+It has to be easily deployable on all platforms. Therefore, portability of the same code accross all major operating systems
+is very important requirement.
+
+== Considered Options
+
+I considered the following frameworks and programming languages
+. Spring
+. NodeJS - ExpressJS
+. ASP DotNet Core
+
+== Decision Outcome
+
+Chosen option: _option 1_. The spring framework is part of the lecture series, therefore it is very familiar for the
+students to read. Also, it seems to support all defined requirements.
+
+=== Negative consequences
+
+. Long build times with the build system
+. Huge memory consumption, > 500MB per Service, together 2.5 GB free memory is requirement
+
+== Pros and Cons of the Options
+
+=== Spring
+
+https://spring.io/[Spring application framework]
+
+. {y} Familiar to the student
+. {y} Has all required features
+. {n} Huge memory consumption
+. {n} Unnecessary framework complexity
+
+===  Decompose by business capability
+
+https://expressjs.com/[Express JS]
+
+. {y} Simple to implement
+. {y} Memory friendly
+. {y} Understood by the students
+
+=== Monolithic Architecture
+
+https://docs.microsoft.com/en-us/dotnet/core/[.Net Core]
+
+. {y} Now portable framework
+. {n} Risky option, not understood platform
+. {n} Immensive learning curve until first line of code
+to design three independent services
+. {n} There is no need to implement microfrontends on the client whichout
+a microservice architecture in the backend.
+
+== Links
+
+https://mindmajix.com/java-spring-vs-node-js[Comparison NodeJS to Spring]

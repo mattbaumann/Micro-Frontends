@@ -9,6 +9,7 @@ buildscript {
 
 plugins {
     id "idea"
+    id "eclipse"
 }
 
 apply plugin: 'org.asciidoctor.convert'

@@ -3,7 +3,9 @@ package ch.hsr.apparch.purchaselist.repository;
 import ch.hsr.apparch.purchaselist.model.PurchaseList;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
+@CrossOrigin
 @RepositoryRestResource
 public interface PurchaseListRepository extends PagingAndSortingRepository<PurchaseList, Long> {
 

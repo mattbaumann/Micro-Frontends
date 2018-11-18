@@ -1,0 +1,62 @@
+= Selected the build system =
+Matt Baumann <matthias.baumann@hsr,ch>
+v1.0, November 18, 2018
+:Author: Matt Baumann
+:Email: matthias.baumann@hsr.ch
+:Date: 18. November 2018
+:Revision: Version 1.0
+:icons: font
+:y: icon:check[role="green"]
+:n: icon:times[role="red"]
+
+. Status: accepted
+. Deciders: Matthias Baumann, Olaf Zimmermann
+. Date: 2018-11-18
+
+== Context and Problem Statement
+
+We need to have a build system that automates the spring tasks. Compiling by hand is not feasible as it needs to mutch
+time to do it by hand.
+
+It has to be simple in usage, be available on the target computer. Also, it has to be extendable in order to provide
+an adaption for the _NodeJS Frontend_.
+
+It also generates the ide specific configuration files automatically. The student does not have to setup the project
+manually,
+
+== Considered Options
+
+I considered the following build systems
+. Gradle
+. Maven
+
+== Decision Outcome
+
+Chosen option: _option 1_. Gradle features a self-installation from the project directory with the first build command.
+Also is very extendable.
+
+=== Negative consequences
+
+. Long build times with the build system
+
+== Pros and Cons of the Options
+
+=== Gradle
+
+https://gradle.org/[Gradle build system]
+
+. {y} Self-installable
+. {y} IDE Integration
+. {y} Very extendable
+. {n} Huge memory consumption
+. {n} Fast changes to the system, build configuration is in near future outdated.
+
+===  Maven
+
+https://maven.apache.org/what-is-maven.html[Maven build system]
+
+. {y} Simple to implement
+. {y} Memory friendly
+. {y} Understood by the students
+. {n} Not self-installable
+. {n} No simple usable from commandline
