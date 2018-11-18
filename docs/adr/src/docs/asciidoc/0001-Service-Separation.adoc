@@ -1,0 +1,86 @@
+= Separated the requirements into services =
+Matt Baumann <matthias.baumann@hsr,ch>
+v1.0, November 18, 2018
+:Author: Matt Baumann
+:Email: matthias.baumann@hsr.ch
+:Date: 18. November 2018
+:Revision: Version 1.0
+:icons: font
+:y: icon:check[role="green"]
+:n: icon:times[role="red"]
+
+. Status: accepted
+. Deciders: Matthias Baumann, Olaf Zimmermann
+. Date: 2018-11-18
+
+== Context and Problem Statement
+
+We need to have a testbed of three services in order to showcase the
+composition of each UI.
+
+How do we separate the data over the three services.
+
+== Considered Options
+
+I considered the following patterns in order to separate the domain model
+into microservices.
+. Decompose by subdomain
+. Decompose by business capability
+. Monolithic Architecture
+
+== Decision Outcome
+
+Chosen option: _option 2_. Separation of the domain model into services
+was not part of the SA and saving time for other tasks was a priority, since
+I write the thesis alone. The third option does not meet the requirement
+of three independent services.
+
+The second option meets all requirements and is also very simple to explain,
+therefore, it is a good exemplary separation.
+
+=== Negative consequences
+
+. It is maybe an overly simplistic method, which does not represent the
+true complexity of business applications.
+. It gives less possibility for inter-service data coordination. I mean
+there is less potential to show data consistency over several services.
+
+== Pros and Cons of the Options
+
+=== Decompose by subdomain
+
+https://microservices.io/patterns/decomposition/decompose-by-subdomain.html[microservices.io - Decompose by subdomain]
+
+. {y} Shows the requirements of a typical software development process
+on the green field (see lecture SE2).
+. {y} Matches good the domain model
+. {n} Over complicated for an exemplary application
+. {n} Not necessary task
+
+===  Decompose by business capability
+
+https://microservices.io/patterns/decomposition/decompose-by-business-capability.html[microservices.io - Decompose by business capability]
+
+. {y} Simple to implement and time saving option
+. {y} Does not require to make inter-service data consistency constraints
+. {y} Simple method helps understanding the process
+. {n} Over simplistic
+. {n} Does not represent the business application complexity - Normal
+applications are interconnected with each other
+
+=== Monolithic Architecture
+
+https://martinfowler.com/bliki/MonolithFirst.html[Creating a monolithic application then breaking up]
+
+. {y} Good experiences by other architects
+. {y} Simplest solution
+. {y} Fast development process
+. {n} Over simplistic
+. {n} Does not represent the requirements - Which state that I have
+to design three independent services
+. {n} There is no need to implement microfrontends on the client whichout
+a microservice architecture in the backend.
+
+== Links
+
+. https://eprints.hsr.ch/476/[Gysel, Michael and Kölbener, Lukas (2015) Service Cutter - A Structured Way to Service Decomposition. Bachelor thesis, HSR Hochschule für Technik Rapperswil.]

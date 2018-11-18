@@ -1,0 +1,34 @@
+plugins {
+  id 'eclipse'
+  id 'idea'
+}
+
+task install(type: Exec) {
+    workingDir "."
+    inputs.dir "."
+    group = BasePlugin.BUILD_GROUP
+    commandLine "npm" + System.getProperty("os.name").toUpperCase().contains("WINDOWS") ? ".cmd" : "", "install"
+}
+
+task build(type: Exec) {
+    dependsOn 'install'
+    workingDir "."
+    inputs.dir "."
+    group = BasePlugin.BUILD_GROUP
+    commandLine "npm" + System.getProperty("os.name").toUpperCase().contains("WINDOWS") ? ".cmd" : "", "run", "build"
+}
+
+task start(type: Exec) {
+    dependsOn 'install'workingDir "."
+    inputs.dir "."
+    group = BasePlugin.BUILD_GROUP
+    commandLine "npm" + System.getProperty("os.name").toUpperCase().contains("WINDOWS") ? ".cmd" : "", "start"
+}
+
+task test(type: Exec) {
+  dependsOn "install"
+    workingDir "."
+    inputs.dir "."
+    group = BasePlugin.BUILD_GROUP
+    commandLine "npm" + System.getProperty("os.name").toUpperCase().contains("WINDOWS") ? ".cmd" : "", "test"
+}

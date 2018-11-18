@@ -1,0 +1,68 @@
+= Selected the build system =
+Matt Baumann <matthias.baumann@hsr,ch>
+v1.0, November 18, 2018
+:Author: Matt Baumann
+:Email: matthias.baumann@hsr.ch
+:Date: 18. November 2018
+:Revision: Version 1.0
+:icons: font
+:y: icon:check[role="green"]
+:n: icon:times[role="red"]
+
+. Status: accepted
+. Deciders: Matthias Baumann, Olaf Zimmermann
+. Date: 2018-11-18
+
+== Context and Problem Statement
+
+We need an exemplary application that works with data in a meaningful manner. This application is then separated into
+three projects and composed together again with webFragments.
+
+== Considered Options
+
+I considered the following datastores
+. Angular.JS
+. React JS
+. Lucid JS with JQuery
+
+== Decision Outcome
+
+Chosen option: _option 2_. React is fairly simple UI framework. Angular proved to be very complicated and tedious to
+program against. Lucid JS with JQuery is not productive enough.
+
+=== Negative consequences
+
+. HTML Tags and React Components are mixed together in markup.
+. HTML Tags are written inside Javascript code
+
+== Pros and Cons of the Options
+
+=== Angular
+
+https://angular.io/[Angular]
+
+. {y} All needed components provided
+. {y} Testing already prepared
+. {y} Packaging system
+. {y} Good separation of concerns
+. {n} Performance
+. {n} Hard to program (single HTTP GET involves HTTP Library, Reactive Streams, Dependency Injection)
+
+===  React
+
+https://reactjs.org/[React JS]
+
+. {y} Productive programming
+. {y} Good UI components
+. {n} HTML in JS Files
+- {n} Components not separable
+
+=== Lucid JS with JQuery
+
+https://jquery.com/[JQuery]
+
+. {y} Performance
+. {y} Understood by the students
+. {n} Realistic example
+. {n} Hard to setup
+. {n} No UI Component library

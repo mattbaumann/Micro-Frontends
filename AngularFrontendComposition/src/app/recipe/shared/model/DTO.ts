@@ -1,4 +1,4 @@
-import { LinkList } from "../../../utilities/Hateoas";
+import { LinkList } from "./Hateoas";
 
 export interface RecipeListDTO {
   recipes : RecipeDTO[];

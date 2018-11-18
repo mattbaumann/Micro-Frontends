@@ -1,0 +1,79 @@
+
+
+Recipe Service
+~~~~~~~~~~~~~~
+
+A service that manages recipes and is the main use case for the client. A recipe has _recipe items_ (instructions) and
+_recipe ingredients_. Also are all recipe categorized in categories to help searching.
+
+The recipe service is available under: http://localhost:9601/
+
+The following explanations assume the base url above.
+
+include::recipe_service_api.adoc[]
+
+Spring static assets server
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Static assets used for the Spring WebMVC Controller page.
+
+.Paths for static server
+[%header]
+|===
+| Path | File | Description
+
+| `/` | `static/index.html` | The file `index.html` will be served under `/` (root path). This HTML file contains a redirect to the home-page of the Spring WebMVC controller's home page under /controller/home.
+| `/static/js` | `/static/static/js` | Bootstrap JS and it's dependecies
+| `/static/css` | `/static/static/css` | Bootstrap CSS and fontawesome
+| `/static/webfonts` | `/static/static/webfonts` | Webfonts for fontawesome
+|===
+
+
+Thymeleaf backend rendered templates server
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Thymeleaf renders the following pages for the spring framework.
+
+.Paths for thymeleaf backend rendered templates server
+[%header]
+|===
+| Path | File | Description
+| `/error/404` | /error/404.html` | Rendered when the path was not found
+|===
+
+Spring MVC Controllers
+^^^^^^^^^^^^^^^^^^^^^^
+
+Expose endpoints for the browser to create backend rendered site for administration and fragments to include.
+
+While the `ErrorPageController` handles all errors, that are thrown in the `CRUD Controllers`.
+
+Page Controllers are:
+
+* CategoryController
+* HomeController
+* RecipeController
+
+
+.CategoryController
+[%header]
+|===
+| Method | Path | Function | Description
+| GET | /controller/category/list | list() | List all categories
+| GET | /controller/category/(id)/edit | edit(id) | Edit new or existing category
+| POST | /controller/category/(id)/update | update(id, name) | Update existing record
+| POST | /controller/category/(id)/add | add(name) | Add new record
+| GET | /controller/category/(id)/delete | delete(id) | Removes the record
+|===
+
+.RecipeController
+[%header]
+|===
+| Method | Path | Function | Description
+| GET | /controller/recipe/list | list() | List all recipes
+| GET | /controller/recipe/list/category/(id)/list | listByCategory(id) | List recipes in category
+| GET | /controller/recipe/(id)/edit | edit(id) | Edit new or existing record
+| POST | /controller/recipe/(id)/update | update(id, name, categoryId) | Update record
+| POST | /controller/recipe/add | add(name, categoryId) | Add new record
+| GET | /controller/recipe/(id)/delete | delete(id) | Remove record
+|===

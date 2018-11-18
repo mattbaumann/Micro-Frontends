@@ -1,0 +1,19 @@
+= Architectural Decision Log
+Matt Baumann <matthias.baumann@hsr,ch>
+v1.0, November 18, 2018
+:Author: Matt Baumann
+:Email: matthias.baumann@hsr.ch
+:Date: 18. November 2018
+:Revision: Version 1.0
+
+This log lists the architectural decisions for micro-frontend composition.
+
+. link:0001-Service-Separation.html[ADR-0001] - Separate domain into microservices
+. link:0002-Service-Framework.html[ADR-0002] - Backend Microservice Framework
+. link:0003-Build-System.html[ADR-0003] - Build System
+. link:0004-DBMS.html[ADR-0004] - Data Persistence
+. link:0005-Frontend.html[ADR-0005] - Frontend
+
+For new ADRs, please use [template.md](template.md) as basis.
+More information on MADR is available at <https://adr.github.io/madr/>.
+General information about architectural decision records is available at <https://adr.github.io/>.

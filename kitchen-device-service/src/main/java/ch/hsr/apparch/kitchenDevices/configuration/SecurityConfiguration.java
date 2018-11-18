@@ -1,4 +1,4 @@
-package ch.hsr.apparch.recipe.configuration;
+package ch.hsr.apparch.kitchenDevices.configuration;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
