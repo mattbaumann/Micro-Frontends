@@ -12,6 +12,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -42,6 +43,7 @@ public class Application {
     }
 
     @Bean
+    @Profile("dev")
     public CommandLineRunner insertSampleData(PurchaseListRepository lists, PurchaseListItemRepository listItems) {
         return args -> {
             Random random = new Random();
@@ -58,6 +60,7 @@ public class Application {
     }
 
     @Bean
+    @Profile("dev")
     public CommandLineRunner logPortAtStartup(@Value("${server.port}") int port) {
         return args -> LOGGER.info("Spring Server 'Purchase List' is running under port {}", port);
     }
