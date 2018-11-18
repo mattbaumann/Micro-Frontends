@@ -6,6 +6,7 @@ import ch.hsr.apparch.purchaselist.model.PurchaseList;
 import ch.hsr.apparch.purchaselist.model.PurchaseListItem;
 import ch.hsr.apparch.purchaselist.repository.PurchaseListItemRepository;
 import ch.hsr.apparch.purchaselist.repository.PurchaseListRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/controller")
+@RequiredArgsConstructor
 public class PurchaseListController {
 
     private static final String BASE_URL = "/controller/purchaseList";
@@ -31,12 +33,6 @@ public class PurchaseListController {
     private final PurchaseListRepository purchaseLists;
 
     private final PurchaseListItemRepository purchaseListItems;
-
-    @Autowired
-    public PurchaseListController(PurchaseListRepository purchaseLists, PurchaseListItemRepository purchaseListItems) {
-        this.purchaseLists = purchaseLists;
-        this.purchaseListItems = purchaseListItems;
-    }
 
     @GetMapping("/home")
     public String home() {
@@ -75,11 +71,11 @@ public class PurchaseListController {
     public String updatePurchaseList(@PathVariable(value = "id") Long id,
                                      @RequestParam("name") String name,
                                      @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-        purchaseLists.findById(id)
+        return purchaseLists.findById(id)
                 .map(purchaseList -> purchaseList.setName(name).setDate(date))
                 .map(purchaseLists::save)
+                .map(purchaseList -> PurchaseListController.REDIRECT_CONTROLLER_LIST_VIEW)
                 .orElseThrow(ResourceNotFoundException.withRecordNotFoundMessage(PurchaseList.class, id));
-        return PurchaseListController.REDIRECT_CONTROLLER_LIST_VIEW;
     }
 
     @GetMapping("/purchaseList/{id}/delete")
@@ -108,7 +104,8 @@ public class PurchaseListController {
                                         @PathVariable(value = "id", required = false) Optional<Long> id,
                                         Model model) {
         model.addAttribute(POSTURL_KEY,
-                id.map(i -> BASE_URL + '/' + plid + "/item/" + i + "/update")
+                id.filter(i -> purchaseListItems.findById(i).isPresent())
+                        .map(i -> BASE_URL + '/' + plid + "/item/" + i + "/update")
                         .orElse(BASE_URL + '/' + plid + "/item/add")
         );
         model.addAttribute(SINGULAR_MODEL_KEY,

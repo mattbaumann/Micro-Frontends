@@ -6,7 +6,6 @@
 <p th:replace="helpers/menu :: main-nav">
 <div id="fragment">
     <form method="post" th:action="${posturl}" th:fragment="content">
-        <input type="hidden" name="integrationPort" th:value="${integrationPort}">
         <div class="form-group">
             <label for="kitchenDeviceName">Name</label>
             <input id="kitchenDeviceName" name="name" type="text" required class="form-control"

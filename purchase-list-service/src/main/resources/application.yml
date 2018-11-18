@@ -23,3 +23,6 @@ spring:
     rest:
       base-path: "/api"
       defaultPageSize: 5
+
+  profiles:
+    default: "dev"
