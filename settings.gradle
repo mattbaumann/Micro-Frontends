@@ -10,7 +10,7 @@
 rootProject.name = "Micro-Frontends"
 
 // Service demonstration projects
-include "kitchen-device-service", "purchase-list-service", "recipe-service"
+include "services:kitchen-device-service", "services:purchase-list-service", "services:recipe-service"
 
 // Frontend composition projects
 include "frontend-composition"

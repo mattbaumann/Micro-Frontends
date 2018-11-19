@@ -22,9 +22,11 @@ This folder contains the following subprojects:
 | docs/adr | Records of architecture relevant decisions
 | docs/architecture | Architecture documentation based on Arc42
 | docs/url | URL endpints of the services
+| docs/testChecklists | Checklists for manual test cases
 | kitchen-device-service | Kitchen device (slave) service
 | purchase-list-service | Purchase list (slave) service
 | recipe-service | Recipe (master) service
+| frontend-composition | full frontend for single frontend testing
 |===
 
 == Execute under Mac and Linux

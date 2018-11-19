@@ -1,0 +1,147 @@
+buildscript {
+	repositories {
+		mavenCentral()
+		maven { url "https://repo.spring.io/snapshot" }
+		maven { url "https://repo.spring.io/milestone" }
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.6.BUILD-SNAPSHOT")
+	}
+}
+
+plugins {
+    id "java"
+    id "eclipse"
+    id "idea"
+    id 'war'
+    id 'pmd'
+    id 'io.franzbecker.gradle-lombok' version '1.14'
+}
+
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group = 'ch.hsr.apparch'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenLocal()
+    maven { url "https://repo.spring.io/snapshot" }
+    maven { url "https://repo.spring.io/milestone" }
+    maven { url 'https://repo.spring.io/libs-snapshot' }
+    mavenCentral()
+}
+
+configurations {
+    asciidoclet
+}
+
+eclipse {
+    classpath {
+        downloadJavadoc = true
+        downloadSources = true
+    }
+}
+
+idea {
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
+}
+
+compileJava {
+    options.warnings = true
+    options.deprecation = true
+    options.compilerArgs += ["-Xdoclint:none", "-Xlint:all"]
+}
+
+compileTestJava {
+    options.warnings = true
+    options.deprecation = true
+    options.compilerArgs += ["-Xdoclint:none", "-Xlint:all"]
+}
+
+// Remove all dependencies to logback (Logging framework) - we use Log4J2
+configurations.all({
+    exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+})
+
+dependencies {
+    asciidoclet 'org.asciidoctor:asciidoclet:1.+'
+
+    //
+    // Core
+    //
+    implementation('org.apache.commons:commons-lang3:3.7')
+    implementation('org.springframework.boot:spring-boot-starter')
+    // Logging with Log4J2 - https://logging.apache.org/log4j/2.x/
+    implementation('org.springframework.boot:spring-boot-starter-log4j2')
+
+    //
+    // Spring web services
+    //
+
+    // Controllers - Thymeleaf rendering - https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html
+	implementation('org.springframework.boot:spring-boot-starter-thymeleaf')
+    // https://spring.io/guides/gs/rest-hateoas/
+    // implementation('org.springframework.boot:spring-boot-starter-hateoas')
+    implementation('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
+
+    // Backend composition see https://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/#boot-features-webclient
+    implementation('org.springframework.boot:spring-boot-starter-webflux')
+    // Reactor: https://www.infoq.com/articles/reactor-by-example/
+
+    // REST API - https://docs.spring.io/spring-data/rest/docs/current/reference/html/
+    implementation('org.springframework.boot:spring-boot-starter-data-rest')
+    implementation('org.springframework.data:spring-data-rest-hal-browser')
+
+    // CORS implementation
+    implementation('org.springframework.boot:spring-boot-starter-security')
+
+    // Database backend - https://docs.spring.io/spring-data/jpa/docs/current/reference/html/
+    implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+	runtimeOnly('com.h2database:h2')
+
+    // https://projectlombok.org/features/all
+    compileOnly('org.projectlombok:lombok:1.18.4')
+    compile 'com.google.code.findbugs:jsr305:3.0.2'
+
+    // Javadoc needs this dependency to compile
+    compile ('javax.interceptor:javax.interceptor-api:1.2.2')
+
+    annotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor 'org.apache.logging.log4j:log4j-core'
+
+    //
+    // Testing
+	//
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.mockito', module: 'mockito-core'
+        exclude group: 'junit', module: 'junit'
+    }
+    // HTTP REST API Testing - http://rest-assured.io/
+    testImplementation group: 'io.rest-assured', name: 'spring-mock-mvc'
+    // JUnit 5 Runner - https://junit.org/junit5/
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api'
+    testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-params'
+
+    // Mocking framework - https://site.mockito.org/
+    testImplementation group: 'org.mockito', name: 'mockito-core'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+javadoc {
+    options.docletpath = configurations.asciidoclet.files.toList()
+    options.doclet = 'org.asciidoctor.Asciidoclet'
+}
+
+task testJavadoc(type: Javadoc) {
+    source = sourceSets.test.allJava
+}
