@@ -1,23 +1,8 @@
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'org.asciidoctor:asciidoctor-gradle-plugin:1.5.9.1'
-    }
-}
 
 plugins {
     id "idea"
     id "eclipse"
 }
 
-apply plugin: 'org.asciidoctor.convert'
-
 group = "url"
 version = "1.0.0"
-
-repositories {
-    mavenLocal()
-    mavenCentral()
-}

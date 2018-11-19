@@ -7,7 +7,7 @@ task install(type: Exec) {
     workingDir "."
     inputs.dir "."
     group = BasePlugin.BUILD_GROUP
-    commandLine "npm" + System.getProperty("os.name").toUpperCase().contains("WINDOWS") ? ".cmd" : "", "install"
+    commandLine "npm" + (System.getProperty("os.name").toUpperCase().contains("WINDOWS") ? ".cmd" : ""), "install"
 }
 
 task build(type: Exec) {
@@ -15,14 +15,14 @@ task build(type: Exec) {
     workingDir "."
     inputs.dir "."
     group = BasePlugin.BUILD_GROUP
-    commandLine "npm" + System.getProperty("os.name").toUpperCase().contains("WINDOWS") ? ".cmd" : "", "run", "build"
+    commandLine "npm" + (System.getProperty("os.name").toUpperCase().contains("WINDOWS") ? ".cmd" : ""), "run", "build"
 }
 
 task start(type: Exec) {
     dependsOn 'install'workingDir "."
     inputs.dir "."
     group = BasePlugin.BUILD_GROUP
-    commandLine "npm" + System.getProperty("os.name").toUpperCase().contains("WINDOWS") ? ".cmd" : "", "start"
+    commandLine "npm" + (System.getProperty("os.name").toUpperCase().contains("WINDOWS") ? ".cmd" : ""), "start"
 }
 
 task test(type: Exec) {
@@ -30,5 +30,5 @@ task test(type: Exec) {
     workingDir "."
     inputs.dir "."
     group = BasePlugin.BUILD_GROUP
-    commandLine "npm" + System.getProperty("os.name").toUpperCase().contains("WINDOWS") ? ".cmd" : "", "test"
+    commandLine "npm" + (System.getProperty("os.name").toUpperCase().contains("WINDOWS") ? ".cmd" : ""), "test"
 }

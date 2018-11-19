@@ -1,0 +1,2 @@
+
+include 'kitchen-device-service', 'purchase-list-service', 'recipe-service'
