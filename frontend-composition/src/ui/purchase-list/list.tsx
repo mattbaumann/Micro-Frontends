@@ -1,52 +1,67 @@
-import { Component } from "react";
+import React, { Component } from "react";
 import { PurchaseListBackend, PurchaseListDTOList } from "../../dal/PurchaseListBackend";
-import React from "react";
-import { Button, Icon, Pagination, PaginationProps, Table } from "semantic-ui-react";
-import { MultiResultHolder } from "../../dal/HateoasDTL";
+import { Button, Dimmer, Icon, Loader, Pagination, PaginationProps, Segment, Table } from "semantic-ui-react";
+import { MultiResultHolder, SortState } from "../../dal/HateoasDTL";
 import { RecipeDTO } from "../../dal/RecipeBackend";
 import { Redirect } from "react-router";
+import ConfirmationButton from "../kitchen-device/confirmationButton";
 
 export default class ListPurchaseLists extends Component<Parameters, State> {
 
-    constructor(properties: Parameters) {
-        super(properties);
-        this.state = {purchaseLists: {
-            _embedded: {purchaseLists: []},
-                page: {number:0, totalPages: 0, totalElements: 0, size: 0},
-                _links: {}},
-            page: 0,
-            redirectPath: ''
-        };
-        this.props.backend.defaultPageDto().then(value => this.setState({ purchaseLists: value }));
-    }
-
-    navigateEdit = (id: number) => () => this.setState({ redirectPath: `/purchaseList/add/${id}` });
-
-    requestDeletion = (id: number) => () =>
-        this.props.backend.deleteDtoById(id)
-            .then(() => this.props.backend.defaultPageDto())
-            .then(value => this.setState({ purchaseLists: value }));
-
+    private static readonly EMPTY_STATE = {
+        page: 0,
+        redirectPath: '',
+        sort: new SortState(),
+        selected: -1,
+        elem: Element
+    };
+    navigateEdit = () => this.setState({ redirectPath: `/purchaseList/add/${!!this.state.purchaseLists ? this.state.purchaseLists._embedded.purchaseLists[ this.state.selected ].id : -1}` });
+    navigateAdd = () => this.setState({ redirectPath: `/kitchenDevices/add` });
+    requestDeletion = () => {
+        if (this.state.selected == -1) {
+        } else {
+            this.props.backend.deleteDtoById(!!this.state.purchaseLists ? this.state.purchaseLists._embedded.purchaseLists[ this.state.selected ].id : -1)
+                .then(() => this.props.backend.pageDto(this.state.page, this.state.sort))
+                .then(value => this.setState({ purchaseLists: value }));
+        }
+    };
     pageChange = (event: any, data: PaginationProps) =>
-        this.props.backend.pageDto(data.activePage as number)
+        this.props.backend.pageDto(data.activePage as number, this.state.sort)
+            .then(value => this.setState({ purchaseLists: value, page: data.activePage as number }));
+    tableSort = (clickedColumn: string) => () => {
+        this.setState(() => {
+            // Do not reverse, imperative programming
+            this.state.sort.shouldReverseDirection(this.state.sort.column == clickedColumn);
+            this.state.sort.column = clickedColumn;
+            return this.state;
+        });
+        this.props.backend.pageDto(this.state.page, this.state.sort)
             .then(value => this.setState({ purchaseLists: value }));
-
-    renderItem = (purchaseList: RecipeDTO) =>
-        <Table.Row key={purchaseList.id}>
+    };
+    rowSelection = (selectedIndex: number) => () => {
+        this.setState({ selected: this.state.selected != selectedIndex ? selectedIndex : -1 });
+    };
+    renderItem = (purchaseList: RecipeDTO, index: number) =>
+        <Table.Row key={purchaseList.id} active={this.state.selected == index}>
             {this.renderRedirect()}
             <Table.Cell>
-                {purchaseList.id}
+                <a onClick={this.rowSelection(index)}>{purchaseList.id}</a>
             </Table.Cell>
             <Table.Cell>
-                {purchaseList.name}
+                <a onClick={this.rowSelection(index)}>{purchaseList.name}</a>
             </Table.Cell>
             <Table.Cell>
-                {purchaseList.date}
+                <a onClick={this.rowSelection(index)}>{purchaseList.date}</a>
             </Table.Cell>
-            <Table.Cell>
-                <Button icon='pencil' content='Edit' onClick={this.navigateEdit(purchaseList.id)}/>
-                <Button icon='trash' content='Delete' onClick={this.requestDeletion(purchaseList.id)}/>
-            </Table.Cell>
+        </Table.Row>;
+    renderHeader = () =>
+        <Table.Row>
+            <Table.HeaderCell sorted={this.state.sort.column == 'id' ? this.state.sort.getLongDirection() : undefined}
+                              onClick={this.tableSort('id')}>Id</Table.HeaderCell>
+            <Table.HeaderCell sorted={this.state.sort.column == 'name' ? this.state.sort.getLongDirection() : undefined}
+                              onClick={this.tableSort('name')}>Name</Table.HeaderCell>
+            <Table.HeaderCell sorted={this.state.sort.column == 'date' ? this.state.sort.getLongDirection() : undefined}
+                              onClick={this.tableSort('date')}>Date</Table.HeaderCell>
         </Table.Row>;
 
     renderRedirect(): React.ReactNode {
@@ -54,21 +69,12 @@ export default class ListPurchaseLists extends Component<Parameters, State> {
             return (<Redirect to={this.state.redirectPath}/>);
         }
     }
-                
-    renderHeader = () =>
-        <Table.Row>
-            <Table.HeaderCell>Id</Table.HeaderCell>
-            <Table.HeaderCell>Name</Table.HeaderCell>
-            <Table.HeaderCell>Date</Table.HeaderCell>
-            <Table.HeaderCell>Actions</Table.HeaderCell>
-        </Table.Row>;
-
     renderPagination = () =>
         <Table.Row>
-            <Table.HeaderCell colSpan='4'>
+            <Table.HeaderCell colSpan='5'>
                 <Pagination
-                    totalPages={this.state.purchaseLists.page.totalPages}
-                    activePage={this.state.purchaseLists.page.number}
+                    totalPages={!!this.state.purchaseLists ? this.state.purchaseLists.page.totalPages : 0}
+                    activePage={!!this.state.purchaseLists ? this.state.purchaseLists.page.number : 0}
                     ellipsisItem={{ content: <Icon name='ellipsis horizontal'/>, icon: true }}
                     firstItem={null}
                     lastItem={null}
@@ -78,28 +84,58 @@ export default class ListPurchaseLists extends Component<Parameters, State> {
                 />
             </Table.HeaderCell>
         </Table.Row>;
-        
+    renderButtons = () =>
+        <div>
+            <Button primary onClick={this.navigateAdd}>Add</Button>
+            <Button secondary onClick={this.navigateEdit}>Edit</Button>
+            <ConfirmationButton openerContent='Delete Item'
+                                onClick={this.requestDeletion}
+                                popupButtonColor='red'
+                                popupButtonContent='Confirm'/>
+        </div>;
+    renderTable = () =>
+        <Segment>
+            {this.renderRedirect()}
+            {this.renderButtons()}
+            <Table celled sortable structured fixed>
+                <Table.Header>
+                    {this.renderHeader()}
+                </Table.Header>
+                <Table.Body>
+                    {this.state.purchaseLists != undefined && this.state.purchaseLists._embedded.purchaseLists
+                        .map((value, index) => this.renderItem(value, index))}
+                </Table.Body>
+                <Table.Footer>
+                    {this.renderPagination()}
+                </Table.Footer>
+            </Table>
+        </Segment>;
+    renderIndicator = () =>
+        <Segment>
+            <Dimmer active>
+                <Loader/>
+            </Dimmer>
+        </Segment>;
+
+    constructor(properties: Parameters) {
+        super(properties);
+        this.state = ListPurchaseLists.EMPTY_STATE;
+        this.props.backend.defaultPageDto().then(value => this.setState({ purchaseLists: value }));
+    }
+
     render(): React.ReactNode {
-        return <Table celled>
-            <Table.Header>
-                {this.renderHeader()}
-            </Table.Header>
-            <Table.Body>
-                {this.state.purchaseLists._embedded.purchaseLists.map(purchaseList => this.renderItem(purchaseList))}
-            </Table.Body>
-            <Table.Footer>
-                {this.renderPagination()}
-            </Table.Footer>
-        </Table>
+        return this.state.purchaseLists != undefined ? this.renderTable() : this.renderIndicator();
     }
 }
 
-    interface State {
-        purchaseLists: MultiResultHolder<PurchaseListDTOList>;
-        redirectPath: string;
-        page: number;
-    }
+interface State {
+    purchaseLists?: MultiResultHolder<PurchaseListDTOList>;
+    redirectPath: string;
+    page: number;
+    sort: SortState;
+    selected: number;
+}
 
-    interface Parameters {
-        backend: PurchaseListBackend;
-    }
+interface Parameters {
+    backend: PurchaseListBackend;
+}

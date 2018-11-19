@@ -1,4 +1,4 @@
-import { HateoasDTL, HateoasDTO} from './HateoasDTL';
+import { HateoasDTL, HateoasDTO } from './HateoasDTL';
 
 export interface KitchenDeviceDTOList {
     kitchenDevices: KitchenDeviceDTO[];
@@ -13,6 +13,6 @@ export interface KitchenDeviceDTO extends HateoasDTO {
 
 export class KitchenDeviceBackend extends HateoasDTL<KitchenDeviceDTO, KitchenDeviceDTOList> {
     constructor() {
-        super("http://localhost:9603/api", "/items");
+        super("http://localhost:9603/api", "/kitchenDevices");
     }
 }
