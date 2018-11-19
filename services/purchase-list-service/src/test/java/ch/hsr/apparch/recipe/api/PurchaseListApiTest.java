@@ -1,5 +1,6 @@
 package ch.hsr.apparch.recipe.api;
 
+import ch.hsr.apparch.purchaselist.Application;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.config.LogConfig;
@@ -26,7 +27,7 @@ import static org.hamcrest.Matchers.*;
 @Log4j2
 @Tag("API")
 @Profile("test")
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = Application.class)
 @ExtendWith(SpringExtension.class)
 class PurchaseListApiTest {
 

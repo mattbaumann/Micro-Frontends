@@ -1,21 +1,16 @@
 package ch.hsr.apparch.kitchenDevices.controller;
 
 
+import ch.hsr.apparch.kitchenDevices.exceptions.ResourceNotFoundException;
 import ch.hsr.apparch.kitchenDevices.model.KitchenDevice;
 import ch.hsr.apparch.kitchenDevices.repository.KitchenDeviceRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.MessageFormat;
 import java.util.Optional;
 
 @Controller
@@ -68,7 +63,7 @@ public class KitchenDeviceController {
         kitchenDevices.findById(id)
                 .map(kitchenDevice -> kitchenDevice.setName(name).setFunction(function).setAvailable(available))
                 .map(kitchenDevices::save)
-                .orElseThrow(ResourceNotFoundException::new);
+                .orElseThrow(ResourceNotFoundException.withRecordNotFoundMessage(KitchenDevice.class, id));
         return REDIRECT_CONTROLLER_LIST_VIEW;
     }
 

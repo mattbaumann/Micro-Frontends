@@ -1,6 +1,7 @@
 package ch.hsr.apparch.purchaselist.controller;
 
 
+import ch.hsr.apparch.kitchenDevices.Application;
 import ch.hsr.apparch.kitchenDevices.controller.KitchenDeviceController;
 import ch.hsr.apparch.kitchenDevices.exceptions.ResourceNotFoundException;
 import ch.hsr.apparch.kitchenDevices.model.KitchenDevice;
@@ -32,13 +33,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @Tag("Controller")
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes = Application.class)
 class KitchenDeviceTest {
 
     static final String PLURAL_MODEL_KEY = "models";
     static final String SINGULAR_MODEL_KEY = "model";
     static final String POSTURL_KEY = "posturl";
-    static final String REDIRECT_CONTROLLER_LIST_VIEW = "redirect:/controller/purchaseList/list";
+    static final String REDIRECT_CONTROLLER_LIST_VIEW = "redirect:/controller/kitchenDevice/list";
     
     @MockBean
     KitchenDeviceRepository kitchenDevices;
@@ -68,7 +69,7 @@ class KitchenDeviceTest {
     void testListKitchenDevices() {
         Mockito.when(kitchenDevices.findAll()).thenReturn(Collections.emptyList());
 
-        assertThat(controller.listKitchenDevices(model)).isEqualTo("list/list");
+        assertThat(controller.listKitchenDevices(model)).isEqualTo("list");
 
         Mockito.verify(kitchenDevices, Mockito.never()).findAll(Pageable.unpaged());
         Mockito.verify(model).addAttribute(PLURAL_MODEL_KEY, kitchenDevices.findAll());
@@ -76,10 +77,10 @@ class KitchenDeviceTest {
 
     @Test
     void testAddKitchenDeviceView() {
-        assertThat(controller.editKitchenDevice(Optional.empty(), model)).isEqualTo("list/edit");
+        assertThat(controller.editKitchenDevice(Optional.empty(), model)).isEqualTo("edit");
 
         Mockito.verify(model).addAttribute(SINGULAR_MODEL_KEY, new KitchenDevice());
-        Mockito.verify(model).addAttribute(POSTURL_KEY, "/controller/purchaseList/add");
+        Mockito.verify(model).addAttribute(POSTURL_KEY, "/controller/kitchenDevice/add");
     }
 
     @Test
@@ -87,7 +88,7 @@ class KitchenDeviceTest {
         final long id = 100;
         Mockito.when(kitchenDevices.findById(id)).thenReturn(Optional.empty());
 
-        assertThatThrownBy(() -> controller.editKitchenDevice(Optional.of(id), model)).isInstanceOf(ResourceNotFoundException.class);
+        assertThat(controller.editKitchenDevice(Optional.of(id), model)).isEqualTo("edit");
     }
 
     @Test
@@ -96,11 +97,11 @@ class KitchenDeviceTest {
         final KitchenDevice entity = new KitchenDevice();
         Mockito.when(kitchenDevices.findById(id)).thenReturn(Optional.of(entity));
 
-        assertThat(controller.editKitchenDevice(Optional.of(id), model)).isEqualTo("list/edit");
+        assertThat(controller.editKitchenDevice(Optional.of(id), model)).isEqualTo("edit");
 
         Mockito.verify(kitchenDevices).findById(id);
         Mockito.verify(model).addAttribute(SINGULAR_MODEL_KEY, entity);
-        Mockito.verify(model).addAttribute(POSTURL_KEY, "/controller/purchaseList/" + id + "/update");
+        Mockito.verify(model).addAttribute(POSTURL_KEY, "/controller/kitchenDevice/" + id + "/update");
     }
 
     @Test
