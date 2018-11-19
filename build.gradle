@@ -21,5 +21,8 @@ subprojects {
 }
 
 task prepare(type: Exec) {
-    dependsOn "asciidoc", "javadoc", "pmdMain", "pmdTest", "build", "test", "idea", "eclipse"
+    dependsOn "docs:asciidoc"
+    dependsOn "services:javadoc", "services:pmdMain", "services:pmdTest", "services:build", "services:test", "services:jar", "services:war"
+    dependsOn "frontend-composition:build"
+    dependsOn "idea", "eclipse"
 }

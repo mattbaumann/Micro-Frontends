@@ -1,0 +1,86 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url "https://repo.spring.io/snapshot" }
+        maven { url "https://repo.spring.io/milestone" }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.6.BUILD-SNAPSHOT")
+    }
+}
+
+plugins {
+    id "java"
+    id "eclipse"
+    id "idea"
+    id 'war'
+    id 'pmd'
+    id "org.asciidoctor.convert" version "1.5.3"
+    id 'io.franzbecker.gradle-lombok' version '1.14'
+}
+
+
+
+subprojects {
+
+    buildscript {
+        repositories {
+            mavenCentral()
+            maven { url "https://repo.spring.io/snapshot" }
+            maven { url "https://repo.spring.io/milestone" }
+        }
+        dependencies {
+            classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.6.BUILD-SNAPSHOT")
+        }
+    }
+    
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    eclipse {
+        classpath {
+            downloadJavadoc = true
+            downloadSources = true
+        }
+    }
+
+    idea {
+        module {
+            downloadJavadoc = true
+            downloadSources = true
+        }
+    }
+
+    repositories {
+        mavenLocal()
+        maven { url "https://repo.spring.io/snapshot" }
+        maven { url "https://repo.spring.io/milestone" }
+        maven { url 'https://repo.spring.io/libs-snapshot' }
+        mavenCentral()
+        jcenter()
+    }
+
+    compileJava {
+        options.warnings = true
+        options.deprecation = true
+        options.compilerArgs += ["-Xdoclint:none", "-Xlint:all"]
+    }
+
+    compileTestJava {
+        options.warnings = true
+        options.deprecation = true
+        options.compilerArgs += ["-Xdoclint:none", "-Xlint:all"]
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+
+    subprojects {
+        asciidoclet 'org.asciidoctor:asciidoclet:1.+'
+    }
+
+    task testJavadoc(type: Javadoc) {
+        source = sourceSets.test.allJava
+    }
+}
