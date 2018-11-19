@@ -1,70 +1,67 @@
 import React, { Component } from "react";
-import { Button, Icon, Pagination, PaginationProps, Table } from "semantic-ui-react";
+import { Button, Dimmer, Icon, Loader, Pagination, PaginationProps, Segment, Table } from "semantic-ui-react";
 import { RecipeBackend, RecipeDTO, RecipeListDTO } from "../../dal/RecipeBackend";
 import { Redirect } from "react-router";
-import { MultiResultHolder } from "../../dal/HateoasDTL";
+import { MultiResultHolder, SortState } from "../../dal/HateoasDTL";
+import ConfirmationButton from "../kitchen-device/confirmationButton";
 
 export default class ListRecipes extends Component<Properties, State> {
 
-    constructor(props: Properties) {
-        super(props);
-        this.state = {
-            recipes: {
-                _embedded: { recipes: [] },
-                page: { number: 0, size: 0, totalElements: 0, totalPages: 0 },
-                _links: {},
-            },
-            redirectPath: '',
-            page: 0
-        };
-        this.props.backend.defaultPageDto().then(value => this.setState({ recipes: value }));
-    }
-
-    navigateEdit = (id: number) => () => this.setState({ redirectPath: `/recipe/add/${id}` });
-
-    requestDeletion = (id: number) => () =>
-        this.props.backend.deleteDtoById(id)
-            .then(() => this.props.backend.defaultPageDto())
-            .then(value => this.setState({ recipes: value }));
-
-    pageChange = (event: any, data: PaginationProps) =>
-        this.props.backend.pageDto(data.activePage as number)
-            .then(value => this.setState({ recipes: value }));
-
-    renderRedirect(): React.ReactNode {
-        if (this.state.redirectPath != '') {
-            return (<Redirect to={this.state.redirectPath}/>);
+    private static readonly EMPTY_STATE = {
+        page: 0,
+        redirectPath: '',
+        sort: new SortState(),
+        selected: -1,
+        elem: Element
+    };
+    navigateEdit = () => this.setState({ redirectPath: `/recipe/add/${!!this.state.recipes ? this.state.recipes._embedded.recipes[ this.state.selected ].id : -1}` });
+    navigateAdd = () => this.setState({ redirectPath: `/recipe/add` });
+    requestDeletion = () => {
+        if (this.state.selected == -1) {
+        } else {
+            this.props.backend.deleteDtoById(!!this.state.recipes ? this.state.recipes._embedded.recipes[ this.state.selected ].id : -1)
+                .then(() => this.props.backend.pageDto(this.state.page, this.state.sort))
+                .then(value => this.setState({ recipes: value }));
         }
-    }
-
-    renderItem = (recipe: RecipeDTO) =>
-        <Table.Row key={recipe.id}>
-            {this.renderRedirect()}
+    };
+    pageChange = (event: any, data: PaginationProps) =>
+        this.props.backend.pageDto(data.activePage as number, this.state.sort)
+            .then(value => this.setState({ recipes: value, page: data.activePage as number }));
+    tableSort = (clickedColumn: string) => () => {
+        this.setState(() => {
+            // Do not reverse, imperative programming
+            this.state.sort.shouldReverseDirection(this.state.sort.column == clickedColumn);
+            this.state.sort.column = clickedColumn;
+            return this.state;
+        });
+        this.props.backend.pageDto(this.state.page, this.state.sort)
+            .then(value => this.setState({ recipes: value }));
+    };
+    rowSelection = (selectedIndex: number) => () => {
+        this.setState({ selected: this.state.selected != selectedIndex ? selectedIndex : -1 });
+    };
+    renderItem = (recipe: RecipeDTO, index: number) =>
+        <Table.Row key={recipe.id} active={this.state.selected == index}>
             <Table.Cell>
-                {recipe.id}
+                <a onClick={this.rowSelection(index)}>{recipe.id}</a>
             </Table.Cell>
             <Table.Cell>
-                {recipe.name}
-            </Table.Cell>
-            <Table.Cell>
-                <Button icon='pencil' content='Edit' onClick={this.navigateEdit(recipe.id)}/>
-                <Button icon='trash' content='Delete' onClick={this.requestDeletion(recipe.id)}/>
+                <a onClick={this.rowSelection(index)}>{recipe.name}</a>
             </Table.Cell>
         </Table.Row>;
-
     renderHeader = () =>
         <Table.Row>
-            <Table.HeaderCell>Id</Table.HeaderCell>
-            <Table.HeaderCell>Name</Table.HeaderCell>
-            <Table.HeaderCell>Actions</Table.HeaderCell>
+            <Table.HeaderCell sorted={this.state.sort.column == 'id' ? this.state.sort.getLongDirection() : undefined}
+                              onClick={this.tableSort('id')}>Id</Table.HeaderCell>
+            <Table.HeaderCell sorted={this.state.sort.column == 'name' ? this.state.sort.getLongDirection() : undefined}
+                              onClick={this.tableSort('name')}>Name</Table.HeaderCell>
         </Table.Row>;
-
     renderPagination = () =>
         <Table.Row>
-            <Table.HeaderCell colSpan='3'>
+            <Table.HeaderCell colSpan='2'>
                 <Pagination
-                    totalPages={this.state.recipes.page.totalPages}
-                    activePage={this.state.recipes.page.number}
+                    totalPages={!!this.state.recipes ? this.state.recipes.page.totalPages : 0}
+                    activePage={!!this.state.recipes ? this.state.recipes.page.number : 0}
                     ellipsisItem={{ content: <Icon name='ellipsis horizontal'/>, icon: true }}
                     firstItem={null}
                     lastItem={null}
@@ -74,27 +71,64 @@ export default class ListRecipes extends Component<Properties, State> {
                 />
             </Table.HeaderCell>
         </Table.Row>;
+    renderButtons = () =>
+        <div>
+            <Button primary onClick={this.navigateAdd}>Add</Button>
+            <Button secondary onClick={this.navigateEdit}>Edit</Button>
+            <ConfirmationButton openerContent='Delete Item'
+                                onClick={this.requestDeletion}
+                                popupButtonColor='red'
+                                popupButtonContent='Confirm'/>
+        </div>;
+    renderTable = () =>
+        <Segment>
+            {this.renderRedirect()}
+            {this.renderButtons()}
+            <Table celled sortable structured fixed>
+                <Table.Header>
+                    {this.renderHeader()}
+                </Table.Header>
+                <Table.Body>
+                    {this.state.recipes != undefined && this.state.recipes._embedded.recipes
+                        .map((value, index) => this.renderItem(value, index))}
+                </Table.Body>
+                <Table.Footer>
+                    {this.renderPagination()}
+                </Table.Footer>
+            </Table>
+        </Segment>;
+    renderIndicator = () =>
+        <Segment>
+            <Dimmer active>
+                <Loader/>
+            </Dimmer>
+        </Segment>;
 
-    render = () =>
-        <Table celled>
-            <Table.Header>
-                {this.renderHeader()}
-            </Table.Header>
-            <Table.Body>
-                {this.state.recipes._embedded.recipes.map(recipe => this.renderItem(recipe))}
-            </Table.Body>
-            <Table.Footer>
-                {this.renderPagination()}
-            </Table.Footer>
-        </Table>;
+    constructor(properties: Properties) {
+        super(properties);
+        this.state = ListRecipes.EMPTY_STATE;
+        this.props.backend.defaultPageDto().then(value => this.setState({ recipes: value }));
+    }
+
+    renderRedirect(): React.ReactNode {
+        if (this.state.redirectPath != '') {
+            return (<Redirect to={this.state.redirectPath}/>);
+        }
+    }
+
+    render() {
+        return this.state.recipes != undefined ? this.renderTable() : this.renderIndicator();
+    }
 }
 
 interface Properties {
-    backend : RecipeBackend;
+    backend: RecipeBackend;
 }
 
 interface State {
-    recipes: MultiResultHolder<RecipeListDTO>;
+    recipes?: MultiResultHolder<RecipeListDTO>;
     redirectPath: string;
     page: number;
+    sort: SortState;
+    selected: number;
 }

@@ -1,12 +1,12 @@
-import { Component } from "react";
 import * as React from "react";
-import { Button, Icon, Pagination, PaginationProps, Segment, Table, Dimmer, Loader } from "semantic-ui-react";
+import { Component } from "react";
+import { Button, Dimmer, Icon, Loader, Pagination, PaginationProps, Segment, Table } from "semantic-ui-react";
 import { HateoasDTL, HateoasDTO, MultiResultHolder, SortState } from "../../dal/HateoasDTL";
 import { Redirect } from "react-router";
-import { KitchenDeviceDTO } from "../../dal/KitchenDevice";
+import { KitchenDeviceDTO, KitchenDeviceDTOList } from "../../dal/KitchenDevice";
 import ConfirmationButton from "./confirmationButton";
 
-export default class KitchenDeviceLists<T extends HateoasDTO, L> extends Component<Parameters<T, L>, State<L>> {
+export default class KitchenDeviceLists extends Component<Parameters<KitchenDeviceDTO, KitchenDeviceDTOList>, State<KitchenDeviceDTOList>> {
 
     private static readonly EMPTY_STATE = {
         page: 0,
@@ -16,36 +16,39 @@ export default class KitchenDeviceLists<T extends HateoasDTO, L> extends Compone
         elem: Element
     };
 
-    constructor(properties: Parameters<T, L>) {
-        super(properties);
-        this.state = KitchenDeviceLists.EMPTY_STATE;
-        this.props.backend.defaultPageDto().then(value => this.setState({ items: value }));
-    }
-
-    navigateEdit = () => this.setState({ redirectPath: `/kitchenDevices/add/${this.state.selected}` });
-    navigateAdd = () => this.setState({ redirectPath: `/kitchenDevices/add` });
-
+    private static readonly HEADERS = [ 'ID', 'Name', 'Function', 'available' ];
+    navigateEdit = () => this.setState({ redirectPath: `/kitchenDevices/add/${!!this.state.items ? this.state.items._embedded.kitchenDevices[ this.state.selected ].id : -1}` });
     requestDeletion = () => {
         if (this.state.selected == -1) {
         } else {
-            this.props.backend.deleteDtoById(this.state.selected)
+            this.props.backend.deleteDtoById(!!this.state.items ? this.state.items._embedded.kitchenDevices[ this.state.selected ].id : -1)
                 .then(() => this.props.backend.pageDto(this.state.page, this.state.sort))
                 .then(value => this.setState({ items: value }));
         }
     };
-
-    pageChange = (event: any, data: PaginationProps) =>
-        this.props.backend.pageDto(data.activePage as number, this.state.sort)
-            .then(value => this.setState({ items: value, page: data.activePage as number }));
-
+    navigateAdd = () => this.setState({ redirectPath: `/kitchenDevices/add` });
     tableSort = (clickedColumn: string) => () => {
         this.setState(() => {
             // Do not reverse, imperative programming
             this.state.sort.shouldReverseDirection(this.state.sort.column == clickedColumn);
             this.state.sort.column = clickedColumn;
+            return this.state;
         });
         this.props.backend.pageDto(this.state.page, this.state.sort)
             .then(value => this.setState({ items: value }));
+    };
+
+    pageChange = (event: any, data: PaginationProps) =>
+        this.props.backend.pageDto(data.activePage as number, this.state.sort)
+            .then(value => this.setState({ items: value, page: data.activePage as number }));
+    renderHeader = () => {
+        return KitchenDeviceLists.HEADERS.map(value => (
+            <Table.HeaderCell key={value}
+                              sorted={this.state.sort.column == value ? this.state.sort.getLongDirection() : undefined}
+                              onClick={this.tableSort(value)}>
+                {value}
+            </Table.HeaderCell>
+        ));
     };
 
     rowSelection = (selectedIndex: number) => () => {
@@ -80,15 +83,25 @@ export default class KitchenDeviceLists<T extends HateoasDTO, L> extends Compone
         }
     }
 
-    renderHeader = () => {
-        return this.props.headers.map(value => (
-            <Table.HeaderCell key={value}
-                              sorted={this.state.sort.column == value ? this.state.sort.getLongDirection() : undefined}
-                              onClick={this.tableSort(value)}>
-                {value}
-            </Table.HeaderCell>
-        ));
-    };
+    renderTable = () =>
+        <Segment>
+            {this.renderRedirect()}
+            {this.renderButtons()}
+            <Table celled sortable structured fixed>
+                <Table.Header>
+                    <Table.Row>
+                        {this.renderHeader()}
+                    </Table.Row>
+                </Table.Header>
+                <Table.Body>
+                    {this.state.items != undefined && this.state.items._embedded.kitchenDevices
+                        .map((value, index) => this.renderItem(value, index))}
+                </Table.Body>
+                <Table.Footer>
+                    {this.renderPagination()}
+                </Table.Footer>
+            </Table>
+        </Segment>;
 
     renderPagination = () =>
         <Table.Row>
@@ -116,24 +129,11 @@ export default class KitchenDeviceLists<T extends HateoasDTO, L> extends Compone
                                 popupButtonContent='Confirm'/>
         </div>;
 
-    renderTable = () =>
-        <Segment>
-            {this.renderRedirect()};
-            {this.renderButtons()};
-            <Table celled sortable structured fixed>
-                <Table.Header>
-                    <Table.Row>
-                        {this.renderHeader()}
-                    </Table.Row>
-                </Table.Header>
-                <Table.Body>
-                    {this.props.rendering(this.state.items as MultiResultHolder<L>)}
-                </Table.Body>
-                <Table.Footer>
-                    {this.renderPagination()}
-                </Table.Footer>
-            </Table>
-        </Segment>;
+    constructor(properties: Parameters<KitchenDeviceDTO, KitchenDeviceDTOList>) {
+        super(properties);
+        this.state = KitchenDeviceLists.EMPTY_STATE;
+        this.props.backend.defaultPageDto().then(value => this.setState({ items: value }));
+    }
 
     renderIndicator = () =>
         <Segment>
@@ -157,6 +157,4 @@ interface State<L> {
 
 interface Parameters<T extends HateoasDTO, L> {
     backend: HateoasDTL<T, L>;
-    headers: string[];
-    rendering: (results: MultiResultHolder<L>) => React.ReactNode;
 }

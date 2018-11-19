@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Router } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 
 import MainMenu from './fragments/MainMenu';
 import Home from './fragments/Home';

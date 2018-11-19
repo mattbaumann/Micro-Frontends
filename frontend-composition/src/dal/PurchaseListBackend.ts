@@ -1,4 +1,4 @@
-import { HateoasDTL, HateoasDTO} from './HateoasDTL';
+import { HateoasDTL, HateoasDTO } from './HateoasDTL';
 
 export interface PurchaseListDTOList {
     purchaseLists: PurchaseListDTO[];
@@ -17,6 +17,6 @@ export interface PurchaseListItemDTO extends HateoasDTO {
 
 export class PurchaseListBackend extends HateoasDTL<PurchaseListDTO, PurchaseListDTOList> {
     constructor() {
-        super("http://localhost:9602/api", "/items");
+        super("http://localhost:9602/api", "/purchaseLists");
     }
 }
