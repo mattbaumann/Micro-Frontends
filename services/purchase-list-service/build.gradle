@@ -4,7 +4,6 @@ plugins {
     id "eclipse"
     id "idea"
     id 'war'
-    id 'pmd'
     id "org.asciidoctor.convert"
     id 'io.franzbecker.gradle-lombok'
 }

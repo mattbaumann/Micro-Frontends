@@ -4,7 +4,6 @@ plugins {
     id "eclipse"
     id "idea"
     id 'war'
-    id 'pmd'
     id "org.asciidoctor.convert"
     id 'io.franzbecker.gradle-lombok'
 }
@@ -13,10 +12,6 @@ group = 'ch.hsr.apparch'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
-
-pmd {
-    ruleSetFiles = files("pmd.xml")
-}
 
 // Remove all dependencies to logback (Logging framework) - we use Log4J2
 configurations {
