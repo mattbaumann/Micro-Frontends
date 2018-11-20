@@ -1,8 +1,0 @@
-PUT http://localhost:9602/api/purchaseLists/2
-Accept: application/json
-Content-Type: application/json
-Cache-Control: no-cache
-
-{"id": 2, "name":"Sample Recipe 1"}
-
-###
