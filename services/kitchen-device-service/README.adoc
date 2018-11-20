@@ -1,0 +1,91 @@
+Kitchen Device Service
+======================
+Matt Baumann <matthias.baumann@hsr,ch>
+v1.0, November 20, 2018
+:Author: Matt Baumann
+:Email: matthias.baumann@hsr.ch
+:Date: 3. November 2018
+:Revision: Version 1.0
+:source-highlighter: prettify
+:prewrap!:
+:icons: font
+:y: icon:check[role="green"]
+:n: icon:times[role="red"]
+
+The kitchen device service allows REST CRUD operations on kitchen device
+objects, stored in the database. This is a very simple demo application.
+The application is not hardened for production use.
+
+It has three data channels:
+
+* HATEOAS paging and sorting REST API under `api/kitchenDevices`
+* Controller that generates server pages under `controller/kitchenDevice`
+
+Also, this application starts several debugging tools
+
+* H2 Database console to see database rows under `/h2`
+* HATEOAS Rest Data browser, to see REST data under `/browser`
+* The controller application is a fully fledged web application under `controller/`
+
+== Directory organisation
+
+.Directory organisation
+[%header]
+|===
+| icon:folder-open[] Directory | Purpose
+| icon:cogs[] /bin | compiler output directory
+| icon:cogs[] /out | resources output directory
+| icon:cogs[] /build | tools output directory
+| icon:cube[] /src | Source code directory
+| icon:cube[] /src/main | production code
+| icon:cube[] /src/test | production code testing code
+| icon:code[] /src/main/resources | configuration and page templates
+|===
+
+== Components
+
+.Spring
+[%header]
+|===
+| icon:sitemap[] Component | Artifact | Function | Website
+| org.springframework.boot | spring-boot-starter | Enable Spring Autoconfiguration | https://spring.io/projects/spring-boot[Spring Boot]
+| org.springframework.boot | spring-boot-starter-log4j2 | Logging with Log4J2 Library | https://logging.apache.org/log4j/2.x/[Log4J2]
+| org.springframework.boot | spring-boot-starter-web | WebMVC Spring controllers and Servlet 2.0 client | https://docs.spring.io/spring/docs/3.2.x/spring-framework-reference/html/mvc.html[Spring Framework WebMVC]
+| org.springframework.boot | spring-boot-starter-thymeleaf | Thymeleaf rendering | https://www.thymeleaf.org/[Tymeleaf]
+| org.springframework.boot | spring-boot-starter-data-rest | Spring Data REST | https://spring.io/projects/spring-data-rest[Spring Data REST]
+| org.springframework.data | spring-data-rest-hal-browser | REST API Browser
+| https://docs.spring.io/spring-data/rest/docs/current/reference/html/#_the_hal_browser[HAL Browser]
+| org.springframework.boot | spring-boot-starter-data-jpa | Java O-R Maping and DB Access | https://spring.io/projects/spring-data-jpa[Spring Data JPA]
+|===
+
+.Additional Libraries and Components
+[%header]
+|===
+| icon:sitemap[] Component | Artifact | Function | Website
+| icon:database[] com.h2database | h2 | In-Process Database | http://www.h2database.com[H2 Database]
+| icon:gears[] org.projectlombok | lombok | In-Compiler source code generator | https://projectlombok.org/[lombok]
+| icon:book[] javax.interceptor | javax.interceptor-api | Non-essential dependency of spring framework without which Javadoc fails | https://github.com/eclipse-ee4j/interceptor-api[Interceptor API]
+|===
+
+.Testing Dependencies
+[%header]
+|===
+| icon:sitemap[] Component | Artifact | Function | Website
+| icon:leaf[] org.springframework.boot | spring-boot-starter-test | Import Spring specific testing components | https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html[Spring Boot Test]
+| icon:book[] org.junit.jupiter | junit-jupiter-api | Test facing JUnit 5 Annotations & Classes | https://junit.org/junit5/[JUnit 5]
+| icon:gears[] org.junit.jupiter | junit-jupiter-engine | JUnit5 Test Engine | https://junit.org/junit5/[JUnit 5]
+| icon:book[] org.mockito | mockito-core | Mocking framework | https://site.mockito.org/[mockito]
+|===
+
+
+All links listed hierby as at October 20th.
+
+
+
+== Verification
+
+The server software is primarely verified by testing the essential components.
+These tests are essentially Microtests with Mocking.
+
+Also, the semantics of the code is verified by https://pmd.github.io/pmd-6.9.0/[PMD]. This
+static code analyser ensures good coding practices.

@@ -16,14 +16,14 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/controller")
 @RequiredArgsConstructor
-@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class KitchenDeviceController {
 
-    static String BASE_PATH = "/controller/kitchenDevice";
-    static String REDIRECT_CONTROLLER_LIST_VIEW = "redirect:" + BASE_PATH + "/list";
-    static String SINGULAR_MODEL_KEY = "model";
-    static String PLURAL_MODEL_KEY = "models";
-    static String POSTURL_KEY = "posturl";
+    static final String BASE_PATH = "/controller/kitchenDevice";
+    static final String REDIRECT_CONTROLLER_LIST_VIEW = "redirect:" + BASE_PATH + "/list";
+    static final String SINGULAR_MODEL_KEY = "model";
+    static final String PLURAL_MODEL_KEY = "models";
+    static final String POSTURL_KEY = "posturl";
     
     KitchenDeviceRepository kitchenDevices;
     

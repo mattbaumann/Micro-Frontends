@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
+    @SuppressWarnings("PMD.SignatureDeclareThrowsException")
     protected void configure(HttpSecurity http) throws Exception {
          http.authorizeRequests().anyRequest().permitAll().and().cors().and().csrf().disable();
     }

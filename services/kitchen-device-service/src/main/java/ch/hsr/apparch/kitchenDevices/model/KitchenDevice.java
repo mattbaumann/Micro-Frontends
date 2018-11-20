@@ -5,13 +5,14 @@ import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Data
 @Entity
 @NoArgsConstructor
-@RequiredArgsConstructor
 @Accessors(chain = true)
+@SuppressWarnings("PMD.ImmutableField")
 public class KitchenDevice implements Serializable {
 
     @Id
@@ -29,6 +30,11 @@ public class KitchenDevice implements Serializable {
     @Column(nullable = false)
     private String function;
 
-    @NonNull
     private boolean available;
+
+    public KitchenDevice(@NotBlank @NotNull String name, @NotBlank @NotNull String function, boolean available) {
+        this.name = name;
+        this.function = function;
+        this.available = available;
+    }
 }
