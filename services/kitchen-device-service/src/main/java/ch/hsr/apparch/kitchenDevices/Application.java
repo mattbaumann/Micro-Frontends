@@ -18,6 +18,7 @@ import java.util.Random;
 @SpringBootApplication
 public class Application {
 
+    @SuppressWarnings("PMD.UseConcurrentHashMap")
     private static final Map<String, String> SAMPLE_MACHINE_NAMES_FUNCTIONS = new HashMap<>();
 
     public static void main(String[] args) {
@@ -32,11 +33,11 @@ public class Application {
     @Profile("dev")
     public CommandLineRunner insertSampleData(KitchenDeviceRepository lists) {
         return args -> {
-            Random random = new Random();
-            Map.Entry[] sample_data = SAMPLE_MACHINE_NAMES_FUNCTIONS.entrySet().toArray(new Map.Entry[]{});
+            final Random random = new Random();
+            final Map.Entry[] sampleData = SAMPLE_MACHINE_NAMES_FUNCTIONS.entrySet().toArray(new Map.Entry[]{});
 
             for (int i = 0; i < 5; i++) {
-                Map.Entry current_entry = sample_data[random.nextInt(sample_data.length)];
+                final Map.Entry current_entry = sampleData[random.nextInt(sampleData.length)];
                 lists.save(new KitchenDevice(current_entry.getKey().toString(), current_entry.getValue().toString(), random.nextBoolean()));
             }
         };
