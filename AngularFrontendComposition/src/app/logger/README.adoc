@@ -1,0 +1,97 @@
+= Logging Library =
+Matt Baumann <matthias.baumann@hsr,ch>
+v1.0, November 10, 2018
+:Author: Matt Baumann
+:Email: matthias.baumann@hsr.ch
+:Date: 10. November 2018
+:Revision: Version 1.0
+:source-highlighter: prettify
+:prewrap!:
+
+:toc:
+
+The logging library allows fine tuning in debugging information output. It also allows to collect severe issues on the
+web-server for further analysis.
+
+Still, the intent of the library is simplicity and effectivity. Nevertheless, it features advanced patterns like
+logger-tree, additivity of appenders and both advanced logger configuration.
+
+This library is oriented after http://log4javascript.org[Log4Javascript] from _Tim Down_.
+
+== Configuration ==
+The library features two logger configuration methods.
+
+. Configuration Module
+. Autoconfiguration
+
+The module will use the order of the list above to determine the configuration method. First it tries to find a
+configuration. When the logger is not configured in the global configuration, then it will use autoconfiguration.
+Autoconfiguration uses logger's parent configuration to configure the target logger.
+
+Appenders can only be specified statically in the global configuration. That's because appenders are replaceable and
+exchangeable to your own implementation.
+
+.Example configuration
+[source,javascript]
+----
+const loggingConfig: LoggingConfig = {
+    appenders: {
+        "appenderName": {
+            appender: new BrowserConsoleAppender(),
+            formatter: LoggerAppender.COLOR_FORMATTER
+        }
+    },
+    loggers: {
+      "<root>": {
+        appender: "appenderName",
+        level: LoggerLevel.TRACE
+      },
+      "test": {
+          level: LoggerLevel.TRACE
+      }
+    }
+};
+----
+
+The root object hosts two properties: _Appender definitions_ and _Logger definitions_.
+
+The appenders object allows to defined named appender instances. Under `appender` you can add an appender instance. By
+choosing the instance, you can change the behaviour of the library. The `formatter` options allows to select a converter
+function, that converts the `MessageObject` into a string.
+
+Loggers on the other hand can be defined under _loggers_. Each logger has a name, an optional reference to the appender
+and a level.
+
+Root logger has to be configured like the first logger configuration above.
+
+.Get Logger
+[source,typescript]
+----
+@NgModule({imports:[ LoggerModule.forRoot(loggingConfig) ]});
+----
+
+== Factory ==
+The `LoggerService` is a factory for `Logger` objects. It creates and caches the Loggers and Appenders. While the
+Appender objects are created on first injection of the service. The loggers are created lazily on request.
+
+.Get Logger
+[source,javascript]
+----
+let LOGGER = loggerservice.getLogger('pkglogger.logger');
+----
+
+This statement generates a new logger. Because loggers are nested, the logger `pkglogger` is also constructed and the
+`<root>` logger. The factory returns then `pkglogger.logger` instance to the code. Still, a child logger is connected to
+it's parent and will send messages upwards.
+
+.Get root Logger
+[source,javascript]
+----
+let LOGGER = loggerservice.getRoot();
+----
+
+Returns the logger at the top of the chain. The root logger is the mother of all loggers and the configuration of this
+logger will affect all loggers. For more information see chapter <<Configuration>>.
+
+It is not recommended to use root logger, because the logger tells the reader which component fired the error message.
+The method merely defined for compatibility to other logging frameworks and for completeness.

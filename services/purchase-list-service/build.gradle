@@ -1,0 +1,76 @@
+
+plugins {
+    id "java"
+    id "eclipse"
+    id "idea"
+    id 'war'
+    id "org.asciidoctor.convert"
+    id 'io.franzbecker.gradle-lombok'
+}
+
+group = 'ch.hsr.apparch'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+// Remove all dependencies to logback (Logging framework) - we use Log4J2
+configurations {
+    asciidoclet
+}
+
+// Remove all dependencies to logback (Logging framework) - we use Log4J2
+configurations.all({
+    exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+})
+
+dependencies {
+
+    //
+    // Core
+    //
+    implementation('org.apache.commons:commons-lang3:3.7')
+    implementation('org.springframework.boot:spring-boot-starter')
+    // Logging with Log4J2 - https://logging.apache.org/log4j/2.x/
+    implementation('org.springframework.boot:spring-boot-starter-log4j2')
+
+    //
+    // Spring web services
+    //
+
+    // Controllers - Thymeleaf rendering - https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html
+	implementation('org.springframework.boot:spring-boot-starter-thymeleaf')
+    // WebMVC https://docs.spring.io/spring/docs/5.0.0.BUILD-SNAPSHOT/spring-framework-reference/htmlsingle
+	implementation('org.springframework.boot:spring-boot-starter-web')
+
+    // CORS implementation
+    implementation('org.springframework.boot:spring-boot-starter-security')
+    
+    // REST API - https://docs.spring.io/spring-data/rest/docs/current/reference/html/
+    implementation('org.springframework.boot:spring-boot-starter-data-rest')
+    implementation('org.springframework.data:spring-data-rest-hal-browser')
+    // Database backend - https://docs.spring.io/spring-data/jpa/docs/current/reference/html/
+    implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+    runtimeOnly('com.h2database:h2')
+
+    // https://projectlombok.org/features/all
+    compileOnly('org.projectlombok:lombok')
+    // Javadoc needs this dependency to compile
+    compile ('javax.interceptor:javax.interceptor-api:1.2.2')
+
+    annotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor 'org.apache.logging.log4j:log4j-core'
+
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'junit', module: 'junit'
+    }
+    // HTTP REST API Testing - http://rest-assured.io/
+    testImplementation group: 'io.rest-assured', name: 'spring-mock-mvc'
+    // JUnit 5 Runner - https://junit.org/junit5/
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api'
+    testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine'
+}
+
+javadoc {
+    options.docletpath = configurations.asciidoclet.files.toList()
+    options.doclet = 'org.asciidoctor.Asciidoclet'
+}

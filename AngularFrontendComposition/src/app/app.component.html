@@ -1,0 +1,24 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div>
+<mat-menu #portalMenu="matMenu">
+  <a href="/controller/purchaseList/list" mat-menu-item>List purchase list</a>
+  <a href="/controller/purchaseList/edit" mat-menu-item>Add purchase list</a>
+  <a href="/controller/kitchenDevice/list/" mat-menu-item>List kitchen devices</a>
+  <a href="/controller/kitchenDevice/edit" mat-menu-item>Add kitchen device</a>
+</mat-menu>
+<mat-menu #backendMenu="matMenu">
+  <a href="/backend/purchaseList/list" mat-menu-item>List purchase list</a>
+  <a href="/backend/purchaseList/edit" mat-menu-item>Add purchase list</a>
+  <a href="/backend/kitchenDevice/list/" mat-menu-item>List kitchen devices</a>
+  <a href="/backend/kitchenDevice/edit" mat-menu-item>Add kitchen device</a>
+</mat-menu>
+
+<mat-toolbar>
+    <span>Frontend Composition</span>
+    <button mat-button [matMenuTriggerFor]="portalMenu">Portal Composition</button>
+    <button mat-button [matMenuTriggerFor]="backendMenu">Backend Composition</button>
+  <span class="example-fill-remaining-space"></span>
+    <a mat-button href="/api/browser/index.html#/">HAL Browser</a>
+  <a mat-button href="/h2">H2 Database</a>
+</mat-toolbar>
+<router-outlet></router-outlet>

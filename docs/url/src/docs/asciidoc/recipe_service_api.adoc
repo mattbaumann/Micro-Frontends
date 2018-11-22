@@ -1,0 +1,67 @@
+
+Spring Data REST API
+^^^^^^^^^^^^^^^^^^^^
+
+./api
+[%header]
+|===
+| Path | Type | ElementType
+| /api | linking | Links to Repositories
+| /api/categories | collection | Global paging and sorting Repository
+| /api/categories/search/findByName?name | specific query | Searches category by name
+| /api/recipes | collection | Global paging and sorting Repository
+| /api/instructions | collection | Global paging and sorting Repository
+| /api/instructions/search/findAllByRecipe?recipe | specific query | Searches instructions with recipe
+| /api/instructions/search/findAllByRecipeId?recipeId | specific query | Searches instructions with recipe id
+| /api/ingredients | collection | Global paging and sorting Repository
+| /api/ingredients/search/findAllByRecipe?recipe | specific query | Searches ingredients with recipe
+| /api/ingredients/search/findAllByRecipeId?recipeId | specific query | Searches ingredients with recipe id
+| /api/categories/(id)/recipes/ | local children | Children Repository
+| /api/recipes/(id)/category | local parent | Parent Element
+| /api/recipes/(id)/ingredients/ | local children | Children Repository
+| /api/recipes/(id)/instructions/ | local children | Children Repository
+| /api/recipes/search/findAllByCategory?category | specific query | Gives recipe of category
+| /api/ingredients/(id)/recipe | local parent | Parent Element
+| /api/instructions/(id)/recipe | local parent | Parent Element
+|===
+
+
+.Repository types
+[%header]
+|===
+| Type | Description
+| collection | Holds entities of the exposed types. Access with `/(id)` for specific element
+| children view | From entity find it's own child entities _parent_ (1) to children (n) relationship
+| parent view | From entity find it's parent entity this entity (1) to (1) _parent_ relationship
+| specific query | Entity specific query to find relationships easier
+|===
+
+.Collection Resource
+[%header]
+|===
+| Method | Path | Argument | Result
+| GET | / | - | List of all entities
+| GET | / | ?page=Int&Sort=Id,asc&size=10 | Paged result sorted and chopped at size
+| HEAD | / | - | Returns whether resource is available
+| POST | / | entity-JSON | Creates the element and returns the location of the resource
+|===
+
+.Item Resource
+[%header]
+|===
+| Method | Path | Arguments | Result
+| GET | /$(id) | - | Gets the entity as JSON
+| HEAD | /$(id) | - | Ensures the resource is defined before access
+| PUT | /$(id) | entity JSON | Overwrites the entire entity, all fields have to be defined
+| PATCH | /$(id) | field JSON | Sets the field of the entity (PATCH entity)
+| DELETE | /$(id) | - | Deletes the entity with the ID id.
+|===
+
+.Error Codes
+[%header]
+|===
+| Code | Error
+| 404 | Entity or resource collection not found
+| 405 | Access restricted by removing function in Repository
+| 403 | CORS or XSRF Not configured
+|===

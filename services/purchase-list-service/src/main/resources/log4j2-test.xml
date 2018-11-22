@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration strict="true" xmlns="http://logging.apache.org/log4j/2.0/config">
+    <Appenders>
+        <Console name="ConsoleAppender" target="SYSTEM_OUT" follow="true">
+            <PatternLayout
+                    pattern="%d{DEFAULT} [%highlight{%level{length=4}}] %style{%pid}{FG_Magenta} [%t] %style{%c{10.}}{FG_CYAN}: %m%throwable%n" />
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Logger name="Testing" level="WARN" />
+
+        <Logger name="ch.hsr.apparch.recipe.configuration.RequestLoggingFilter" level="WARN" />
+
+        <Logger name="ch.hsr.apparch.recipe.Application" level="INFO" />
+
+        <Logger name="ch.hsr.apparch.recipe.controller.ErrorPageController" level="ERROR" />
+
+        <Root level="OFF">
+            <AppenderRef ref="ConsoleAppender" />
+        </Root>
+    </Loggers>
+</Configuration>

@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>Add new Recipe</h1>
+<div mat-dialog-content>
+    <mat-form-field>
+      <input matNativeControl placeholder="name" [formControl]="name"  />
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button matDialogClose>Cancel</button>
+  <button mat-button [mat-dialog-close]="data.name" cdkFocusInitial>Save</button>
+</div>

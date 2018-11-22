@@ -1,0 +1,27 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'org.asciidoctor:asciidoctor-gradle-plugin:1.5.9.1'
+    }
+}
+
+subprojects {
+
+    buildscript {
+        repositories {
+            jcenter()
+        }
+        dependencies {
+            classpath 'org.asciidoctor:asciidoctor-gradle-plugin:1.5.9.1'
+        }
+    }
+
+    apply plugin: 'org.asciidoctor.convert'
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+}

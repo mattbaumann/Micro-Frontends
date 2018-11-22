@@ -1,0 +1,72 @@
+Purchase List Service
+~~~~~~~~~~~~~~~~~~~~~~
+
+A service that manages purchase lists for next grocery shopping. Idea behind the service is to have a service with an
+one to many object relationship entanglement.
+
+The purchase list service is available under: http://localhost:9602/
+
+The following explanations assume the base url above.
+
+include::purchase_list_service_api.adoc[]
+
+Spring static assets server
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Static assets used for the Spring WebMVC Controller page.
+
+.Paths for static server
+[%header]
+|===
+| Path | File | Description
+| `/` | `static/index.html` | The file `index.html` will be served under `/` (root path). This HTML file contains a redirect to the home-page of the Spring WebMVC controller's home page under /controller/home.
+| `/static/js` | `/static/static/js` | Bootstrap JS and it's dependecies
+| `/static/css` | `/static/static/css` | Bootstrap CSS and fontawesome
+| `/static/webfonts` | `/static/static/webfonts` | Webfonts for fontawesome
+|===
+
+
+Thymeleaf backend rendered templates server
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Thymeleaf renders the following pages for the spring framework.
+
+.Paths for thymeleaf backend rendered templates server
+[%header]
+|===
+| Path | File | Description
+| `/error/404` | /error/404.html` | Rendered when the path was not found
+|===
+
+Spring MVC Controllers
+^^^^^^^^^^^^^^^^^^^^^^
+
+Expose endpoints for the browser to create backend rendered site for administration and fragments to include.
+
+While the `ErrorPageController` handles all errors, that are thrown in the `KitchenDeviceController`.
+
+.Controllers
+[%header]
+|===
+| Name | Scope | Function
+| `ErrorPageController` | Cross-Cutting | Serves the error page for all exceptions defined in `exceptions`
+| `PurchaseListController` | REST purchase lists and items | Serves CRUD HTML Administration page
+|===
+
+
+.KitchenDeviceController
+[%header]
+|===
+| Method | Path | Function | Description
+| GET | /controller/home | home() | Service homepage
+| GET | /controller/purchaseList/list | listPurchaseLists() | List all kitchen devices
+| GET | /controller/purchaseList/edit(/{id}) | editPurchaseList(id) | Show kitchen device attributes edit page
+| POST | /controller/purchaseList/add | addPurchaseList(name, function, available) | Add new kitchen device
+| POST | /controller/purchaseList/{id}/update | updatePurchaseList(name, function, available) | Update kitchen device with id
+| GET | /controller/purchaseList/{id}/delete | deletePurchaseList(id) | Removes the kitchen device
+| GET | /controller/purchaseList/{id}/list | listPurchaseListItems(id) | List items inside specific list
+| GET | /controller/purchaseList/{plid}/item/({id})/edit | editPurchaseListItems(plid, id) | Edit specific item or add new
+| POST | /controller/purchaseList/{plid}/item/add | addPurchaseListItem(plid, name) | Append new element to list
+| POST | /controller/purchaseList/{plid}/item/{id}/update | updatePurchaseListItem(plid, id, name) | Update value and redirect to purchaseList listing
+| GET | /controller/purchaseList/{plid}/item/{id}/remove | removePurchaseListItem(plid, id) | Removes the item and redirect to purchaseList listing
+|===

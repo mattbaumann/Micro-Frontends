@@ -19,3 +19,10 @@ idea {
 subprojects {
     version = "1.0"
 }
+
+task prepare(type: Exec) {
+    dependsOn "docs:asciidoc"
+    dependsOn "services:javadoc", "services:pmdMain", "services:pmdTest", "services:build", "services:test", "services:jar", "services:war"
+    dependsOn "frontend-composition:build"
+    dependsOn "idea", "eclipse"
+}
