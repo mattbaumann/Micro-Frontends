@@ -1,6 +1,8 @@
-= Purchase List Frontend
+= Monolithic Frontend
 
-This project contains the sources of the purchase list service.
+This project contains the sources of the frontend-composition. The
+frontend composition composes the data in the frontend framework, in
+this case it's React.
 
 == Available Scripts
 

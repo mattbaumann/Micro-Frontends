@@ -1,6 +1,6 @@
 = Purchase List Frontend
 
-This project contains the sources of the purchase list service.
+(This project contains the sources of the purchase list service.)
 
 == Available Scripts
 
