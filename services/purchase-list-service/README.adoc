@@ -1,5 +1,4 @@
-Kitchen Device Service
-======================
+= Purchase List Service =
 Matt Baumann <matthias.baumann@hsr,ch>
 v1.0, November 20, 2018
 :Author: Matt Baumann
@@ -12,14 +11,14 @@ v1.0, November 20, 2018
 :y: icon:check[role="green"]
 :n: icon:times[role="red"]
 
-The kitchen device service allows REST CRUD operations on kitchen device
+The purchase list service allows REST CRUD operations on purchase list
 objects, stored in the database. This is a very simple demo application.
 The application is not hardened for production use.
 
 It has three data channels:
 
-* HATEOAS paging and sorting REST API under `api/kitchenDevices`
-* Controller that generates server pages under `controller/kitchenDevice`
+* HATEOAS paging and sorting REST API under `api/purchaseLists`
+* Controller that generates server pages under `controller/purchaseList`
 
 Also, this application starts several debugging tools
 
@@ -51,10 +50,10 @@ Also, this application starts several debugging tools
 | org.springframework.boot | spring-boot-starter | 2.1.0.RELEASE | Enable Spring Autoconfiguration | https://spring.io/projects/spring-boot[Spring Boot]
 | org.springframework.boot | spring-boot-starter-log4j2 | 2.1.0.RELEASE | Logging with Log4J2 Library | https://logging.apache.org/log4j/2.x/[Log4J2]
 | org.springframework.boot | spring-boot-starter-web | 2.1.0.RELEASE | WebMVC Spring controllers and Servlet 2.0 client | https://docs.spring.io/spring/docs/3.2.x/spring-framework-reference/html/mvc.html[Spring Framework WebMVC]
-| org.springframework.boot | spring-boot-starter-thymeleaf | 2.1.0.RELEASE | Thymeleaf rendering | https://www.thymeleaf.org/[Tymeleaf]
+| org.springframework.boot | spring-boot-starter-thymeleaf | 2.1.0.RELEASE | Thymeleaf rendering | https://www.thymeleaf.org/[Thymeleaf]
 | org.springframework.boot | spring-boot-starter-data-rest | 2.1.0.RELEASE | Spring Data REST | https://spring.io/projects/spring-data-rest[Spring Data REST]
-| org.springframework.data | spring-data-rest-hal-browser | 3.1.2.RELEASE | REST API Browser
-| https://docs.spring.io/spring-data/rest/docs/current/reference/html/#_the_hal_browser[HAL Browser]
+| org.springframework.boot | spring-boot-stater-security | 2.1.0.RELEASE | Spring Security (CORS) | https://spring.io/projects/spring-security
+| org.springframework.data | spring-data-rest-hal-browser | 3.1.2.RELEASE | REST API Browser| https://docs.spring.io/spring-data/rest/docs/current/reference/html/#_the_hal_browser[HAL Browser]
 | org.springframework.boot | spring-boot-starter-data-jpa | 2.1.0.RELEASE | Java O-R Maping and DB Access | https://spring.io/projects/spring-data-jpa[Spring Data JPA]
 |===
 
