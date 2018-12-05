@@ -1,6 +1,6 @@
-= Purchase List Frontend
+= Kitchen Device Frontend
 
-This project contains the sources of the purchase list service.
+This project contains the sources of the kitchen device service.
 
 == Available Scripts
 
