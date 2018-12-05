@@ -13,7 +13,6 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-// Remove all dependencies to logback (Logging framework) - we use Log4J2
 configurations {
     asciidoclet
 }
@@ -23,25 +22,31 @@ configurations.all({
     exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
 })
 
+repositories {
+maven { url 'http://oss.jfrog.org/artifactory/oss-snapshot-local/' }
+}
+
 dependencies {
-    implementation(group: 'org.springframework.boot', name: 'spring-boot-starter', version: '2.0.0.RELEASE')
+    implementation(group: 'org.springframework.boot', name: 'spring-boot-starter', version: '2.1.0.RELEASE')
     // Logging with Log4J2 - https://logging.apache.org/log4j/2.x/
-    implementation(group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2', version: '2.0.0.BUILD-SNAPSHOT')
+    implementation(group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2', version: '2.1.0.RELEASE')
     
     // Controllers - Thymeleaf rendering - https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html
-    runtimeOnly(group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '2.0.0.BUILD-SNAPSHOT')
+    runtimeOnly(group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '2.1.0.RELEASE')
     // WebMVC https://docs.spring.io/spring/docs/5.0.0.BUILD-SNAPSHOT/spring-framework-reference/htmlsingle
-    implementation(group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.0.0.BUILD-SNAPSHOT')
+    implementation(group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.1.0.RELEASE')
 
     // CORS implementation
-    implementation(group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.0.0.BUILD-SNAPSHOT')
+    implementation(group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.1.0.RELEASE')
     
     // REST API - https://docs.spring.io/spring-data/rest/docs/current/reference/html/
-    implementation(group: 'org.springframework.boot', name: 'spring-boot-starter-data-rest', version: '2.0.0.BUILD-SNAPSHOT')
+    implementation(group: 'org.springframework.boot', name: 'spring-boot-starter-data-rest', version: '2.1.0.RELEASE')
     // Database backend - https://docs.spring.io/spring-data/jpa/docs/current/reference/html/
-    implementation(group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.0.0.RELEASE')
-    runtimeOnly(group: 'org.springframework.data', name: 'spring-data-rest-hal-browser', version: '3.0.0.BUILD-SNAPSHOT')
+    implementation(group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.1.0.RELEASE')
+    runtimeOnly(group: 'org.springframework.data', name: 'spring-data-rest-hal-browser', version: '3.1.2.RELEASE')
     runtimeOnly(group: 'com.h2database', name: 'h2', version: '1.4.197')
+
+    // implementation(group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2')
 
     // https://projectlombok.org/features/all
     compileOnly(group: 'org.projectlombok', name: 'lombok', version: '1.18.0')
@@ -54,7 +59,7 @@ dependencies {
     //
     // Testing
     //
-    testImplementation(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.0.0.RELEASE') {
+    testImplementation(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.1.0.RELEASE') {
         exclude (group: 'org.mockito', module: 'mockito-core')
         exclude (group: 'junit', module: 'junit')
     }
