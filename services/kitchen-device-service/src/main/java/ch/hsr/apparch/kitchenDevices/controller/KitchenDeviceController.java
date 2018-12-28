@@ -7,6 +7,7 @@ import ch.hsr.apparch.kitchenDevices.repository.KitchenDeviceRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,12 @@ public class KitchenDeviceController {
     static final String POSTURL_KEY = "posturl";
     
     KitchenDeviceRepository kitchenDevices;
-    
+
+    @Autowired
+    public KitchenDeviceController(KitchenDeviceRepository kitchenDevices) {
+        this.kitchenDevices = kitchenDevices;
+    }
+
     @GetMapping("/home")
     public String home() {
         return "home";
