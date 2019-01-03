@@ -1,0 +1,212 @@
+openapi: 3.0.0
+servers:
+  - url: http://localhost:9603/api
+info:
+  description: Kitchen Device saving service
+  version: "1.0.0"
+  title: Kitchen Device API
+  contact:
+    email: m2bauman@hsr.ch
+  license:
+    name: Private
+
+paths:
+  /kitchenDevices:
+    description: Collection of kitchen device objects
+    get:
+      description: Returns all kitchen devices inside a paged response
+      parameters:
+        - name: page
+          in: query
+          description: The page number of the returned content
+          required: false
+          schema:
+            type: integer
+            format: int32
+
+        - name: sort
+          in: query
+          description: The sorting applied before the content is paged
+          required: false
+          schema:
+            type: string
+
+        - name: size
+          in: query
+          description: The number of elements in the result set
+          required: false
+          schema:
+            type: integer
+            format: int32
+
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/collection'
+
+    head:
+      description: Returns the existence of the entity
+      responses:
+        404:
+          description: Endpoint Not Found
+
+        200:
+          description: Endpoint is available
+
+    post:
+      description: Add element to the collection of kitchen devices
+      requestBody:
+        description: Element to add to the collection
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/kitchenDevice'
+      responses:
+        200:
+          $ref: '#/components/responses/ok'
+
+  /kitchenDevices/{id}:
+    get:
+      description: Fetches a single kitchen device
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        200:
+          description: Returns kitchen device with ID id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/kitchenDevice'
+
+    head:
+      description: Returns the existence of the entity
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        404:
+          description: Endpoint Not Found
+
+        200:
+          description: Endpoint is available
+
+    put:
+      description: Replaces the entity with body argument
+      parameters:
+        - $ref: '#/components/parameters/id'
+      requestBody:
+        description: Replacee
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/kitchenDevice'
+      responses:
+        200:
+          $ref: '#/components/responses/ok'
+
+    patch:
+      description: Partialy updates the entity with given values
+      parameters:
+        - $ref: '#/components/parameters/id'
+      requestBody:
+        description: Partial object with kitchenDevice properties to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/kitchenDevice'
+
+      responses:
+        200:
+          $ref: '#/components/responses/ok'
+
+    delete:
+      description: Deletes the entity
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        200:
+          $ref: '#/components/responses/ok'
+
+components:
+  parameters:
+    id:
+      name: id
+      in: path
+      description: Entity id
+      required: true
+      schema:
+        type: integer
+        format: int32
+
+  responses:
+    ok:
+      description: Successful operation
+
+  schemas:
+    collection:
+      type: object
+      properties:
+        _embedded:
+          type: array
+          items:
+            $ref: '#/components/schemas/kitchenDevice'
+
+        page:
+          $ref: '#/components/schemas/page'
+
+      required:
+        - _embedded
+        - page
+
+    page:
+      type: object
+
+      properties:
+        size:
+          type: integer
+          format: int32
+
+        totalElements:
+          type: integer
+          format: int32
+
+        totalPages:
+          type: integer
+          format: int32
+
+        number:
+          type: integer
+          format: int32
+
+      required:
+        - size
+        - totalElements
+        - totalPages
+        - number
+
+    kitchenDevice:
+      type: object
+
+      properties:
+        id:
+          type: integer
+          format: int32
+
+        available:
+          type: boolean
+
+        function:
+          type: string
+
+        name:
+          type: string
+
+      required:
+        - available
+        - function
+        - name
