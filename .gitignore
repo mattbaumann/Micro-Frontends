@@ -17,6 +17,7 @@
 .gradle/
 out/
 build/
+bin/
 
 # HTTP Request Log
 httpRequests/

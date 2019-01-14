@@ -1,0 +1,504 @@
+openapi: 3.0.0
+servers:
+  - url: http://localhost:9602/api
+info:
+  description: Purchase List saving service
+  version: "1.0.0"
+  title: Purchase List API
+  contact:
+    email: m2bauman@hsr.ch
+  license:
+    name: Private
+
+paths:
+  /purchaseLists:
+    description: Collection of Purchase List objects
+    get:
+      description: Returns all Purchase Lists inside a paged response
+      parameters:
+        - name: page
+          in: query
+          description: The page number of the returned content
+          required: false
+          schema:
+            type: integer
+            format: int32
+
+        - name: sort
+          in: query
+          description: The sorting applied before the content is paged
+          required: false
+          schema:
+            type: string
+
+        - name: size
+          in: query
+          description: The number of elements in the result set
+          required: false
+          schema:
+            type: integer
+            format: int32
+
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/collection'
+
+    head:
+      description: Returns the existence of the entity
+      responses:
+        404:
+          description: Endpoint Not Found
+
+        200:
+          description: Endpoint is available
+
+    post:
+      description: Add element to the collection of Purchase Lists
+      requestBody:
+        description: Element to add to the collection
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/purchaseList'
+      responses:
+        200:
+          $ref: '#/components/responses/ok'
+
+  /purchaseLists/{id}:
+    get:
+      description: Fetches a single Purchase List
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        200:
+          description: Returns Purchase List with ID id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/purchaseList'
+
+    head:
+      description: Returns the existence of the entity
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        404:
+          description: Endpoint Not Found
+
+        200:
+          description: Endpoint is available
+
+    put:
+      description: Replaces the entity with body argument
+      parameters:
+        - $ref: '#/components/parameters/id'
+      requestBody:
+        description: Replacee
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/purchaseList'
+      responses:
+        200:
+          $ref: '#/components/responses/ok'
+
+    patch:
+      description: Partialy updates the entity with given values
+      parameters:
+        - $ref: '#/components/parameters/id'
+      requestBody:
+        description: Partial object with kitchenDevice properties to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/purchaseList'
+
+      responses:
+        200:
+          $ref: '#/components/responses/ok'
+
+    delete:
+      description: Deletes the entity
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        200:
+          $ref: '#/components/responses/ok'
+
+
+  /purchaseLists/{id}/items:
+    description: Collection of Purchase List Item objects
+    get:
+      description: Returns all Purchase List Items inside a paged response
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - name: page
+          in: query
+          description: The page number of the returned content
+          required: false
+          schema:
+            type: integer
+            format: int32
+
+        - name: sort
+          in: query
+          description: The sorting applied before the content is paged
+          required: false
+          schema:
+            type: string
+
+        - name: size
+          in: query
+          description: The number of elements in the result set
+          required: false
+          schema:
+            type: integer
+            format: int32
+
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/collectionItems'
+
+    head:
+      description: Returns the existence of the entity
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        404:
+          description: Endpoint Not Found
+
+        200:
+          description: Endpoint is available
+
+    post:
+      description: Add element to the collection of Purchase List Items
+      parameters:
+        - $ref: '#/components/parameters/id'
+      requestBody:
+        description: Element to add to the collection
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/purchaseListItem'
+      responses:
+        200:
+          $ref: '#/components/responses/ok'
+
+  /purchaseLists/{id}/items/{itemId}:
+    get:
+      description: Fetches a single Purchase List Item
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/itemId'
+      responses:
+        200:
+          description: Returns Purchase List Item with ID id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/purchaseListItem'
+
+    head:
+      description: Returns the existence of the entity
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/itemId'
+      responses:
+        404:
+          description: Endpoint Not Found
+
+        200:
+          description: Endpoint is available
+
+    put:
+      description: Replaces the entity with body argument
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/itemId'
+      requestBody:
+        description: Replacee
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/purchaseListItem'
+      responses:
+        200:
+          $ref: '#/components/responses/ok'
+
+    patch:
+      description: Partialy updates the entity with given values
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/itemId'
+      requestBody:
+        description: Partial object with kitchenDevice properties to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/purchaseListItem'
+
+      responses:
+        200:
+          $ref: '#/components/responses/ok'
+
+    delete:
+      description: Deletes the entity
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/itemId'
+      responses:
+        200:
+          $ref: '#/components/responses/ok'
+
+
+  /purchaseListItems:
+    description: Collection of Purchase List Item objects
+    get:
+      description: Returns all Purchase List Items inside a paged response
+      parameters:
+        - name: page
+          in: query
+          description: The page number of the returned content
+          required: false
+          schema:
+            type: integer
+            format: int32
+
+        - name: sort
+          in: query
+          description: The sorting applied before the content is paged
+          required: false
+          schema:
+            type: string
+
+        - name: size
+          in: query
+          description: The number of elements in the result set
+          required: false
+          schema:
+            type: integer
+            format: int32
+
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/collectionItems'
+
+    head:
+      description: Returns the existence of the entity
+      responses:
+        404:
+          description: Endpoint Not Found
+
+        200:
+          description: Endpoint is available
+
+    post:
+      description: Add element to the collection of Purchase List Items
+      requestBody:
+        description: Element to add to the collection
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/purchaseListItem'
+      responses:
+        200:
+          $ref: '#/components/responses/ok'
+
+  /purchaseListItems/{id}:
+    get:
+      description: Fetches a single Purchase List Item
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        200:
+          description: Returns Purchase List Item with ID id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/purchaseListItem'
+
+    head:
+      description: Returns the existence of the entity
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        404:
+          description: Endpoint Not Found
+
+        200:
+          description: Endpoint is available
+
+    put:
+      description: Replaces the entity with body argument
+      parameters:
+        - $ref: '#/components/parameters/id'
+      requestBody:
+        description: Replacee
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/purchaseListItem'
+      responses:
+        200:
+          $ref: '#/components/responses/ok'
+
+    patch:
+      description: Partialy updates the entity with given values
+      parameters:
+        - $ref: '#/components/parameters/id'
+      requestBody:
+        description: Partial object with kitchenDevice properties to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/purchaseListItem'
+
+      responses:
+        200:
+          $ref: '#/components/responses/ok'
+
+    delete:
+      description: Deletes the entity
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        200:
+          $ref: '#/components/responses/ok'
+
+components:
+  parameters:
+    id:
+      name: id
+      in: path
+      description: Entity id
+      required: true
+      schema:
+        type: integer
+        format: int32
+
+    itemId:
+      name: itemId
+      in: path
+      description: Entity id
+      required: true
+      schema:
+        type: integer
+        format: int32
+
+  responses:
+    ok:
+      description: Successful operation
+
+  schemas:
+    collection:
+      type: object
+      properties:
+        _embedded:
+          type: array
+          items:
+            $ref: '#/components/schemas/purchaseList'
+
+        page:
+          $ref: '#/components/schemas/page'
+
+      required:
+        - _embedded
+        - page
+
+    collectionItems:
+      type: object
+      properties:
+        _embedded:
+          type: array
+          items:
+            $ref: '#/components/schemas/purchaseListItem'
+
+        page:
+          $ref: '#/components/schemas/page'
+
+      required:
+        - _embedded
+        - page
+
+    page:
+      type: object
+
+      properties:
+        size:
+          type: integer
+          format: int32
+
+        totalElements:
+          type: integer
+          format: int32
+
+        totalPages:
+          type: integer
+          format: int32
+
+        number:
+          type: integer
+          format: int32
+
+      required:
+        - size
+        - totalElements
+        - totalPages
+        - number
+
+    purchaseList:
+      type: object
+
+      properties:
+        id:
+          type: integer
+          format: int32
+
+        available:
+          type: boolean
+
+        function:
+          type: string
+
+        name:
+          type: string
+
+      required:
+        - available
+        - function
+        - name
+
+    purchaseListItem:
+      type: object
+
+      properties:
+        id:
+          type: integer
+          format: int32
+
+        name:
+          type: string
+
+      required:
+        - name
